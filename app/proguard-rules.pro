@@ -19,3 +19,13 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+
+-keep class com.kroy.sseditor.models.** { *; }
+-keep class com.kroy.sseditor.api.** { *; }
+
+
+-keep,allowobfuscation,allowshrinkinginterfaceretrofit2.Call
+-keep,allowobfuscation,allowshrinkingclassretrofit2.Response
+-keep,allowobfuscation,allowshrinkingclasskotlin.coroutines.Continuation

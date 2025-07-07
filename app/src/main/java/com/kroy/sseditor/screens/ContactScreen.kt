@@ -69,15 +69,19 @@ import com.kroy.sseditor.ui.theme.CustomTypography
 import com.kroy.sseditor.ui.theme.Primary
 import com.kroy.sseditor.utils.ContactScrollPositionManager
 import com.kroy.sseditor.utils.SelectedClient
+import com.kroy.sseditor.utils.SelectedClient.clientName
 import com.kroy.sseditor.utils.Utils
 import com.kroy.sseditor.utils.Utils.CaptureAndSaveComposable
 import com.kroy.sseditor.utils.Utils.base64ToBitmap
 import com.kroy.sseditor.utils.Utils.getYesterdaysDateFormatted
 import com.kroy.sseditor.viewmodels.ContactViewModel
 import com.kroy.sseditor.viewmodels.SharedViewModel
+import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
+import java.util.Calendar
+import java.util.Locale
 import kotlin.random.Random
 
 
@@ -115,6 +119,8 @@ fun ContactScreen(
     onTransferContact: () -> Unit,
     sharedViewModel: SharedViewModel
 ) {
+
+
     val context = LocalContext.current
     val contactViewModel: ContactViewModel = hiltViewModel()
     val isLoading: State<Boolean> = contactViewModel.isLoading.collectAsState()
@@ -133,6 +139,7 @@ fun ContactScreen(
 
     var r1clickedCount by rememberSaveable { mutableStateOf(0) }
     var r2clickedCount by rememberSaveable { mutableStateOf(0) }
+    var rathoreTimes by remember { mutableStateOf<List<String>>(emptyList()) }
 
     // Use rememberLazyListState to initialize with global scroll position
     val listState = rememberLazyListState(
@@ -147,6 +154,11 @@ fun ContactScreen(
                 ContactScrollPositionManager.scrollIndex = index
                 ContactScrollPositionManager.scrollOffset = offset
             }
+    }
+
+    LaunchedEffect(SelectedClient.clientName) {
+        val times = getIncreasedTimes(SelectedClient.time)
+        rathoreTimes = times
     }
 
     Log.d(
@@ -245,12 +257,10 @@ fun ContactScreen(
         }
         Utils.generateNewChatScreen(
             chatList = chatItems,
-            clientName = sharedViewModel.clients.value
-                ?.find { it.clientId == SelectedClient.clientId }?.clientName
-                ?: "",
             contactViewModel = contactViewModel,
-            r1clickedCount = r1clickedCount,
-            r2clickedCount = r2clickedCount
+            rathoreTime = if (SelectedClient.clientName == "RATHORE 1") rathoreTimes[(r1clickedCount-1)%3]
+            else if (SelectedClient.clientName == "RATHORE 2") rathoreTimes[(r2clickedCount-1)%3]
+            else null,
         )
 
     }
@@ -320,16 +330,10 @@ fun ContactScreen(
                 IconButton(
                     onClick = {
 
-                        val clientName = sharedViewModel.clients.value
-                            ?.find { it.clientId == SelectedClient.clientId }?.clientName
-                            ?: ""
-
-                        if (clientName == "RATHORE 1" ) {
-                            if (r1clickedCount == 3) r1clickedCount = 0
-                            else r1clickedCount++
+                        if (clientName == "RATHORE 1") {
+                            r1clickedCount++
                         } else if (clientName == "RATHORE 2") {
-                            if (r2clickedCount == 3) r2clickedCount = 0
-                            else r2clickedCount++
+                            r2clickedCount++
                         }
 
                         contactViewModel.setLoading(true)
@@ -510,4 +514,20 @@ fun ContactItem(
 fun ContactScreenPreview() {
     val v = hiltViewModel<SharedViewModel>()
     ContactScreen(onAddContact = {}, onEditClick = {}, onTransferContact = {}, v)
+}
+
+
+fun getIncreasedTimes(timeStr: String): List<String> {
+    val format = SimpleDateFormat("hh:mm a", Locale.US)
+    val baseDate = format.parse(timeStr)!!
+    val result = mutableListOf<String>()
+
+    for (i in 0..2) {
+        val calendar = Calendar.getInstance()
+        calendar.time = baseDate
+        calendar.add(Calendar.MINUTE, i)
+        result.add(format.format(calendar.time))
+    }
+
+    return result
 }

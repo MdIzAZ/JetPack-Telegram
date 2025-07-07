@@ -88,7 +88,6 @@ class MainActivity :FragmentActivity() {
     lateinit var dataStoreHelper: DataStoreHelper
 
     @RequiresApi(Build.VERSION_CODES.O)
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Make the activity full screen

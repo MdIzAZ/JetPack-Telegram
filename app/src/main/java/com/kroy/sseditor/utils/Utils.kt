@@ -23,6 +23,7 @@ import com.kroy.sseditor.models.ChatItem
 import com.kroy.sseditor.models.ChatMessage
 import com.kroy.sseditor.screens.ChatScreen
 import com.kroy.sseditor.screens.CustomTelegramLayout
+import com.kroy.sseditor.utils.SelectedClient.clientName
 import com.kroy.sseditor.viewmodels.ContactViewModel
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -77,10 +78,8 @@ object Utils {
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     fun generateNewChatScreen(
-        clientName: String,
         chatList: List<ChatItem>,
-        r1clickedCount: Int,
-        r2clickedCount: Int,
+        rathoreTime: String?,
         contactViewModel: ContactViewModel
     ) {
         val context = LocalContext.current
@@ -92,9 +91,7 @@ object Utils {
 
             generateChatScreenComposableToBitmap(
                 context = context,
-                r2clickedCount = r2clickedCount,
-                r1clickedCount = r1clickedCount,
-                clientName = clientName,
+                rathoreTime = rathoreTime,
                 chatList = chatList
             )
             contactViewModel.setLoading(false)
@@ -116,9 +113,7 @@ object Utils {
     @RequiresApi(Build.VERSION_CODES.O)
     fun generateChatScreenComposableToBitmap(
         context: Context,
-        r2clickedCount: Int,
-        r1clickedCount: Int,
-        clientName: String,
+        rathoreTime: String?,
         chatList: List<ChatItem>
     ) {
         // Ensure context is an Activity
@@ -127,10 +122,8 @@ object Utils {
         val composeView = ComposeView(context).apply {
             setContent {
                 ChatScreen(
-                    clientName = clientName,
                     chats = chatList,
-                    r2clickedCount = r2clickedCount,
-                    r1clickedCount = r1clickedCount,
+                    rathoreTime = rathoreTime
                 )
             }
         }

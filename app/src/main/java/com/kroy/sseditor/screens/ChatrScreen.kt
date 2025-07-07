@@ -58,17 +58,19 @@ import com.kroy.sseditor.ui.theme.Telegram
 import com.kroy.sseditor.ui.theme.TelegramDark
 import com.kroy.sseditor.ui.theme.UnreadMessages
 import com.kroy.sseditor.utils.SelectedClient
+import com.kroy.sseditor.utils.SelectedClient.clientName
 import com.kroy.sseditor.utils.Utils
+import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Locale
 import kotlin.random.Random
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ChatScreen(
-    clientName: String,
-    r2clickedCount: Int,
-    r1clickedCount: Int,
+    rathoreTime: String?,
     chats: List<ChatItem>
 ) {
 
@@ -98,13 +100,10 @@ fun ChatScreen(
 
             // Chat List (middle content)
             ChatListUI(
-                modifier = Modifier
-                    .weight(1f),// Fills the remaining space right after the status bar,
-                clientName,
-                chats,
-                randomInitialTime,
-                r2clickedCount = r2clickedCount,
-                r1clickedCount = r1clickedCount
+                modifier = Modifier.weight(1f),
+                chats = chats,
+                randomInitialTime = randomInitialTime,
+                rathoreTime = rathoreTime
             )
 
             // Bottom Navigation Bar (fixed at the bottom)
@@ -562,11 +561,9 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
 @Composable
 fun ChatListUI(
     modifier: Modifier = Modifier,
-    clientName: String,
     chats: List<ChatItem>,
     randomInitialTime: LocalTime,
-    r2clickedCount: Int,
-    r1clickedCount: Int,
+    rathoreTime: String?
 ) {
     // Parse the initial time from the SelectedClient
     val initialTime = remember {
@@ -605,10 +602,8 @@ fun ChatListUI(
 
             ChatRow(
                 chat = chat,
-                clientName = clientName,
                 time = adjustedTime,
-                r2clickedCount = r2clickedCount,
-                r1clickedCount = r1clickedCount,
+                rathoreTime = rathoreTime
             )
             Divider(color = Color.Gray, thickness = 0.1.dp)
         }
@@ -619,9 +614,9 @@ fun ChatListUI(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ChatRow(
-    clientName: String, chat: ChatItem, time: LocalTime,
-    r2clickedCount: Int,
-    r1clickedCount: Int
+    chat: ChatItem,
+    time: LocalTime,
+    rathoreTime: String?
 ) {
     // Format the time
     val formattedTime = remember {
@@ -637,8 +632,6 @@ fun ChatRow(
                 .padding(vertical = 4.dp, horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
-            val rathoreTimes = listOf("01:55 AM", "01:56 AM", "01:57 AM")
 
 
             // Profile Image
@@ -684,7 +677,6 @@ fun ChatRow(
                     Text(
                         text = initials,
                         fontSize = 28.sp,
-
                         fontFamily = CustomComfortaaFontFamily,
                         fontWeight = FontWeight.W900,
                         color = Color.White,
@@ -719,9 +711,7 @@ fun ChatRow(
                         modifier = Modifier.weight(1f)
                     )
                     Text(
-                        text = if (clientName == "RATHORE 1") rathoreTimes[r1clickedCount - 1]
-                               else if (clientName == "RATHORE 2") rathoreTimes[r2clickedCount - 1]
-                               else formattedTime,
+                        text = rathoreTime ?: formattedTime,
                         fontSize = 14.sp,
                         fontFamily = CustomRobotoMediumFontFamily,
                         fontWeight = FontWeight.SemiBold,
@@ -957,5 +947,11 @@ fun TelegramScreenPreview() {
             Random.nextInt(2, 5)
         )
     )
-    ChatScreen("RATHORE 1", 3, 2, chats)
+    ChatScreen(
+        "RATHORE 1",
+        chats = chats,
+    )
 }
+
+
+

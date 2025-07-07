@@ -155,10 +155,10 @@ fun AddClientScreen(onClientAdded: (Int) -> Unit) {
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth(0.9f),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Primary,
-                unfocusedBorderColor = Primary,
-                cursorColor = Primary
+            colors = TextFieldDefaults.colors(
+                cursorColor = Primary,
+                focusedIndicatorColor = Primary,
+                unfocusedIndicatorColor = Primary
             )
         )
 

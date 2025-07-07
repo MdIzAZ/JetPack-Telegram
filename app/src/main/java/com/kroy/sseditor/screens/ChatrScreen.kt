@@ -65,7 +65,14 @@ import kotlin.random.Random
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ChatScreen(chats:List<ChatItem>) {
+fun ChatScreen(
+    clientName: String,
+    r2clickedCount: Int,
+    r1clickedCount: Int,
+    chats: List<ChatItem>
+) {
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -92,11 +99,12 @@ fun ChatScreen(chats:List<ChatItem>) {
             // Chat List (middle content)
             ChatListUI(
                 modifier = Modifier
-                    .weight(1f)
-                ,// Fills the remaining space right after the status bar,
+                    .weight(1f),// Fills the remaining space right after the status bar,
+                clientName,
                 chats,
-                randomInitialTime
-
+                randomInitialTime,
+                r2clickedCount = r2clickedCount,
+                r1clickedCount = r1clickedCount
             )
 
             // Bottom Navigation Bar (fixed at the bottom)
@@ -137,9 +145,10 @@ fun ChatScreen(chats:List<ChatItem>) {
 //        )
     }
 }
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun StatusBar(randomInitialTime:LocalTime) {
+fun StatusBar(randomInitialTime: LocalTime) {
 
     Column(
         modifier = Modifier
@@ -167,7 +176,13 @@ fun StatusBar(randomInitialTime:LocalTime) {
             // Time
 
             Text(
-                text = Utils.removeLeadingZero(randomInitialTime.format(DateTimeFormatter.ofPattern("hh:mm"))),
+                text = Utils.removeLeadingZero(
+                    randomInitialTime.format(
+                        DateTimeFormatter.ofPattern(
+                            "hh:mm"
+                        )
+                    )
+                ),
                 color = Color.White,
                 fontSize = 15.sp,
                 letterSpacing = 1.sp,
@@ -187,7 +202,7 @@ fun StatusBar(randomInitialTime:LocalTime) {
                     .background(Color.Black, shape = RoundedCornerShape(14.dp))
                     .padding(horizontal = 6.dp, vertical = 2.dp),
 
-            ) {
+                ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start,
@@ -215,7 +230,12 @@ fun StatusBar(randomInitialTime:LocalTime) {
                     .wrapContentSize()
                     .padding(end = 13.dp)
             ) {
-                Icon(painterResource(id = R.drawable.ic_signal2), contentDescription = "Signal", tint = Color.White, modifier = Modifier.size(16.dp))
+                Icon(
+                    painterResource(id = R.drawable.ic_signal2),
+                    contentDescription = "Signal",
+                    tint = Color.White,
+                    modifier = Modifier.size(16.dp)
+                )
                 Spacer(modifier = Modifier.width(7.dp))
                 Text(
                     text = "5G",
@@ -225,10 +245,10 @@ fun StatusBar(randomInitialTime:LocalTime) {
                     color = Color.White,
                     modifier = Modifier.padding(top = 2.dp)
                 )
-             //   Icon(painterResource(id = R.drawable.ic_wifi), contentDescription = "Wi-Fi", tint = Color.White, modifier = Modifier.size(16.dp))
+                //   Icon(painterResource(id = R.drawable.ic_wifi), contentDescription = "Wi-Fi", tint = Color.White, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(7.dp))
                 Icon(
-                    painter = painterResource(id =Utils.getBatteryImage(SelectedClient.dayName)),
+                    painter = painterResource(id = Utils.getBatteryImage(SelectedClient.dayName)),
                     contentDescription = "Battery",
                     tint = Color.White,
                     modifier = Modifier
@@ -307,7 +327,10 @@ fun StatusBar(randomInitialTime:LocalTime) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp, bottom = 4.dp),  // Only top padding between first and second row
+                .padding(
+                    top = 8.dp,
+                    bottom = 4.dp
+                ),  // Only top padding between first and second row
             verticalAlignment = Alignment.CenterVertically, // Center content vertically in the row
             horizontalArrangement = Arrangement.Start // Spread the content across the width of the row
         ) {
@@ -327,8 +350,6 @@ fun StatusBar(randomInitialTime:LocalTime) {
             Spacer(modifier = Modifier.width(spacerValue))
 
 
-
-
             // Personal tab
             Row(
                 modifier = Modifier
@@ -343,7 +364,7 @@ fun StatusBar(randomInitialTime:LocalTime) {
                     fontFamily = CustomRobotoMediumFontFamily,
                     modifier = Modifier.padding(end = 3.dp, bottom = 2.dp)
                 )
-                Box(modifier =Modifier.padding(top = 0.dp) ){
+                Box(modifier = Modifier.padding(top = 0.dp)) {
                     BadgeBoxSmall(Random.nextInt(50, 100))
                 }
 
@@ -360,7 +381,7 @@ fun StatusBar(randomInitialTime:LocalTime) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
 
-                    modifier = Modifier  .padding( bottom = 7.dp)
+                    modifier = Modifier.padding(bottom = 7.dp)
                 ) {
                     Text(
                         text = "Unread",
@@ -371,7 +392,7 @@ fun StatusBar(randomInitialTime:LocalTime) {
                         fontFamily = CustomRobotoMediumFontFamily,
                         modifier = Modifier.padding(end = 3.dp, bottom = 3.dp)
                     )
-                    Box(modifier =Modifier.padding(top = 0.dp) ){
+                    Box(modifier = Modifier.padding(top = 0.dp)) {
                         BadgeBoxSmall(Random.nextInt(50, 100))
                     }
                 }
@@ -401,16 +422,13 @@ fun StatusBar(randomInitialTime:LocalTime) {
                     fontFamily = CustomRobotoMediumFontFamily,
                     modifier = Modifier.padding(end = 3.dp, bottom = 2.dp)
                 )
-                Box(modifier =Modifier.padding(top = 0.dp) ){
+                Box(modifier = Modifier.padding(top = 0.dp)) {
                     BadgeBoxSmall(Random.nextInt(50, 100))
                 }
             }
         }
     }
 }
-
-
-
 
 
 @Composable
@@ -468,7 +486,7 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
                         fontWeight = FontWeight.Thin,
                         fontFamily = CustomRobotoMediumFontFamily,
                         maxLines = 1,
-                        )
+                    )
                 }
                 Box(
                     modifier = Modifier
@@ -542,7 +560,14 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ChatListUI(modifier: Modifier = Modifier, chats: List<ChatItem>,randomInitialTime: LocalTime) {
+fun ChatListUI(
+    modifier: Modifier = Modifier,
+    clientName: String,
+    chats: List<ChatItem>,
+    randomInitialTime: LocalTime,
+    r2clickedCount: Int,
+    r1clickedCount: Int,
+) {
     // Parse the initial time from the SelectedClient
     val initialTime = remember {
         (randomInitialTime)
@@ -575,10 +600,16 @@ fun ChatListUI(modifier: Modifier = Modifier, chats: List<ChatItem>,randomInitia
     ) {
         itemsIndexed(chats) { index, chat ->
             val adjustedTime = remember(timeOffsets[index]) {
-                    initialTime.plusMinutes(timeOffsets[index].toLong())
-                }
+                initialTime.plusMinutes(timeOffsets[index].toLong())
+            }
 
-            ChatRow(chat = chat, time = adjustedTime)
+            ChatRow(
+                chat = chat,
+                clientName = clientName,
+                time = adjustedTime,
+                r2clickedCount = r2clickedCount,
+                r1clickedCount = r1clickedCount,
+            )
             Divider(color = Color.Gray, thickness = 0.1.dp)
         }
     }
@@ -587,7 +618,11 @@ fun ChatListUI(modifier: Modifier = Modifier, chats: List<ChatItem>,randomInitia
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ChatRow(chat: ChatItem, time: LocalTime) {
+fun ChatRow(
+    clientName: String, chat: ChatItem, time: LocalTime,
+    r2clickedCount: Int,
+    r1clickedCount: Int
+) {
     // Format the time
     val formattedTime = remember {
         Utils.convertLettersToUppercase(
@@ -602,6 +637,10 @@ fun ChatRow(chat: ChatItem, time: LocalTime) {
                 .padding(vertical = 4.dp, horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
+            val rathoreTimes = listOf("01:55 AM", "01:56 AM", "01:57 AM")
+
+
             // Profile Image
             val gradientPair = RandomBgColorPairs.random()
             Box(
@@ -610,7 +649,10 @@ fun ChatRow(chat: ChatItem, time: LocalTime) {
                     .clip(CircleShape)
                     .background(
                         brush = Brush.linearGradient(
-                            colors = listOf(gradientPair.first, gradientPair.second) // Apply gradient from the pair
+                            colors = listOf(
+                                gradientPair.first,
+                                gradientPair.second
+                            ) // Apply gradient from the pair
                         )
                     )
             ) {
@@ -628,10 +670,12 @@ fun ChatRow(chat: ChatItem, time: LocalTime) {
                             when {
                                 words.size == 1 -> words.first().firstOrNull()?.uppercase() ?: "N"
                                 words.size > 1 -> {
-                                    val firstInitial = words.first().firstOrNull()?.uppercase() ?: ""
+                                    val firstInitial =
+                                        words.first().firstOrNull()?.uppercase() ?: ""
                                     val lastInitial = words.last().firstOrNull()?.uppercase() ?: ""
                                     "$firstInitial$lastInitial"
                                 }
+
                                 else -> "N"
                             }
                         }
@@ -641,10 +685,10 @@ fun ChatRow(chat: ChatItem, time: LocalTime) {
                         text = initials,
                         fontSize = 28.sp,
 
-                         fontFamily = CustomComfortaaFontFamily,
+                        fontFamily = CustomComfortaaFontFamily,
                         fontWeight = FontWeight.W900,
                         color = Color.White,
-                     //   style = MaterialTheme.typography.body1,
+                        //   style = MaterialTheme.typography.body1,
                         modifier = Modifier
                             .padding(bottom = 5.dp)
                             .align(Alignment.Center)
@@ -675,7 +719,9 @@ fun ChatRow(chat: ChatItem, time: LocalTime) {
                         modifier = Modifier.weight(1f)
                     )
                     Text(
-                        text = formattedTime,
+                        text = if (clientName == "RATHORE 1") rathoreTimes[r1clickedCount - 1]
+                               else if (clientName == "RATHORE 2") rathoreTimes[r2clickedCount - 1]
+                               else formattedTime,
                         fontSize = 14.sp,
                         fontFamily = CustomRobotoMediumFontFamily,
                         fontWeight = FontWeight.SemiBold,
@@ -743,9 +789,6 @@ fun ChatRow(chat: ChatItem, time: LocalTime) {
 }
 
 
-
-
-
 @Composable
 fun BadgeBox(unreadCount: Int, size: Int, modifier: Modifier = Modifier) {
     Box(
@@ -768,7 +811,7 @@ fun BadgeBox(unreadCount: Int, size: Int, modifier: Modifier = Modifier) {
                 fontSize = (12.7f).sp,
                 fontWeight = FontWeight.Thin,
                 modifier = Modifier
-                .padding(bottom = 3.dp),
+                    .padding(bottom = 3.dp),
                 color = Color.Black
             )
         }
@@ -780,14 +823,16 @@ fun BadgeBox(unreadCount: Int, size: Int, modifier: Modifier = Modifier) {
 @Composable
 fun BadgeBoxSmall(unreadCount: Int) {
     // Pending Messages Box
-    Box(modifier = Modifier
-        .padding(top = 0.dp, bottom = 6.dp)){
+    Box(
+        modifier = Modifier
+            .padding(top = 0.dp, bottom = 6.dp)
+    ) {
         Box(
             modifier = Modifier
                 .wrapContentSize()
         ) {
             Text(
-                text = "$unreadCount" ,
+                text = "$unreadCount",
                 fontFamily = CustomRobotoMediumFontFamily,
                 fontWeight = FontWeight.Thin,
                 fontSize = (11f).sp,
@@ -803,8 +848,6 @@ fun BadgeBoxSmall(unreadCount: Int) {
 }
 
 
-
-
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(
     showBackground = true,
@@ -814,21 +857,105 @@ fun BadgeBoxSmall(unreadCount: Int) {
 fun TelegramScreenPreview() {
     val context = LocalContext.current
     val chats = listOf(
-        ChatItem("Akash Gupta", "Hi", SelectedClient.time,Utils.getBitmapFromResource(context,R.drawable.b) , Random.nextInt(2, 5)),
-        ChatItem("Effi", "Hey", SelectedClient.time, Utils.getBitmapFromResource(context,R.drawable.b), Random.nextInt(2, 5)),
+        ChatItem(
+            "Akash Gupta",
+            "Hi",
+            SelectedClient.time,
+            Utils.getBitmapFromResource(context, R.drawable.b),
+            Random.nextInt(2, 5)
+        ),
+        ChatItem(
+            "Effi",
+            "Hey",
+            SelectedClient.time,
+            Utils.getBitmapFromResource(context, R.drawable.b),
+            Random.nextInt(2, 5)
+        ),
         ChatItem("Anil Wuryavanshi", "", SelectedClient.time, null, Random.nextInt(2, 5)),
-        ChatItem("EXCEPTION", "Hey", SelectedClient.time,Utils.getBitmapFromResource(context,R.drawable.f), Random.nextInt(2, 10)),
-        ChatItem("Jsvindr Sng", "https://t.me/+i_voE00fHsMOODA9 jhkjhj ijiuoiu kokpokpok kokpo jpokkkjk;jopk jkjkj kkljkj", SelectedClient.time,null, Random.nextInt(2, 5)),
-        ChatItem("Zpple", "https://t.me/+qnGC9Zd2csJkZDU9", SelectedClient.time,null, Random.nextInt(2, 5)),
-        ChatItem("Binary Trading Trader", "H this is the best text you can find from eleaborate he fghfgfhfhfghgfhgfhgffghgfhgffghgfhgfhfghgfhgfhfghgfhgfhgfhgfhgfh ", SelectedClient.time,Utils.getBitmapFromResource(context,R.drawable.a), Random.nextInt(2, 10)),
-        ChatItem("Binary Trading Trader", "Ftgmn...", SelectedClient.time,Utils.getBitmapFromResource(context,R.drawable.a), Random.nextInt(2, 5)),
-        ChatItem("Binary Trading Trader", "Ftgmn...", SelectedClient.time,Utils.getBitmapFromResource(context,R.drawable.a), Random.nextInt(2, 5)),
-        ChatItem("Binary Trading Trader", "Ftgmn...", SelectedClient.time,Utils.getBitmapFromResource(context,R.drawable.a), Random.nextInt(2, 5)),
-        ChatItem("Binary Trading Trader", "Ftgmn...", SelectedClient.time,Utils.getBitmapFromResource(context,R.drawable.a), Random.nextInt(2, 5)),
-        ChatItem("Binary Trading Trader", "Ftgmn...", SelectedClient.time,Utils.getBitmapFromResource(context,R.drawable.a), Random.nextInt(2, 5)),
-        ChatItem("Binary Trading Trader", "Ftgmn...", SelectedClient.time,Utils.getBitmapFromResource(context,R.drawable.a), Random.nextInt(2, 5)),
-        ChatItem("Binary Trading Trader", "Ftgmn...", SelectedClient.time,Utils.getBitmapFromResource(context,R.drawable.a), Random.nextInt(2, 5)),
-        ChatItem("Tronix Bot", "🦴🦴🦴🦴🦴", SelectedClient.time, Utils.getBitmapFromResource(context,R.drawable.b), Random.nextInt(2, 5))
+        ChatItem(
+            "EXCEPTION",
+            "Hey",
+            SelectedClient.time,
+            Utils.getBitmapFromResource(context, R.drawable.f),
+            Random.nextInt(2, 10)
+        ),
+        ChatItem(
+            "Jsvindr Sng",
+            "https://t.me/+i_voE00fHsMOODA9 jhkjhj ijiuoiu kokpokpok kokpo jpokkkjk;jopk jkjkj kkljkj",
+            SelectedClient.time,
+            null,
+            Random.nextInt(2, 5)
+        ),
+        ChatItem(
+            "Zpple",
+            "https://t.me/+qnGC9Zd2csJkZDU9",
+            SelectedClient.time,
+            null,
+            Random.nextInt(2, 5)
+        ),
+        ChatItem(
+            "Binary Trading Trader",
+            "H this is the best text you can find from eleaborate he fghfgfhfhfghgfhgfhgffghgfhgffghgfhgfhfghgfhgfhfghgfhgfhgfhgfhgfh ",
+            SelectedClient.time,
+            Utils.getBitmapFromResource(context, R.drawable.a),
+            Random.nextInt(2, 10)
+        ),
+        ChatItem(
+            "Binary Trading Trader",
+            "Ftgmn...",
+            SelectedClient.time,
+            Utils.getBitmapFromResource(context, R.drawable.a),
+            Random.nextInt(2, 5)
+        ),
+        ChatItem(
+            "Binary Trading Trader",
+            "Ftgmn...",
+            SelectedClient.time,
+            Utils.getBitmapFromResource(context, R.drawable.a),
+            Random.nextInt(2, 5)
+        ),
+        ChatItem(
+            "Binary Trading Trader",
+            "Ftgmn...",
+            SelectedClient.time,
+            Utils.getBitmapFromResource(context, R.drawable.a),
+            Random.nextInt(2, 5)
+        ),
+        ChatItem(
+            "Binary Trading Trader",
+            "Ftgmn...",
+            SelectedClient.time,
+            Utils.getBitmapFromResource(context, R.drawable.a),
+            Random.nextInt(2, 5)
+        ),
+        ChatItem(
+            "Binary Trading Trader",
+            "Ftgmn...",
+            SelectedClient.time,
+            Utils.getBitmapFromResource(context, R.drawable.a),
+            Random.nextInt(2, 5)
+        ),
+        ChatItem(
+            "Binary Trading Trader",
+            "Ftgmn...",
+            SelectedClient.time,
+            Utils.getBitmapFromResource(context, R.drawable.a),
+            Random.nextInt(2, 5)
+        ),
+        ChatItem(
+            "Binary Trading Trader",
+            "Ftgmn...",
+            SelectedClient.time,
+            Utils.getBitmapFromResource(context, R.drawable.a),
+            Random.nextInt(2, 5)
+        ),
+        ChatItem(
+            "Tronix Bot",
+            "🦴🦴🦴🦴🦴",
+            SelectedClient.time,
+            Utils.getBitmapFromResource(context, R.drawable.b),
+            Random.nextInt(2, 5)
+        )
     )
-    ChatScreen(chats)
+    ChatScreen("RATHORE 1", 3, 2, chats)
 }

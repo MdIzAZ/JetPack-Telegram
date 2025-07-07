@@ -153,11 +153,11 @@ fun AddContactScreen(onContactAdded: (Int) -> Unit) {
             modifier = Modifier
                 .fillMaxWidth(0.9f)
                 .align(Alignment.CenterHorizontally),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Primary,
-                unfocusedBorderColor = Primary,
-                cursorColor = Primary
-            )
+            colors = TextFieldDefaults.colors(
+                    cursorColor = Primary,
+                    focusedIndicatorColor = Primary,
+                    unfocusedIndicatorColor = Primary
+                )
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -170,11 +170,11 @@ fun AddContactScreen(onContactAdded: (Int) -> Unit) {
             modifier = Modifier
                 .fillMaxWidth(0.9f)
                 .align(Alignment.CenterHorizontally),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Primary,
-                unfocusedBorderColor = Primary,
-                cursorColor = Primary
-            )
+            colors = TextFieldDefaults.colors(
+                    cursorColor = Primary,
+                    focusedIndicatorColor = Primary,
+                    unfocusedIndicatorColor = Primary
+                )
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -187,11 +187,11 @@ fun AddContactScreen(onContactAdded: (Int) -> Unit) {
                 .fillMaxWidth(0.9f)
                 .align(Alignment.CenterHorizontally),
             enabled = comment1.isNotEmpty(), // Enable only if comment1 is not empty
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Primary,
-                unfocusedBorderColor = Primary,
-                cursorColor = Primary
-            )
+            colors = TextFieldDefaults.colors(
+                    cursorColor = Primary,
+                    focusedIndicatorColor = Primary,
+                    unfocusedIndicatorColor = Primary
+                )
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -204,11 +204,11 @@ fun AddContactScreen(onContactAdded: (Int) -> Unit) {
                 .fillMaxWidth(0.9f)
                 .align(Alignment.CenterHorizontally),
             enabled = comment1.isNotEmpty() && comment2.isNotEmpty(), // Enable only if comment1 and comment2 are not empty
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Primary,
-                unfocusedBorderColor = Primary,
-                cursorColor = Primary
-            )
+            colors = TextFieldDefaults.colors(
+                    cursorColor = Primary,
+                    focusedIndicatorColor = Primary,
+                    unfocusedIndicatorColor = Primary
+                )
         )
 
         Spacer(modifier = Modifier.height(16.dp))

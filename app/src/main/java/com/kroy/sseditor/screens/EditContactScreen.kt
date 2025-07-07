@@ -75,12 +75,12 @@ fun EditContactScreen(
     val editcontact: State<ApiResponse.EditContacttResponse?> =
         editContactViewModel.filterededitContactResponse.collectAsState()
 
-    if (editcontact.value?.data != null  && !hasNavigated) {
+    if (editcontact.value?.data != null && !hasNavigated) {
         hasNavigated = true
         onSaveClicked(SelectedContact.contactId)
         Toast.makeText(context, "Contact Updated", Toast.LENGTH_SHORT).show()
     }
-    if (editcontact.value?.data == null  && !hasNavigated && editcontact?.value?.message!=null) {
+    if (editcontact.value?.data == null && !hasNavigated && editcontact?.value?.message != null) {
         hasNavigated = true
         onSaveClicked(SelectedContact.contactId)
         Toast.makeText(context, editcontact?.value?.message, Toast.LENGTH_SHORT).show()
@@ -193,7 +193,8 @@ fun EditContactScreen(
 
         Image(
             bitmap = selectedImageUri?.let {
-                BitmapFactory.decodeStream(context.contentResolver.openInputStream(it)).asImageBitmap()
+                BitmapFactory.decodeStream(context.contentResolver.openInputStream(it))
+                    .asImageBitmap()
             } ?: clientImageBitmap.asImageBitmap(),
             contentDescription = "Contact Image",
             modifier = Modifier
@@ -225,7 +226,8 @@ fun EditContactScreen(
 
         Image(
             bitmap = selectedBackgroundUri?.let {
-                BitmapFactory.decodeStream(context.contentResolver.openInputStream(it)).asImageBitmap()
+                BitmapFactory.decodeStream(context.contentResolver.openInputStream(it))
+                    .asImageBitmap()
             } ?: backgroundImageBitmap.asImageBitmap(),
             contentDescription = "Background Image",
             modifier = Modifier
@@ -243,10 +245,10 @@ fun EditContactScreen(
             label = { Text("Comment 1") },
 
             modifier = Modifier.fillMaxWidth(0.9f),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Primary,
-                unfocusedBorderColor = Primary,
-                cursorColor = Primary
+            colors = TextFieldDefaults.colors(
+                cursorColor = Primary,
+                focusedIndicatorColor = Primary,
+                unfocusedIndicatorColor = Primary
             )
         )
 
@@ -254,14 +256,14 @@ fun EditContactScreen(
 
         OutlinedTextField(
             value = comment2State,
-            onValueChange = {  if (it.length <= 60) comment2State = it },
+            onValueChange = { if (it.length <= 60) comment2State = it },
             label = { Text("Comment 2") },
             enabled = comment1State.isNotEmpty(),
             modifier = Modifier.fillMaxWidth(0.9f),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Primary,
-                unfocusedBorderColor = Primary,
-                cursorColor = Primary
+            colors = TextFieldDefaults.colors(
+                cursorColor = Primary,
+                focusedIndicatorColor = Primary,
+                unfocusedIndicatorColor = Primary
             )
         )
 
@@ -269,14 +271,14 @@ fun EditContactScreen(
 
         OutlinedTextField(
             value = comment3State,
-            onValueChange = {  if (it.length <= 60) comment3State = it },
+            onValueChange = { if (it.length <= 60) comment3State = it },
             label = { Text("Comment 3") },
             enabled = comment1State.isNotEmpty() && comment2State.isNotEmpty(),
             modifier = Modifier.fillMaxWidth(0.9f),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Primary,
-                unfocusedBorderColor = Primary,
-                cursorColor = Primary
+            colors = TextFieldDefaults.colors(
+                cursorColor = Primary,
+                focusedIndicatorColor = Primary,
+                unfocusedIndicatorColor = Primary
             )
         )
 
@@ -285,7 +287,7 @@ fun EditContactScreen(
         // Save button with validation
         Button(
             onClick = {
-                if ( backgroundImageBase64.isNotEmpty()) {
+                if (backgroundImageBase64.isNotEmpty()) {
                     editContactViewModel.editContact(
                         contactId = SelectedContact.contactId,
                         editContactBody = editContactBody(
@@ -294,7 +296,7 @@ fun EditContactScreen(
                             comment1 = comment1State,
                             comment2 = comment2State,
                             comment3 = comment3State,
-                            uploadedImage= backgroundImageBase64
+                            uploadedImage = backgroundImageBase64
                         ),
                         context
                     )
@@ -323,7 +325,7 @@ fun EditContactScreen(
 fun PreviewEditContactScreen() {
     val context = LocalContext.current
     EditContactScreen(
-    ){
+    ) {
 
     }
 }

@@ -43,6 +43,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -108,18 +109,30 @@ fun addRandomMinutesToTime(initialTime: String, min: Int, max: Int): String {
 @SuppressLint("UnrememberedMutableState")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ContactScreen(onAddContact: () -> Unit = {}, onEditClick: (ContactItem) -> Unit = {},onTransferContact:()->Unit,sharedViewModel: SharedViewModel) {
+fun ContactScreen(
+    onAddContact: () -> Unit = {},
+    onEditClick: (ContactItem) -> Unit = {},
+    onTransferContact: () -> Unit,
+    sharedViewModel: SharedViewModel
+) {
     val context = LocalContext.current
     val contactViewModel: ContactViewModel = hiltViewModel()
     val isLoading: State<Boolean> = contactViewModel.isLoading.collectAsState()
-    val allContacts: State<ApiResponse.AllContactResponse?> = contactViewModel.filteredContactResponse.collectAsState()
-    val contactDetails: State<ApiResponse.ContactDetailsResponse?> = contactViewModel.filteredgetContactDetailsResponse.collectAsState()
-    val randomContacts: State<ApiResponse.RandomContactsResponse?> = contactViewModel.filteredRandomContactsResponse.collectAsState()
+    val allContacts: State<ApiResponse.AllContactResponse?> =
+        contactViewModel.filteredContactResponse.collectAsState()
+    val contactDetails: State<ApiResponse.ContactDetailsResponse?> =
+        contactViewModel.filteredgetContactDetailsResponse.collectAsState()
+    val randomContacts: State<ApiResponse.RandomContactsResponse?> =
+        contactViewModel.filteredRandomContactsResponse.collectAsState()
     // Remember and save the scroll index and offset manually
     // Retrieve scroll index and offset from ViewModel
     // Retrieve scroll index and offset from the singleton object
     val scrollIndex = ContactScrollPositionManager.scrollIndex
     val scrollOffset = ContactScrollPositionManager.scrollOffset
+
+
+    var r1clickedCount by rememberSaveable { mutableStateOf(0) }
+    var r2clickedCount by rememberSaveable { mutableStateOf(0) }
 
     // Use rememberLazyListState to initialize with global scroll position
     val listState = rememberLazyListState(
@@ -136,7 +149,10 @@ fun ContactScreen(onAddContact: () -> Unit = {}, onEditClick: (ContactItem) -> U
             }
     }
 
-    Log.d("contact loading ->", " loading value ${isLoading.value} ,${contactDetails.value?.data?.contactId} ")
+    Log.d(
+        "contact loading ->",
+        " loading value ${isLoading.value} ,${contactDetails.value?.data?.contactId} "
+    )
 
     if (contactDetails.value?.data != null && isLoading.value) {
         Log.d("contact loading ->", " Entered image saving  ")
@@ -160,9 +176,21 @@ fun ContactScreen(onAddContact: () -> Unit = {}, onEditClick: (ContactItem) -> U
             .mapIndexed { index, trimmedComment ->
                 // Update the time for each message based on the index
                 currentTime = when (index) {
-                    0 -> addRandomMinutesToTime(currentTime, 1, 2) // 1st message: 1-2 min difference
-                    1 -> addRandomMinutesToTime(currentTime, 2, 3) // 2nd message: 2-3 min difference
-                    2 -> addRandomMinutesToTime(currentTime, 5, 7) // 3rd message: 5-7 min difference
+                    0 -> addRandomMinutesToTime(
+                        currentTime,
+                        1,
+                        2
+                    ) // 1st message: 1-2 min difference
+                    1 -> addRandomMinutesToTime(
+                        currentTime,
+                        2,
+                        3
+                    ) // 2nd message: 2-3 min difference
+                    2 -> addRandomMinutesToTime(
+                        currentTime,
+                        5,
+                        7
+                    ) // 3rd message: 5-7 min difference
                     else -> currentTime
                 }
 
@@ -193,10 +221,11 @@ fun ContactScreen(onAddContact: () -> Unit = {}, onEditClick: (ContactItem) -> U
     }
 
     // Remember the list of ChatItem, initializing it based on the randomContacts value
-    val chatItems = remember { mutableStateListOf<ChatItem>() } // Initialize as a mutable state list
+    val chatItems =
+        remember { mutableStateListOf<ChatItem>() } // Initialize as a mutable state list
 
     // Update the chatItems when randomContacts changes and isLoading is true
-    Log.d("random contacts ->","${randomContacts.value?.data}")
+    Log.d("random contacts ->", "${randomContacts.value?.data}")
     if (randomContacts.value?.data != null && isLoading.value) {
         chatItems.clear() // Clear previous items before adding new ones
         for (contact in randomContacts?.value?.data!!) {
@@ -206,16 +235,27 @@ fun ContactScreen(onAddContact: () -> Unit = {}, onEditClick: (ContactItem) -> U
                 message = contact.comment1, // or any other comment you want to use as message
                 time = getYesterdaysDateFormatted(), // Get yesterday's date
                 profileImage = Utils.base64ToBitmap(contact.contactImage), // Convert the image string to Bitmap if needed
-                unreadCount = Random.nextInt(1, 4) // Set unread count, you can modify this based on your logic
+                unreadCount = Random.nextInt(
+                    1,
+                    4
+                ) // Set unread count, you can modify this based on your logic
             )
             // Add the ChatItem to the list
             chatItems.add(chatItem)
         }
-        Utils.generateNewChatScreen(chatList = chatItems, contactViewModel = contactViewModel)
+        Utils.generateNewChatScreen(
+            chatList = chatItems,
+            clientName = sharedViewModel.clients.value
+                ?.find { it.clientId == SelectedClient.clientId }?.clientName
+                ?: "",
+            contactViewModel = contactViewModel,
+            r1clickedCount = r1clickedCount,
+            r2clickedCount = r2clickedCount
+        )
 
     }
 
-    if(allContacts.value?.data != null ){ // setting all contacts
+    if (allContacts.value?.data != null) { // setting all contacts
         sharedViewModel.setContacts(allContacts.value?.data!!)
     }
 
@@ -257,11 +297,11 @@ fun ContactScreen(onAddContact: () -> Unit = {}, onEditClick: (ContactItem) -> U
                 )
                 IconButton(
                     onClick = {
-                              onTransferContact()
-                              },
+                        onTransferContact()
+                    },
                     modifier = Modifier
 
-                        .padding(start = 10.dp,end=5.dp)
+                        .padding(start = 10.dp, end = 5.dp)
                         .clip(CircleShape)
                         .background(Color.White)
                 ) {
@@ -269,7 +309,7 @@ fun ContactScreen(onAddContact: () -> Unit = {}, onEditClick: (ContactItem) -> U
                         painter = painterResource(id = R.drawable.ic_forward),
                         contentDescription = "Forward",
                         modifier = Modifier
-                           .padding(5.dp)
+                            .padding(5.dp)
                             .size(30.dp),
 
                         colorFilter = ColorFilter.tint(Primary)
@@ -279,8 +319,22 @@ fun ContactScreen(onAddContact: () -> Unit = {}, onEditClick: (ContactItem) -> U
                 // Generate button
                 IconButton(
                     onClick = {
+
+                        val clientName = sharedViewModel.clients.value
+                            ?.find { it.clientId == SelectedClient.clientId }?.clientName
+                            ?: ""
+
+                        if (clientName == "RATHORE 1" ) {
+                            if (r1clickedCount == 3) r1clickedCount = 0
+                            else r1clickedCount++
+                        } else if (clientName == "RATHORE 2") {
+                            if (r2clickedCount == 3) r2clickedCount = 0
+                            else r2clickedCount++
+                        }
+
                         contactViewModel.setLoading(true)
                         contactViewModel.getRandomContacts(
+                            clientName = clientName,
                             SelectedClient.clientId,
                             SelectedClient.dayName,
                             context
@@ -370,9 +424,13 @@ fun ContactList(
 }
 
 @Composable
-fun ContactItem(contact: ContactItem, onEditClick: (ContactItem) -> Unit,contactViewModel: ContactViewModel) {
+fun ContactItem(
+    contact: ContactItem,
+    onEditClick: (ContactItem) -> Unit,
+    contactViewModel: ContactViewModel
+) {
     val context = LocalContext.current
-   // val isLoading: State<Boolean> = contactViewModel.isLoading.collectAsState()
+    // val isLoading: State<Boolean> = contactViewModel.isLoading.collectAsState()
 
     Row(
         modifier = Modifier
@@ -413,7 +471,6 @@ fun ContactItem(contact: ContactItem, onEditClick: (ContactItem) -> Unit,contact
                 )
 
 
-
             },
             modifier = Modifier
                 .size(40.dp)
@@ -451,5 +508,6 @@ fun ContactItem(contact: ContactItem, onEditClick: (ContactItem) -> Unit,contact
 @Preview(showBackground = true)
 @Composable
 fun ContactScreenPreview() {
-     ContactScreen(onAddContact = {}, onEditClick = {}, onTransferContact = {}, SharedViewModel())
+    val v = hiltViewModel<SharedViewModel>()
+    ContactScreen(onAddContact = {}, onEditClick = {}, onTransferContact = {}, v)
 }

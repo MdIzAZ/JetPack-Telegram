@@ -125,11 +125,11 @@ fun LoginScreen(
                     onValueChange = { userId = it },
                     label = { Text(text = "Username", color = Primary) },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Primary,
-                        unfocusedBorderColor = Primary,
-                        cursorColor = Primary
-                    )
+                    colors = TextFieldDefaults.colors(
+                    cursorColor = Primary,
+                    focusedIndicatorColor = Primary,
+                    unfocusedIndicatorColor = Primary
+                )
                 )
 
                 // Password Text Field
@@ -139,11 +139,11 @@ fun LoginScreen(
                     label = { Text(text = "Password", color = Primary) },
                     visualTransformation = PasswordVisualTransformation(),
                     modifier = Modifier.fillMaxWidth(),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Primary,
-                        unfocusedBorderColor = Primary,
-                        cursorColor = Primary
-                    )
+                    colors = TextFieldDefaults.colors(
+                    cursorColor = Primary,
+                    focusedIndicatorColor = Primary,
+                    unfocusedIndicatorColor = Primary
+                )
                 )
                 Spacer(modifier = Modifier
 

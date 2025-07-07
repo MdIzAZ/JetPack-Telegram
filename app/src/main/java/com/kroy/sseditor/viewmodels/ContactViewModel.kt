@@ -13,10 +13,12 @@ import com.kroy.sseditor.models.editContactBody
 import com.kroy.sseditor.repository.SSEditorRepository
 import com.kroy.sseditor.utils.DataStoreHelper
 import com.kroy.sseditor.utils.SelectedClient
+import com.kroy.sseditor.utils.SelectedClient.clientId
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,6 +38,9 @@ class ContactViewModel @Inject constructor(
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
+
+    private val _clientName = MutableStateFlow("")
+    val clientName = _clientName.asStateFlow()
 
     // Function to toggle the loading state
     fun toggleLoading() {
@@ -57,7 +62,7 @@ class ContactViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            getAllContacts(SelectedClient.clientId,SelectedClient.dayName)
+            getAllContacts(SelectedClient.clientId, SelectedClient.dayName)
         }
     }
 
@@ -80,7 +85,7 @@ class ContactViewModel @Inject constructor(
     // Filtered response for all clients
     private val _filteredContactResponse = MutableStateFlow<ApiResponse.AllContactResponse?>(null)
     val filteredContactResponse: StateFlow<ApiResponse.AllContactResponse?> get() = _filteredContactResponse
-    fun getAllContacts(clientId:Int,dayName:String) {
+    fun getAllContacts(clientId: Int, dayName: String) {
         viewModelScope.launch {
             Log.d("ContactViewModel", "Fetching all clients for userId: $clientId")
             repository.getAllContacts(clientId, dayName)
@@ -97,12 +102,13 @@ class ContactViewModel @Inject constructor(
     private val addContact: StateFlow<ApiResponse> get() = repository.addContact
 
     // Filtered response for all clients
-    private val _filteredaddContactResponse = MutableStateFlow<ApiResponse.AddContacttResponse?>(null)
+    private val _filteredaddContactResponse =
+        MutableStateFlow<ApiResponse.AddContacttResponse?>(null)
     val filteredaddContactResponse: StateFlow<ApiResponse.AddContacttResponse?> get() = _filteredaddContactResponse
-    fun addContact(addContactBody: addContactBody,context:Context) {
+    fun addContact(addContactBody: addContactBody, context: Context) {
         viewModelScope.launch {
 
-            repository.addContact(addContactBody,context)
+            repository.addContact(addContactBody, context)
 
             // Assuming repository.allClients is updated after the API call
             addContact.collect { response ->
@@ -114,12 +120,14 @@ class ContactViewModel @Inject constructor(
     private val editContact: StateFlow<ApiResponse> get() = repository.editContactDetails
 
     // Filtered response for all clients
-    private val _filterededitContactResponse = MutableStateFlow<ApiResponse.EditContacttResponse?>(null)
+    private val _filterededitContactResponse =
+        MutableStateFlow<ApiResponse.EditContacttResponse?>(null)
     val filterededitContactResponse: StateFlow<ApiResponse.EditContacttResponse?> get() = _filterededitContactResponse
-    fun editContact(contactId:Int, editContactBody: editContactBody, context:Context) {
+    fun editContact(contactId: Int, editContactBody: editContactBody, context: Context) {
         viewModelScope.launch {
 
-            repository.editContactDetails(contactId = contactId,
+            repository.editContactDetails(
+                contactId = contactId,
                 editContactBody = editContactBody,
                 context
             )
@@ -135,12 +143,13 @@ class ContactViewModel @Inject constructor(
     private val getContactDetails: StateFlow<ApiResponse> get() = repository.getContactDetails
 
     // Filtered response for all clients
-    private val _filteredgetContactDetailsResponse = MutableStateFlow<ApiResponse.ContactDetailsResponse?>(null)
+    private val _filteredgetContactDetailsResponse =
+        MutableStateFlow<ApiResponse.ContactDetailsResponse?>(null)
     val filteredgetContactDetailsResponse: StateFlow<ApiResponse.ContactDetailsResponse?> get() = _filteredgetContactDetailsResponse
-    fun getcontactDetails(contactId:Int, context:Context) {
+    fun getcontactDetails(contactId: Int, context: Context) {
         viewModelScope.launch {
 
-            repository.getContactDetails(contactId,context)
+            repository.getContactDetails(contactId, context)
 
             // Assuming repository.allClients is updated after the API call
             getContactDetails.collect { response ->
@@ -152,11 +161,17 @@ class ContactViewModel @Inject constructor(
     private val getRandomContact: StateFlow<ApiResponse> get() = repository.randomContactsResponse
 
     // Filtered response for all clients
-    private val _filteredRandomContactsResponse = MutableStateFlow<ApiResponse.RandomContactsResponse?>(null)
+    private val _filteredRandomContactsResponse =
+        MutableStateFlow<ApiResponse.RandomContactsResponse?>(null)
     val filteredRandomContactsResponse: StateFlow<ApiResponse.RandomContactsResponse?> get() = _filteredRandomContactsResponse
-    fun getRandomContacts(clientId:Int, dayName: String,context:Context,) {
+    fun getRandomContacts(
+        clientName: String,
+        clientId: Int,
+        dayName: String,
+        context: Context
+    ) {
         viewModelScope.launch {
-
+            _clientName.value = clientName
             repository.getRandomContacts(clientId, dayName, context)
 
             // Assuming repository.allClients is updated after the API call
@@ -169,12 +184,13 @@ class ContactViewModel @Inject constructor(
     private val copyContact: StateFlow<ApiResponse> get() = repository.copyContactsResponse
 
     // Filtered response for all clients
-    private val _filteredCopyContactsResponse = MutableStateFlow<ApiResponse.CopyContactsResponse?>(null)
+    private val _filteredCopyContactsResponse =
+        MutableStateFlow<ApiResponse.CopyContactsResponse?>(null)
     val filteredCopyContactsResponse: StateFlow<ApiResponse.CopyContactsResponse?> get() = _filteredCopyContactsResponse
-    fun copyContacts(copyContactReqBody: copyContactReqBody,context:Context) {
+    fun copyContacts(copyContactReqBody: copyContactReqBody, context: Context) {
         viewModelScope.launch {
 
-            repository.copyContacts(copyContactReqBody,context)
+            repository.copyContacts(copyContactReqBody, context)
 
             // Assuming repository.allClients is updated after the API call
             copyContact.collect { response ->
@@ -182,11 +198,6 @@ class ContactViewModel @Inject constructor(
             }
         }
     }
-
-
-
-
-
 
 
     // Handle and filter the API response
@@ -205,8 +216,9 @@ class ContactViewModel @Inject constructor(
                     )
                 }
             }
+
             is ApiResponse.AddContacttResponse -> {
-                if (response.data!=null) {
+                if (response.data != null) {
                     // Emit the successful response
                     _filteredaddContactResponse.value = response
                 } else {
@@ -220,7 +232,7 @@ class ContactViewModel @Inject constructor(
             }
 
             is ApiResponse.ContactDetailsResponse -> {
-                if (response.data!=null) {
+                if (response.data != null) {
                     // Emit the successful response
                     _filteredgetContactDetailsResponse.value = response
                 } else {
@@ -234,7 +246,7 @@ class ContactViewModel @Inject constructor(
             }
 
             is ApiResponse.EditContacttResponse -> {
-                if (response.data!=null) {
+                if (response.data != null) {
                     // Emit the successful response
                     _filterededitContactResponse.value = response
                 } else {
@@ -246,8 +258,9 @@ class ContactViewModel @Inject constructor(
                     )
                 }
             }
+
             is ApiResponse.RandomContactsResponse -> {
-                if (response.data!=null) {
+                if (response.data != null) {
                     // Emit the successful response
                     _filteredRandomContactsResponse.value = response
                 } else {
@@ -259,8 +272,9 @@ class ContactViewModel @Inject constructor(
                     )
                 }
             }
+
             is ApiResponse.CopyContactsResponse -> {
-                if (response.data!=null) {
+                if (response.data != null) {
                     // Emit the successful response
                     _filteredCopyContactsResponse.value = response
                 } else {
@@ -272,6 +286,7 @@ class ContactViewModel @Inject constructor(
                     )
                 }
             }
+
             else -> {
                 // Handle other response types if necessary
                 _filteredContactResponse.value = null
@@ -283,7 +298,7 @@ class ContactViewModel @Inject constructor(
 //       _filteredaddContactResponse.value = null
 //        _filteredContactResponse.value = null
         _filteredCopyContactsResponse.value = null
-        _filteredgetContactDetailsResponse.value= null
+        _filteredgetContactDetailsResponse.value = null
         _filteredRandomContactsResponse.value = null
     }
 

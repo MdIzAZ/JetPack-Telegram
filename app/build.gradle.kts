@@ -16,8 +16,8 @@ android {
         applicationId = "com.kroy.sseditor"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "v1.8.1"
+        versionCode = 2
+        versionName = "v1.8.2"
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

@@ -21,9 +21,8 @@
 #-renamesourcefileattribute SourceFile
 
 
-
--keep class com.kroy.sseditor.models.** { *; }
--keep class com.kroy.sseditor.api.** { *; }
+-keep class com.kroy.sseditor.data.** { *; }
+-keep class com.kroy.sseditor.domain.models.** { *; }
 
 
 -keep,allowobfuscation,allowshrinkinginterfaceretrofit2.Call

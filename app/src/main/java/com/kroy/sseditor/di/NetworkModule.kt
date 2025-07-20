@@ -1,6 +1,6 @@
 package com.kroy.sseditor.di
 
-import com.kroy.sseditor.api.ApiService
+import com.kroy.sseditor.data.remote.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,7 +36,7 @@ class NetworkModule {
     @Provides
     fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://13.202.225.156:5000/api/") // Replace with your API base URL
+            .baseUrl("http://13.202.225.156:4000/api/") // Replace with your API base URL
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

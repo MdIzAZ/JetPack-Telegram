@@ -19,12 +19,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
-import com.kroy.sseditor.models.ChatItem
-import com.kroy.sseditor.models.ChatMessage
-import com.kroy.sseditor.screens.ChatScreen
-import com.kroy.sseditor.screens.CustomTelegramLayout
-import com.kroy.sseditor.utils.SelectedClient.clientName
-import com.kroy.sseditor.viewmodels.ContactViewModel
+import com.kroy.ssediotor.R
+import com.kroy.sseditor.domain.models.ContactItem
+import com.kroy.sseditor.presentation.contact_list.ContactListScreenState
+import com.kroy.sseditor.presentation.contact_list.remove.ContactViewModel
+import com.kroy.sseditor.presentation.contact_list.ios.TelegramContactListScreen
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -38,6 +37,7 @@ import kotlin.random.Random
 
 object Utils {
 
+    /*
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     fun CaptureAndSaveComposable(
@@ -73,13 +73,12 @@ object Utils {
 
         // Optionally, show some UI while waiting for the capture
         // Text(text = "Capturing Composable in 5 seconds...")
-    }
+    }*/
 
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     fun generateNewChatScreen(
-        chatList: List<ChatItem>,
-        rathoreTime: String?,
+        chatList: List<ContactItem>,
         contactViewModel: ContactViewModel
     ) {
         val context = LocalContext.current
@@ -89,11 +88,7 @@ object Utils {
         LaunchedEffect(Unit) {
 
 
-            generateChatScreenComposableToBitmap(
-                context = context,
-                rathoreTime = rathoreTime,
-                chatList = chatList
-            )
+            generateChatScreenComposableToBitmap(context, chatList)
             contactViewModel.setLoading(false)
             contactViewModel.resetContactState()
         }
@@ -113,17 +108,19 @@ object Utils {
     @RequiresApi(Build.VERSION_CODES.O)
     fun generateChatScreenComposableToBitmap(
         context: Context,
-        rathoreTime: String?,
-        chatList: List<ChatItem>
+        chatList: List<ContactItem>
     ) {
         // Ensure context is an Activity
         val activity = context as? Activity ?: return
 
         val composeView = ComposeView(context).apply {
             setContent {
-                ChatScreen(
-                    chats = chatList,
-                    rathoreTime = rathoreTime
+                TelegramContactListScreen(
+                    state = ContactListScreenState(),
+                    onChatClick = {},
+                    startShowingContacts = {},
+                    onLongPress = {},
+                    onNavigateBack = {}
                 )
             }
         }
@@ -166,6 +163,8 @@ object Utils {
         })
     }
 
+
+    /*
     @RequiresApi(Build.VERSION_CODES.O)
     fun captureAndSaveComposableToBitmap(
         context: Context,
@@ -182,7 +181,7 @@ object Utils {
 
         val composeView = ComposeView(context).apply {
             setContent {
-                CustomTelegramLayout(
+                TelegramChatScreen(
                     contactName = contactName,
                     contactPic = contactPic,
                     messages = messages,
@@ -232,6 +231,8 @@ object Utils {
         })
     }
 
+    */
+
     fun saveBitmapToGallery(context: Context, bitmap: Bitmap) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             // Use MediaStore for Android 10 and above
@@ -277,7 +278,7 @@ object Utils {
         return BitmapFactory.decodeResource(context.resources, resourceId)
     }
 
-    fun base64ToBitmap(base64String: String): Bitmap? {
+    fun base64ToBitmap(base64String: String?): Bitmap? {
         return try {
             val decodedString = Base64.decode(base64String, Base64.DEFAULT)
             BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
@@ -340,7 +341,6 @@ object Utils {
     }
 
     fun getBatteryImage(dayName: String): Int {
-        Log.d("day entered ->", "$dayName")
         val index = com.kroy.ssediotor.R.drawable.battery80
         val list = listOf(
             com.kroy.ssediotor.R.drawable.battery80,
@@ -388,5 +388,21 @@ object Utils {
         }
 
         return index
+    }
+
+    fun getRandomBatteryPair(): Pair<Int, Int> {
+        val options = listOf(
+            Pair(R.drawable.battery25, 25),
+            Pair(R.drawable.battery30, 30),
+            Pair(R.drawable.battery35, 35),
+            Pair(R.drawable.battery40, 40),
+            Pair(R.drawable.battery50, 50),
+            Pair(R.drawable.battery60, 60),
+            Pair(R.drawable.battery70, 70),
+            Pair(R.drawable.battery80, 80),
+            Pair(R.drawable.battery90, 90)
+        )
+
+        return options.random()
     }
 }

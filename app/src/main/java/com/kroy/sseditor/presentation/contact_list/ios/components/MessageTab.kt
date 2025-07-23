@@ -11,23 +11,27 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.Dimens
+import com.kroy.sseditor.presentation.theme.IosFolderColor
 import com.kroy.sseditor.presentation.theme.Telegram
 
+@Preview
 @Composable
 fun MessageTab(
     modifier: Modifier = Modifier,
-    isSelected: Boolean = false,
-    title: String,
-    count: Int
+    isSelected: Boolean = true,
+    title: String = "Folder",
+    count: Int = 4
 ) {
 
     Column(
-        modifier = modifier.height(48.dp),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -37,16 +41,17 @@ fun MessageTab(
         ) {
             Text(
                 text = title,
-                color = Telegram,
+                color = if(isSelected) IosFolderColor else Color.Gray,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = (0.5f).sp,
-                fontSize = 16.sp,
+                fontSize = 12.sp,
                 fontFamily = CustomRobotoMediumFontFamily
             )
 
             BadgeBoxSmall(
                 modifier = Modifier.padding(start = 4.dp),
-                unreadCount = count
+                unreadCount = count,
+                color = if(isSelected) IosFolderColor else Color.Gray
             )
 
         }
@@ -54,10 +59,10 @@ fun MessageTab(
         if (isSelected) {
             HorizontalDivider(
                 modifier = Modifier
-                    .width(80.dp)  // Adjust width based on content
-                    .padding(top = 0.dp, end = 2.dp, start = 0.dp),
+                    .width(80.dp)
+                    .padding(top = 4.dp, end = 2.dp, start = 0.dp),
                 thickness = 2.dp,
-                color = Telegram
+                color = IosFolderColor
             )
         }
     }

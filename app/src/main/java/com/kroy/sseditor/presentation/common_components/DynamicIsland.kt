@@ -41,33 +41,33 @@ fun DynamicIsland(modifier: Modifier = Modifier, onLongPress: () -> Unit = {}) {
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Box(
-            modifier = Modifier
-                .height(35.dp)
-                .widthIn()
-                .width(160.dp)
-                .background(Color.Black, shape = RoundedCornerShape(50.dp))
-                .padding(horizontal = 4.dp, vertical = 2.dp)
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onLongPress = {
-                            vibrate(context)
-                            onLongPress()
-                        }
-                    )
-                }
-        ) {
-            Image(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(vertical = 4.dp, horizontal = 2.dp)
-                    .rotate(0f)
-                    .size(18.dp),
-                painter = painterResource(id = R.drawable.hotspot_bold),
-                contentDescription = "Hotspot logo "
-            )
-
-        }
+//        Box(
+//            modifier = Modifier
+//                .height(35.dp)
+//                .widthIn()
+//                .width(160.dp)
+//                .background(Color.Black, shape = RoundedCornerShape(50.dp))
+//                .padding(horizontal = 4.dp, vertical = 2.dp)
+//                .pointerInput(Unit) {
+//                    detectTapGestures(
+//                        onLongPress = {
+//                            vibrate(context)
+//                            onLongPress()
+//                        }
+//                    )
+//                }
+//        ) {
+//            Image(
+//                modifier = Modifier
+//                    .fillMaxHeight()
+//                    .padding(vertical = 4.dp, horizontal = 2.dp)
+//                    .rotate(0f)
+//                    .size(18.dp),
+//                painter = painterResource(id = R.drawable.hotspot_bold),
+//                contentDescription = "Hotspot logo "
+//            )
+//
+//        }
 
         Spacer(modifier = Modifier.weight(1f))
     }

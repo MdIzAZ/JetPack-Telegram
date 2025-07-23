@@ -50,13 +50,13 @@ fun SendChatBubble(
     Row(
         modifier = modifier
             .padding(horizontal = 16.dp)
-            .padding(bottom = if (shouldShowChatTail) 6.dp else 2.dp),
+            .padding(bottom = if (shouldShowChatTail) 6.dp else 0.dp),
         horizontalArrangement = Arrangement.End
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth(0.75f)
-                .padding(start = 2.dp)
+                .padding(start = 0.dp)
         ) {
 
 
@@ -94,7 +94,7 @@ fun SendChatBubble(
                         Text(
                             text = message.text,
                             fontFamily = CustomRobotoMediumFontFamily,
-                            fontWeight = FontWeight.Thin,
+                            fontWeight = FontWeight.SemiBold,
                             color = Color.White,
                             fontSize = 15.sp,
                             letterSpacing = (-0.5).sp,

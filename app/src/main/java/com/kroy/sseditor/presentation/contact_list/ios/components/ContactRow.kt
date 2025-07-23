@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import com.kroy.ssediotor.R
 import com.kroy.sseditor.domain.models.ContactItem
 import com.kroy.sseditor.domain.models.NonTextMessage
+import com.kroy.sseditor.domain.models.dummyChatMessages
 import com.kroy.sseditor.presentation.theme.CustomComfortaaFontFamily
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.UnreadNoBox
@@ -46,7 +47,7 @@ fun ContactRow(
         id = 1,
         name = "John Doe",
         profileImage = null,
-        messages = listOf(),
+        messages = dummyChatMessages,
         unreadCount = 0,
         color = Color.Cyan
     ),
@@ -67,7 +68,7 @@ fun ContactRow(
 
         Box(
             modifier = Modifier
-                .size(60.dp)
+                .size(56.dp)
                 .clip(CircleShape)
                 .background(color = contact.color ?: Color.Cyan)
         ) {
@@ -104,7 +105,6 @@ fun ContactRow(
                     textAlign = TextAlign.Center,
                     color = Color.White,
                     modifier = Modifier
-                        .padding(bottom = 5.dp)
                         .align(Alignment.Center)
 
                 )
@@ -146,7 +146,7 @@ fun ContactRow(
             // Row for the last message and badge
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.Top
             ) {
                 if (contact.messages.last().text.isBlank()) {
                     Row(
@@ -156,7 +156,7 @@ fun ContactRow(
                         val bitmap = contact.messages.last().nonTextMessage?.let {
                             when (it) {
                                 is NonTextMessage.Image -> it.bitmap
-                                is NonTextMessage.Sticker -> it.bitmap
+                                is NonTextMessage.Sticker -> null
                             }
                         }
                         bitmap?.asImageBitmap()?.let {
@@ -167,9 +167,11 @@ fun ContactRow(
                                 modifier = Modifier.size(16.dp)
                             )
                         }
-                        Spacer(modifier = Modifier.width(8.dp))
+                        if (bitmap != null) {
+                            Spacer(modifier = Modifier.width(8.dp))
+                        }
                         Text(
-                            text = when(contact.messages.last().nonTextMessage) {
+                            text = when (contact.messages.last().nonTextMessage) {
                                 is NonTextMessage.Image -> "Photo"
                                 is NonTextMessage.Sticker -> "Sticker"
                                 null -> ""
@@ -179,6 +181,7 @@ fun ContactRow(
                             fontSize = 13.5.sp,
                             fontWeight = FontWeight.Thin,
                             maxLines = 1,
+                            modifier = Modifier.padding(top = 5.dp),
                             overflow = TextOverflow.Ellipsis
                         )
                     }
@@ -187,16 +190,18 @@ fun ContactRow(
                         text = contact.messages.last().text,
                         color = Color.Gray,
                         fontFamily = CustomRobotoMediumFontFamily,
-                        fontSize = 14.7.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.Thin,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(top = 5.dp)
                     )
                 }
 
                 BadgeBox(
-                    modifier = Modifier.padding(top = 12.dp),
+                    modifier = Modifier.padding(top = 8.dp),
                     unreadCount = contact.unreadCount ?: 0,
                     boxColor = UnreadNoBox
                 )
@@ -204,7 +209,7 @@ fun ContactRow(
 
             // Add a divider after each chat item
             HorizontalDivider(
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(top = 4.dp),
                 thickness = 1.dp,
                 color = Color.Gray.copy(alpha = 0.3f)
             )

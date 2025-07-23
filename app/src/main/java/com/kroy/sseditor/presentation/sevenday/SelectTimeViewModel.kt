@@ -20,6 +20,7 @@ import com.kroy.sseditor.domain.models.NonTextMessage
 import com.kroy.sseditor.domain.repo.ContactRepo
 import com.kroy.sseditor.presentation.chat.ChatScreenState
 import com.kroy.sseditor.presentation.contact_list.ContactListScreenState
+import com.kroy.sseditor.utils.SelectedClient
 import com.kroy.sseditor.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -150,6 +151,10 @@ class SelectTimeViewModel @Inject constructor(
             try {
                 _sevenDayScreenState.update { it.copy(isLoading = true) }
 
+                _contactListScreenState.update {
+                    it.copy(battery = Utils.getRandomBatteryPair())
+                }
+
                 val contacts =
                     contactRepo.getRandomContacts().data?.toContactItemList() ?: emptyList()
 
@@ -195,10 +200,6 @@ class SelectTimeViewModel @Inject constructor(
         uiTime: String,
         triggerTime: LocalTime
     ) {
-        //set battery
-        _contactListScreenState.update {
-            it.copy(battery = Utils.getRandomBatteryPair())
-        }
 
         if (contactListScreenState.value.isListUpdatingStarted) return
 
@@ -232,9 +233,11 @@ class SelectTimeViewModel @Inject constructor(
                             unreadCount = item.unreadCount
                         )
 
-                        val totalUnreadMessages =
-                            contactListScreenState.value.totalUnreadMessages + (item.unreadCount
-                                ?: 0)
+//                        val totalUnreadMessages =
+//                            contactListScreenState.value.totalUnreadMessages + (item.unreadCount
+//                                ?: 0)
+
+                        val totalUnreadMessages = contactListScreenState.value.totalUnreadMessages + 1
 
                         _contactListScreenState.update { state ->
                             state.copy(
@@ -360,9 +363,14 @@ class SelectTimeViewModel @Inject constructor(
 
             //reduce total unread messages count
             _contactListScreenState.update {
+
+                val reduceBy = if (contactItem?.unreadCount == 0) 0 else 1
+
                 it.copy(
-                    totalUnreadMessages = contactListScreenState.value.totalUnreadMessages -
-                            (contactItem?.unreadCount ?: 0)
+//                    totalUnreadMessages = contactListScreenState.value.totalUnreadMessages -
+//                            (contactItem?.unreadCount ?: 0)
+
+                    totalUnreadMessages = contactListScreenState.value.totalUnreadMessages - reduceBy
                 )
             }
 
@@ -373,7 +381,7 @@ class SelectTimeViewModel @Inject constructor(
                     contactName = contactItem?.name ?: "Unknown",
                     contactPic = contactItem?.profileImage,
                     messages = chatMessages,
-                    backgroundImage = contactItem?.profileImage,
+                    backgroundImage = Utils.base64ToBitmap(SelectedClient.backgroundImage),
                     notificationBarTime = contactListScreenState.value.notificationBarTime,
                     lastMessageTime = contactItem?.uiTime ?: "04:25 AM",
                     battery = contactListScreenState.value.battery,

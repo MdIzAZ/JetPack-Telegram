@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
@@ -63,7 +65,8 @@ fun ImageMessage(
                     .size(17.dp, 17.dp)
                     .padding(bottom = 4.dp)
                     .offset(x = 8.dp),
-                isSender = isSender
+                isSender = isSender,
+                color = Color.Black
             )
         }
 
@@ -98,12 +101,16 @@ fun ImageMessage(
                         .then(
                             if (isLandscape)
                                 Modifier
-                                    .widthIn(200.dp, 300.dp)
-                                    .heightIn(180.dp, 250.dp)
+//                                    .widthIn(180.dp, 280.dp)
+//                                    .heightIn(160.dp, 230.dp)
+                                    .width(280.dp)
+                                    .height(200.dp)
                             else
                                 Modifier
-                                    .widthIn(150.dp, 220.dp)
-                                    .heightIn(230.dp, 350.dp)
+//                                    .widthIn(150.dp, 220.dp)
+//                                    .heightIn(200.dp, 320.dp)
+                                    .width(220.dp)
+                                    .height(320.dp)
                         )
                         .border(
                             width = 1.dp,

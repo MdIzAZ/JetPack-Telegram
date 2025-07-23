@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.kroy.sseditor.domain.models.dummyContacts
 import com.kroy.sseditor.presentation.contact_list.ContactListScreenState
 import com.kroy.sseditor.presentation.contact_list.ios.components.BottomNavBar
 import com.kroy.sseditor.presentation.contact_list.ios.components.ContactList
@@ -61,7 +62,7 @@ fun TelegramContactListScreen(
                 folders = state.folders,
                 batteryIcon = state.battery.first,
                 batteryPercentage = state.battery.second,
-                onLongPress = onLongPress
+                onLongPress = {}
             )
         },
 
@@ -69,7 +70,8 @@ fun TelegramContactListScreen(
             BottomNavBar(
                 modifier = Modifier
                     .background(color = CustomGray)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                onLongPress = onLongPress
             )
         }
     ) { ip ->
@@ -152,7 +154,7 @@ fun TelegramContactListScreen(
 fun TelegramScreenPreview() {
 
     TelegramContactListScreen(
-        ContactListScreenState(contactItems = emptyList()),
+        ContactListScreenState(contactItems = dummyContacts),
         {},
         {},
         {},

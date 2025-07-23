@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -38,6 +39,7 @@ import com.kroy.sseditor.domain.models.NonTextMessage
 import com.kroy.sseditor.presentation.chat.ios.components.StickerMessage
 import com.kroy.sseditor.presentation.theme.CustomMediumTypography
 import com.kroy.sseditor.presentation.theme.DarkPink
+import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -53,6 +55,12 @@ fun AndroidChatListSection(
 
     val listState = rememberLazyListState()
     var shouldShowToday by remember { mutableStateOf(false) }
+    val isAtTop by remember {
+        derivedStateOf {
+            listState.firstVisibleItemIndex == 0 &&
+                    listState.firstVisibleItemScrollOffset == 0
+        }
+    }
 
 
 
@@ -87,6 +95,7 @@ fun AndroidChatListSection(
         if (listState.isScrollInProgress) {
             shouldShowToday = true
         } else {
+            delay(1500)
             shouldShowToday = false
 
         }
@@ -94,12 +103,12 @@ fun AndroidChatListSection(
 
     Box(modifier = modifier.fillMaxSize()) {
 
-        if (shouldShowToday) {
+        if (shouldShowToday && !isAtTop) {
             Text(
                 text = "Today",
                 style = CustomMediumTypography.titleMedium,
                 color = Color.White,
-                fontSize = 11.sp,
+                fontSize = 13.sp,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .padding(8.dp)
@@ -125,7 +134,21 @@ fun AndroidChatListSection(
 
 
             item {
-                Spacer(Modifier.height(8.dp))
+                if (isAtTop) {
+                    Text(
+                        text = "Today",
+                        style = CustomMediumTypography.titleMedium,
+                        color = Color.White,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .padding(8.dp)
+                            .padding(top = 6.dp)
+                            .background(Color(0x65000000), RoundedCornerShape(10.dp))
+                            .padding(horizontal = 5.dp, vertical = (2.7f).dp)
+                            .zIndex(1f)
+                    )
+                }
             }
 
             itemsIndexed(chats) { idx, item ->

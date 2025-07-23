@@ -16,10 +16,10 @@ data class ContactListScreenState(
 
 
 val defaultFolderList = listOf(
-    Pair("All", 0),
-    Pair("Members", 0),
-    Pair("Unread", 0),
-    Pair("Channel", 0),
+    Pair("All", 12),
+    Pair("Members", 5),
+    Pair("Unread", 43),
+    Pair("Channel", 9),
 )
 
 

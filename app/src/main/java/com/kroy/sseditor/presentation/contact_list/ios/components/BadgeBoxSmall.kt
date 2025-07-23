@@ -16,11 +16,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
+import com.kroy.sseditor.presentation.theme.IosFolderColor
 import com.kroy.sseditor.presentation.theme.UnreadMessages
 
 @Preview
 @Composable
-fun BadgeBoxSmall(modifier: Modifier = Modifier, unreadCount: Int = 4) {
+fun BadgeBoxSmall(
+    modifier: Modifier = Modifier,
+    unreadCount: Int = 4,
+    color: Color = IosFolderColor
+) {
 
     Box(
         modifier = modifier
@@ -32,15 +37,15 @@ fun BadgeBoxSmall(modifier: Modifier = Modifier, unreadCount: Int = 4) {
             text = "$unreadCount",
             fontFamily = CustomRobotoMediumFontFamily,
             fontWeight = FontWeight.Thin,
-            fontSize = (11f).sp,
+            fontSize = (10f).sp,
             color = Color.White,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .background(
-                    UnreadMessages,
+                    color,
                     if (unreadCount >= 10) RoundedCornerShape(24.dp) else CircleShape
                 )
-                .padding(horizontal = 7.5.dp, vertical = if (unreadCount < 10) 5.dp else 2.dp)
+                .padding(horizontal = 5.dp, vertical = if (unreadCount < 10) 2.dp else 1.dp)
         )
 
     }

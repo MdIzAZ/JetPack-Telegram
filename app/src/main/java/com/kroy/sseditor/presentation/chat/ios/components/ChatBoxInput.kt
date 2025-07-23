@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -58,6 +59,7 @@ fun ChatBoxInput(
     sendMessage: (msg: MessageType) -> Unit = {},
     onClipBtnClick: () -> Unit = {},
     onTxtFieldValueChange: (String) -> Unit = {},
+    onStickerClick:()->Unit = {}
 ) {
 
     val context = LocalContext.current
@@ -95,9 +97,8 @@ fun ChatBoxInput(
                         painter = painterResource(id = com.kroy.ssediotor.R.drawable.ic_attach_file),
                         contentDescription = "Attach",
                         modifier = Modifier
-                            .height(32.dp)
-                            .padding( start = 10.dp)
-                            .size(22.dp),
+                            .padding(start = 10.dp)
+                            .size(32.dp),
                         tint = BottomIconTint
                     )
                 }
@@ -114,7 +115,8 @@ fun ChatBoxInput(
                 onTextChanged = { onTxtFieldValueChange(it) },
                 onSendMessage = {
                     sendMessage(MessageType.Text(txtFieldValue))
-                }
+                },
+                onStickerClick = onStickerClick
             )
 
 
@@ -147,15 +149,19 @@ fun ChatBoxInput(
         }
 
         if (!isKeyboardOpen) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .fillMaxWidth(.4f)
-                    .padding(top = 20.dp)
-                    .height(5.dp)
-                    .background(Color.White)
-            )
+            Spacer(Modifier.height(24.dp))
         }
+
+//        if (!isKeyboardOpen) {
+//            Box(
+//                modifier = Modifier
+//                    .align(Alignment.CenterHorizontally)
+//                    .fillMaxWidth(.4f)
+//                    .padding(top = 20.dp)
+//                    .height(5.dp)
+//                    .background(Color.White)
+//            )
+//        }
     }
 
 
@@ -169,7 +175,7 @@ fun StickerCompatibleInput(
     onTextChanged: (String) -> Unit,
     onImageReceived: (Uri) -> Unit,
     onSendMessage: () -> Unit,
-    onStickerClick: () -> Unit = {} // Added callback for sticker icon
+    onStickerClick: () -> Unit  // Added callback for sticker icon
 ) {
 
     val context = LocalContext.current
@@ -250,7 +256,7 @@ fun StickerCompatibleInput(
                     24.dpToPx(context),
                     24.dpToPx(context)
                 )
-                setOnClickListener { onStickerClick() }
+                setOnClickListener {  }
             }
 
 

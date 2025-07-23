@@ -9,19 +9,19 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.kroy.sseditor.domain.models.ContactItem
+import com.kroy.sseditor.domain.models.dummyContacts
 
 
-//@Preview(showSystemUi = true)
+@Preview()
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ContactList(
     modifier: Modifier = Modifier,
-    chats: List<ContactItem> ,
+    chats: List<ContactItem> = dummyContacts,
     onContactClick: (Int) -> Unit = {}
 ) {
-
-
 
     LazyColumn(
         horizontalAlignment = Alignment.Start,

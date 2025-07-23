@@ -43,15 +43,15 @@ fun IOSNotificationBar(
 
 
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(8.dp)
+            .then(modifier)
     ) {
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 8.dp, bottom = 8.dp, top = 8.dp)
+                .padding(start = 8.dp, bottom = 6.dp, top = 8.dp)
                 .wrapContentHeight(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -69,7 +69,7 @@ fun IOSNotificationBar(
                     .size(80.dp, 18.dp)
             )
 
-            Spacer(modifier = Modifier.width(180.dp))
+            Spacer(modifier = Modifier.weight(1f))
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -78,20 +78,17 @@ fun IOSNotificationBar(
                     .wrapContentSize()
             ) {
                 Icon(
-                    painterResource(id = R.drawable.ic_signal2),
+                    painter = painterResource(id = R.drawable.ic_signal2),
                     contentDescription = "Signal",
                     tint = Color.White,
-                    modifier = Modifier.size(17.dp, (10.67).dp)
+                    modifier = Modifier.size(20.dp)
                 )
                 Spacer(modifier = Modifier.width(7.dp))
-                Text(
-                    text = "5G",
-                    fontSize = 15.sp,
-                    fontFamily = CustomRegularFontFamily,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center,
-                    color = Color.White,
-                    modifier = Modifier
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_wifi),
+                    contentDescription = "Signal",
+                    tint = Color.White,
+                    modifier = Modifier.size(20.dp)
                 )
                 //   Icon(painterResource(id = R.drawable.ic_wifi), contentDescription = "Wi-Fi", tint = Color.White, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(7.dp))
@@ -104,6 +101,8 @@ fun IOSNotificationBar(
                     contentDescription = "Battery",
                     tint = Color.White
                 )
+
+                Spacer(modifier = Modifier.width(16.dp))
 
             }
         }

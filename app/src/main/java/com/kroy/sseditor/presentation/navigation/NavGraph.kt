@@ -22,6 +22,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.kroy.sseditor.domain.models.Client
 import com.kroy.sseditor.domain.models.OSType
 import com.kroy.sseditor.presentation.SharedViewModel
 import com.kroy.sseditor.presentation.add_client.AddClientScreen
@@ -29,6 +30,7 @@ import com.kroy.sseditor.presentation.chat.ChatScreenContent
 import com.kroy.sseditor.presentation.client.ClientScreen
 import com.kroy.sseditor.presentation.client.ClientViewModel
 import com.kroy.sseditor.presentation.contact_list.ContactListScreenContent
+import com.kroy.sseditor.presentation.edit_client.EditClientScreen
 import com.kroy.sseditor.presentation.login.LoginScreen
 import com.kroy.sseditor.presentation.sevenday.SelectTimeViewModel
 import com.kroy.sseditor.presentation.sevenday.SevenDayScreen
@@ -127,12 +129,12 @@ fun NavGraph(
                     navController.navigate("timer/${clientItem.clientName}/${clientItem.clientId}")
                 },
                 onEditClick = { clientItem ->
-//                    SelectedClient.clientId = clientItem.clientId
-//                    SelectedClient.clientImage = clientItem.clientImage
-//                    SelectedClient.clientName = clientItem.clientName
-//                    SelectedClient.backgroundImage = clientItem.backgroundImage
-//
-//                    navController.navigate("editclient")
+                    SelectedClient.clientId = clientItem.clientId
+                    SelectedClient.clientImage = clientItem.clientImage
+                    SelectedClient.clientName = clientItem.clientName
+                    SelectedClient.backgroundImage = clientItem.backgroundImage
+
+                    navController.navigate("editclient")
                 },
                 setClientsOnSharedViewModel = {
                     sharedViewModel.setClients(it)
@@ -164,7 +166,7 @@ fun NavGraph(
         }
 
 
-        /*
+
         composable(
             route = "editclient",
             enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
@@ -188,7 +190,7 @@ fun NavGraph(
             }
 
         }
-         */
+
 
         composable(
             route = "timer/{name}/{id}",

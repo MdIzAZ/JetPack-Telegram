@@ -4,8 +4,6 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,14 +22,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,9 +34,10 @@ import androidx.compose.ui.unit.sp
 import com.kroy.ssediotor.R
 import com.kroy.sseditor.presentation.common_components.IOSNotificationBar
 import com.kroy.sseditor.presentation.contact_list.defaultFolderList
-import com.kroy.sseditor.presentation.theme.CustomBoldTypography
+import com.kroy.sseditor.presentation.theme.COLOR_PINK
 import com.kroy.sseditor.presentation.theme.CustomGray
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
+import com.kroy.sseditor.presentation.theme.IosFolderColor
 import com.kroy.sseditor.presentation.theme.TelegramDark
 import com.kroy.sseditor.presentation.theme.UnreadMessages
 import org.json.JSONObject
@@ -67,7 +62,7 @@ fun ContactListScreenTopBar(
     ) {
 
         IOSNotificationBar(
-            modifier = Modifier,
+            modifier = Modifier.padding(8.dp),
             time = time,
             onLongPress = onLongPress,
             batteryPercentage = batteryPercentage,
@@ -114,7 +109,6 @@ fun ContactListScreenTopBar(
                         .padding(start = 4.dp)
                 )
             }
-
             Row(
                 modifier = Modifier.align(Alignment.CenterVertically),
                 verticalAlignment = Alignment.CenterVertically
@@ -122,7 +116,7 @@ fun ContactListScreenTopBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_add_dotted),
                     contentDescription = "Search",
-                    tint = TelegramDark,
+                    tint = IosFolderColor,
                     modifier = Modifier
                         .rotate(180f)
                         .size(24.dp)
@@ -131,7 +125,7 @@ fun ContactListScreenTopBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_edit),
                     contentDescription = "More options",
-                    tint = TelegramDark,
+                    tint = IosFolderColor,
                     modifier = Modifier
                         .padding(end = 5.dp)
                         .size(24.dp)
@@ -139,18 +133,18 @@ fun ContactListScreenTopBar(
             }
         }
 
+        Spacer(modifier = Modifier.fillMaxWidth().height(8.dp))
+
+
         // Third Row - Tabs with "Unread" centered vertically
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
 //                .height(52.dp)
                 .wrapContentHeight()
-                .padding(
-                    top = 8.dp,
-                    bottom = 4.dp
-                ),
+                .padding(top = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(2.dp)
+            horizontalArrangement = Arrangement.spacedBy(5.dp)
         ) {
 
             val spacerValue = 8.dp
@@ -158,6 +152,7 @@ fun ContactListScreenTopBar(
                 Spacer(modifier = Modifier.width(spacerValue))
                 MessageTab(
                     title = it.first,
+                    isSelected = it.first == "Unread",
                     count = if (it.first == "Unread") unreadMessageCount else it.second
                 )
             }

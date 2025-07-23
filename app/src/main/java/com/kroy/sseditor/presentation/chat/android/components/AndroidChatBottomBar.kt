@@ -177,7 +177,7 @@ fun TrailingIconContent(
 @Composable
 fun AndroidChatBottomBar(
     modifier: Modifier = Modifier,
-    txtFieldValue: String = "Hello",
+    txtFieldValue: String ="",
     onTxtFieldValueChange: (String) -> Unit = {},
     onSendClick: () -> Unit = {},
     onImageReceived: (Uri) -> Unit = {},
@@ -267,6 +267,9 @@ fun AndroidChatBottomBar(
                 setImageResource(R.drawable.ic_attach_file)
                 setColorFilter(Color.Gray.toArgb())
                 setPadding(16, 0, 32, 0)
+                layoutParams = ViewGroup.LayoutParams(
+                    50.dpToPx(context), 50.dpToPx(context)
+                )
                 setOnClickListener {
                     onClipIconClick()
                 }

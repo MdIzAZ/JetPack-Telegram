@@ -39,7 +39,7 @@ fun ReceivedChatBubble(
     Row(
         modifier = modifier
             .padding(horizontal = 16.dp)
-            .padding(bottom = if (shouldShowChatTail) 6.dp else 2.dp),
+            .padding(bottom = if (shouldShowChatTail) 6.dp else 0.dp),
         horizontalArrangement = Arrangement.Start
     ) {
         Box(

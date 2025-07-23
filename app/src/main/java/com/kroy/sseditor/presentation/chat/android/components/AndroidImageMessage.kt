@@ -99,12 +99,16 @@ fun AndroidImageMessage(
                         .then(
                             if (isLandscape)
                                 Modifier
-                                    .widthIn(20.dp, 300.dp)
-                                    .heightIn(18.dp, 250.dp)
+//                                    .widthIn(200.dp, 300.dp)
+//                                    .heightIn(120.dp, 250.dp)
+                                    .width(300.dp)
+                                    .height(150.dp)
                             else
                                 Modifier
-                                    .widthIn(150.dp, 220.dp)
-                                    .heightIn(230.dp, 350.dp)
+//                                    .widthIn(150.dp, 220.dp)
+//                                    .heightIn(230.dp, 350.dp)
+                                    .width(220.dp)
+                                    .height(320.dp)
                         )
                         .border(
                             width = 2.dp,
@@ -118,7 +122,7 @@ fun AndroidImageMessage(
                         ),
                     bitmap = imageBitmap,
                     contentDescription = "Chart Screenshot",
-                    contentScale = if (isLandscape) ContentScale.FillWidth else ContentScale.Crop
+                    contentScale = if (isLandscape) ContentScale.FillBounds else ContentScale.Crop
                 )
 
 

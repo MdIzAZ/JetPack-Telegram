@@ -72,7 +72,7 @@ fun ClientScreen(
                 ClientList(
                     clients = state.clients,
                     onClick = onClientClick,
-                    onEditClick
+                    onEditClick = onEditClick
                 )
             }
 

@@ -2,10 +2,12 @@ package com.kroy.sseditor.presentation.contact_list.ios.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -42,8 +44,15 @@ import com.kroy.sseditor.utils.Utils
 
 @Preview(showBackground = true)
 @Composable
-fun BottomNavBar(modifier: Modifier = Modifier) {
-    Column(modifier.fillMaxWidth().defaultMinSize(minHeight = 83.dp)) {
+fun BottomNavBar(
+    modifier: Modifier = Modifier,
+    onLongPress: () -> Unit = {}
+) {
+    Column(
+        modifier
+            .fillMaxWidth()
+            .defaultMinSize(minHeight = 83.dp)
+    ) {
         Row(
             modifier = Modifier
                 .padding(top = 4.dp)
@@ -76,7 +85,7 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
+                modifier = Modifier.clickable { onLongPress() }
             ) {
                 Icon(
                     imageVector = Icons.Default.Call,
@@ -146,7 +155,7 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
             ) {
-                val imagePainter = SelectedClient.backgroundImage?.takeIf { it.isNotEmpty() }?.let {
+                val imagePainter = SelectedClient.clientImage?.takeIf { it.isNotEmpty() }?.let {
                     Utils.base64ToBitmap(it)?.asImageBitmap()?.let { bitmap ->
                         BitmapPainter(bitmap)
                     }
@@ -174,14 +183,16 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
 
         }
 
-        Box(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .fillMaxWidth(.4f)
-                .padding(top = 20.dp)
-                .height(5.dp)
-                .background(Color.White)
-        )
+        Spacer(Modifier.height(24.dp))
+
+//        Box(
+//            modifier = Modifier
+//                .align(Alignment.CenterHorizontally)
+//                .fillMaxWidth(.4f)
+//                .padding(top = 20.dp)
+//                .height(5.dp)
+//                .background(Color.White)
+//        )
 
 
     }

@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,7 +29,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.kroy.sseditor.domain.models.ChatMessage
 import com.kroy.sseditor.domain.models.NonTextMessage
+import com.kroy.sseditor.domain.models.dummyChatMessages
 import com.kroy.sseditor.presentation.theme.CustomMediumTypography
+import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -44,6 +47,12 @@ fun ChatListSection(
 
     val listState = rememberLazyListState()
     var shouldShowToday by remember { mutableStateOf(false) }
+    val isAtTop by remember {
+        derivedStateOf {
+            listState.firstVisibleItemIndex == 0 &&
+                    listState.firstVisibleItemScrollOffset == 0
+        }
+    }
 
     val receiverTimeMap = remember(chats) {
         val total = chats.count { !it.isSender }
@@ -74,6 +83,7 @@ fun ChatListSection(
             shouldShowToday = true
             
         } else {
+            delay(1500)
             shouldShowToday = false
             
         }
@@ -81,16 +91,17 @@ fun ChatListSection(
 
     Box(modifier = modifier) {
 
-        if (shouldShowToday) {
+
+        if (shouldShowToday && !isAtTop) {
             Text(
                 text = "Today",
                 style = CustomMediumTypography.titleMedium,
                 color = Color.White,
-                fontSize = 11.sp,
+                fontSize = 13.sp,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .padding(8.dp)
-                    .padding(top = 6.dp)
+                    .padding(top = 2.dp)
                     .background(Color(0x65000000), RoundedCornerShape(10.dp))
                     .padding(horizontal = 5.dp, vertical = (2.7f).dp)
                     .zIndex(1f)
@@ -104,8 +115,22 @@ fun ChatListSection(
             verticalArrangement = Arrangement.Bottom
         ) {
 
-            item{
-                Spacer(Modifier.height(8.dp))
+            item {
+                if (isAtTop) {
+                    Text(
+                        text = "Today",
+                        style = CustomMediumTypography.titleMedium,
+                        color = Color.White,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .padding(8.dp)
+                            .padding(top = 6.dp)
+                            .background(Color(0x65000000), RoundedCornerShape(10.dp))
+                            .padding(horizontal = 5.dp, vertical = (2.7f).dp)
+                            .zIndex(1f)
+                    )
+                }
             }
 
             itemsIndexed(chats) { idx, item ->
@@ -172,5 +197,5 @@ fun ChatListSection(
 @Preview
 @Composable
 fun PreviewChatListSection(modifier: Modifier = Modifier) {
-    ChatListSection(chats = emptyList(), lastReceiverMsgTime = "03:55 AM" ,onLongPress = {})
+    ChatListSection(chats = dummyChatMessages, lastReceiverMsgTime = "03:55 AM" ,onLongPress = {})
 }

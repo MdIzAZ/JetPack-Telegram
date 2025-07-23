@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -34,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kroy.ssediotor.R
 import com.kroy.sseditor.domain.models.MessageType
+import com.kroy.sseditor.domain.models.dummyChatMessages
 import com.kroy.sseditor.presentation.chat.ChatScreenState
 import com.kroy.sseditor.presentation.chat.ios.components.ChatBoxInput
 import com.kroy.sseditor.presentation.chat.ios.components.ChatListSection
@@ -54,11 +54,16 @@ fun TelegramChatScreen(
 
     val context = LocalContext.current
 
+    var imageOrSticker by remember { mutableStateOf(0) }  // 0-> Img, 1-> Sticker
+
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = {
             it?.let {
-                onMessageSend(contactId, MessageType.Image(it))
+                when (imageOrSticker) {
+                    0 -> onMessageSend(contactId, MessageType.Image(it))
+                    1 -> onMessageSend(contactId, MessageType.Sticker(it))
+                }
             }
         }
     )
@@ -88,7 +93,9 @@ fun TelegramChatScreen(
 
 
     Scaffold(
-        modifier = Modifier.fillMaxSize().imePadding(),
+        modifier = Modifier
+            .fillMaxSize()
+            .imePadding(),
         topBar = {
             ChatScreenTopBar(
                 time = state.notificationBarTime,
@@ -105,6 +112,7 @@ fun TelegramChatScreen(
             ChatBoxInput(
                 txtFieldValue = txtFieldValue,
                 onClipBtnClick = {
+                    imageOrSticker = 0
                     if (!hasExternalStoragePermission(context)) {
                         permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
                     } else {
@@ -123,6 +131,14 @@ fun TelegramChatScreen(
                         txtFieldValue = ""
                         isEditing = false
                         editingMsgId = -4
+                    }
+                },
+                onStickerClick = {
+                    imageOrSticker = 1
+                    if (!hasExternalStoragePermission(context)) {
+                        permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+                    } else {
+                        imagePickerLauncher.launch(PickVisualMediaRequest())
                     }
                 }
             )
@@ -191,12 +207,13 @@ fun PreviewTelegram() {
     TelegramChatScreen(
         contactId = 404,
         state = ChatScreenState(
-            messages = emptyList(),
+            contactName = "Rakesh",
+            messages = dummyChatMessages,
             backgroundImage = Utils.getBitmapFromResource(context, R.drawable.d)
         ),
         onBackClick = {},
         onMessageSend = { _, _ -> },
-        editMessage = { _,_, _ -> }
+        editMessage = { _, _, _ -> }
     )
 }
 

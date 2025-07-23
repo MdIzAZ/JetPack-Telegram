@@ -29,6 +29,7 @@ import com.kroy.sseditor.presentation.contact_list.defaultFolderList
 import com.kroy.sseditor.presentation.contact_list.ios.components.MessageTab
 import com.kroy.sseditor.presentation.theme.CustomMediumTypography
 import com.kroy.sseditor.presentation.theme.DARK_GRAY
+import com.kroy.sseditor.presentation.theme.IosFolderColor
 
 @Preview(showBackground = true, backgroundColor = 0x00000000)
 @Composable
@@ -103,6 +104,7 @@ fun TelegramTopBarAndroid(
                 Spacer(modifier = Modifier.width(spacerValue))
                 MessageTab(
                     title = it.first,
+                    isSelected = it.first == "Unread",
                     count = if (it.first == "Unread") unreadMessageCount else it.second
                 )
             }

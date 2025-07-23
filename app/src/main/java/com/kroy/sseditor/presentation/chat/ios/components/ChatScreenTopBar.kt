@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -74,7 +75,8 @@ fun ChatScreenTopBar(
     var lastSeenStatus by remember { mutableStateOf("Online") }
 
     LaunchedEffect(Unit) {
-        delay(10_000)
+        val delay = (0..5).random()
+        delay(delay.times(1000).toLong())
         lastSeenStatus = "Last seen today"
     }
     val context = LocalContext.current
@@ -92,7 +94,7 @@ fun ChatScreenTopBar(
 
 
         IOSNotificationBar(
-            modifier = Modifier,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
             time = time,
             batteryPercentage = batteryPercentage,
             batteryIcon = batteryIcon,
@@ -117,8 +119,9 @@ fun ChatScreenTopBar(
 
                 Row(
                     modifier = Modifier
-                        .padding(top = 18.dp)
-                        .clickable { onBackClick() }
+                        .padding(top = 12.dp, bottom = 12.dp)
+                        .clickable { onBackClick() },
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
 
                     // Back Button
@@ -185,9 +188,10 @@ fun ChatScreenTopBar(
                         color = Color(0xFFAAACAF),
                         fontFamily = CustomRobotoMediumFontFamily,
                         fontWeight = FontWeight.Thin,
-                        fontSize = 11.sp,
+                        fontSize = 12.sp,
                         letterSpacing = 0.3.sp,
                         modifier = Modifier.padding(
+                            top = 2.dp,
                             start = 10.dp,
                             bottom = 5.dp
                         ), // No top padding here

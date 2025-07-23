@@ -4,6 +4,7 @@ import com.kroy.sseditor.data.remote.temp.ContactDto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+
 sealed class ApiResponse {
 
     data class UserLoginResponse(

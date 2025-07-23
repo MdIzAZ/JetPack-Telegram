@@ -2,34 +2,20 @@ package com.kroy.sseditor.presentation.chat.android.components
 
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,9 +27,7 @@ import com.kroy.sseditor.presentation.theme.CustomMediumTypography
 import com.kroy.sseditor.presentation.theme.DarkPink
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 @Composable
 fun AndroidChatListSection(
@@ -52,6 +36,8 @@ fun AndroidChatListSection(
     chats: List<ChatMessage>,
     onLongPress: (id: Int) -> Unit
 ) {
+    val context = LocalContext.current
+    val screenHeightPx = context.resources.displayMetrics.heightPixels.toFloat()
 
     val listState = rememberLazyListState()
     var shouldShowToday by remember { mutableStateOf(false) }
@@ -61,8 +47,6 @@ fun AndroidChatListSection(
                     listState.firstVisibleItemScrollOffset == 0
         }
     }
-
-
 
     val receiverTimeMap = remember(chats) {
         val total = chats.count { !it.isSender }
@@ -83,9 +67,6 @@ fun AndroidChatListSection(
         map
     }
 
-
-
-
     LaunchedEffect(chats.size) {
         val lastIndex = if (chats.lastIndex < 0) 0 else chats.lastIndex
         listState.animateScrollToItem(lastIndex)
@@ -97,7 +78,6 @@ fun AndroidChatListSection(
         } else {
             delay(1500)
             shouldShowToday = false
-
         }
     }
 
@@ -114,16 +94,10 @@ fun AndroidChatListSection(
                     .padding(8.dp)
                     .padding(top = 6.dp)
                     .background(Color(0x65000000), RoundedCornerShape(10.dp))
-                    .padding(horizontal = 5.dp, vertical = (2.7f).dp)
+                    .padding(horizontal = 5.dp, vertical = 2.7.dp)
                     .zIndex(1f)
             )
         }
-
-
-        val screenHeightPx = LocalWindowInfo.current.containerSize.height.toFloat()
-
-
-
 
         LazyColumn(
             state = listState,
@@ -131,8 +105,6 @@ fun AndroidChatListSection(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
         ) {
-
-
             item {
                 if (isAtTop) {
                     Text(
@@ -145,15 +117,13 @@ fun AndroidChatListSection(
                             .padding(8.dp)
                             .padding(top = 6.dp)
                             .background(Color(0x65000000), RoundedCornerShape(10.dp))
-                            .padding(horizontal = 5.dp, vertical = (2.7f).dp)
+                            .padding(horizontal = 5.dp, vertical = 2.7.dp)
                             .zIndex(1f)
                     )
                 }
             }
 
             itemsIndexed(chats) { idx, item ->
-
-
                 val shouldShowChatTail =
                     if (chats.lastIndex == idx) true
                     else if (!(item.isSender xor chats[idx + 1].isSender)) false
@@ -163,9 +133,7 @@ fun AndroidChatListSection(
                 val blendRatio = (itemOffsetY / screenHeightPx).coerceIn(0f, 1f)
                 val bgColor = lerp(DarkPink, Color(0xFF495ED4), blendRatio)
 
-
                 when (item.isTextMessage) {
-
                     true -> {
                         if (item.isSender) {
                             AndroidSendChatBubble(
@@ -222,14 +190,9 @@ fun AndroidChatListSection(
 
                 Spacer(Modifier.height(4.dp))
             }
-
-
         }
-
-
     }
 }
-
 
 @Preview
 @Composable

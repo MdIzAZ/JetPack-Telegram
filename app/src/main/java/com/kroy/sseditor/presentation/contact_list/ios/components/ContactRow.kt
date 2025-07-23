@@ -14,7 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Divider
+
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -208,7 +209,7 @@ fun ContactRow(
             }
 
             // Add a divider after each chat item
-            HorizontalDivider(
+            Divider(
                 modifier = Modifier.padding(top = 4.dp),
                 thickness = 1.dp,
                 color = Color.Gray.copy(alpha = 0.3f)

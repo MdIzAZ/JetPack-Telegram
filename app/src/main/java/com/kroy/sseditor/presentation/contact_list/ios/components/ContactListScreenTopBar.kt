@@ -81,7 +81,7 @@ fun ContactListScreenTopBar(
                 text = "Edit",
                 fontFamily = CustomRobotoMediumFontFamily,
                 color = UnreadMessages, // Assuming you have defined TelegramDark
-                fontSize = 16.sp,
+                fontSize = 17.sp,
                 fontWeight = FontWeight.SemiBold
             )
 
@@ -97,8 +97,8 @@ fun ContactListScreenTopBar(
                     text = "Chats",
                     color = Color.White,
                     fontFamily = CustomRobotoMediumFontFamily,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                 )
@@ -144,12 +144,12 @@ fun ContactListScreenTopBar(
                 .wrapContentHeight()
                 .padding(top = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(5.dp)
+            horizontalArrangement = Arrangement.SpaceAround
         ) {
 
-            val spacerValue = 8.dp
+            val spacerValue = 0.dp
             items(folders) {
-                Spacer(modifier = Modifier.width(spacerValue))
+              //  Spacer(modifier = Modifier.width(spacerValue))
                 MessageTab(
                     title = it.first,
                     isSelected = it.first == "Unread",

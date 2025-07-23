@@ -100,7 +100,7 @@ fun ChatListSection(
                 fontSize = 13.sp,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .padding(8.dp)
+                    .padding(4.dp)
                     .padding(top = 2.dp)
                     .background(Color(0x65000000), RoundedCornerShape(10.dp))
                     .padding(horizontal = 5.dp, vertical = (2.7f).dp)
@@ -124,8 +124,8 @@ fun ChatListSection(
                         fontSize = 13.sp,
                         modifier = Modifier
                             .align(Alignment.TopCenter)
-                            .padding(8.dp)
-                            .padding(top = 6.dp)
+                            .padding(4.dp)
+                            .padding(top = 2.dp)
                             .background(Color(0x65000000), RoundedCornerShape(10.dp))
                             .padding(horizontal = 5.dp, vertical = (2.7f).dp)
                             .zIndex(1f)
@@ -183,7 +183,7 @@ fun ChatListSection(
                     }
                 }
 
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(1.dp))
             }
 
 

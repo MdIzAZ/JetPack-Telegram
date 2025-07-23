@@ -83,7 +83,7 @@ fun ChatBoxInput(
                 .height(50.dp)
                 .padding(4.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             // Attachment file icon at the start
 
@@ -94,7 +94,7 @@ fun ChatBoxInput(
                 },
                 content = {
                     Icon(
-                        painter = painterResource(id = com.kroy.ssediotor.R.drawable.ic_attach_file),
+                        painter = painterResource(id = com.kroy.ssediotor.R.drawable.attach),
                         contentDescription = "Attach",
                         modifier = Modifier
                             .padding(start = 10.dp)

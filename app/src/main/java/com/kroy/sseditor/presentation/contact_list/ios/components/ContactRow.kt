@@ -100,7 +100,7 @@ fun ContactRow(
 
                 Text(
                     text = initials,
-                    fontSize = 28.sp,
+                    fontSize = 29.sp,
                     fontFamily = CustomComfortaaFontFamily,
                     fontWeight = FontWeight.W900,
                     textAlign = TextAlign.Center,
@@ -127,7 +127,7 @@ fun ContactRow(
                 Text(
                     text = contact.name,
                     fontFamily = CustomRobotoMediumFontFamily,
-                    fontSize = 14.5.sp,
+                    fontSize = 16.sp,
                     letterSpacing = 0.7.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -191,7 +191,7 @@ fun ContactRow(
                         text = contact.messages.last().text,
                         color = Color.Gray,
                         fontFamily = CustomRobotoMediumFontFamily,
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         fontWeight = FontWeight.Thin,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,

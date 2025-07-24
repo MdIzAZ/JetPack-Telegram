@@ -60,7 +60,7 @@ fun IOSNotificationBar(
             Text(
                 text = removeLeadingZero(time).dropLast(2).trim(),
                 color = Color.White,
-                fontSize = 15.sp,
+                fontSize = 16.sp,
                 letterSpacing = 1.sp,
                 style = CustomMediumTypography.titleMedium,
                 fontWeight = FontWeight.W700,
@@ -96,7 +96,7 @@ fun IOSNotificationBar(
 
                 Icon(
                     modifier = Modifier
-                        .size(28.dp, 12.dp),
+                        .size(35.dp, 13.dp),
                     painter = painterResource(batteryIcon),
                     contentDescription = "Battery",
                     tint = Color.White

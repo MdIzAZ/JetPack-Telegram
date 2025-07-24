@@ -52,7 +52,7 @@ fun ContactRow(
         unreadCount = 0,
         color = Color.Cyan
     ),
-    time: String = "12:00",
+    time: String = "09:00",
     onContactClick: () -> Unit = {}
 ) {
 
@@ -126,18 +126,19 @@ fun ContactRow(
             ) {
                 Text(
                     text = contact.name,
+                   // text = "KRoy",
                     fontFamily = CustomRobotoMediumFontFamily,
-                    fontSize = 16.sp,
+                    fontSize = 15.5.sp,
                     letterSpacing = 0.7.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                     modifier = Modifier
                         .weight(1f)
-                        .padding(top = 10.dp)
+                        .padding(top = 9.dp)
                 )
                 Text(
                     text = time,
-                    fontSize = 14.sp,
+                    fontSize = 13.sp,
                     fontFamily = CustomRobotoMediumFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     color = Color.Gray
@@ -191,18 +192,18 @@ fun ContactRow(
                         text = contact.messages.last().text,
                         color = Color.Gray,
                         fontFamily = CustomRobotoMediumFontFamily,
-                        fontSize = 14.sp,
+                        fontSize = 13.sp,
                         fontWeight = FontWeight.Thin,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .weight(1f)
-                            .padding(top = 5.dp)
+
                     )
                 }
 
                 BadgeBox(
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 5.dp),
                     unreadCount = contact.unreadCount ?: 0,
                     boxColor = UnreadNoBox
                 )
@@ -210,7 +211,7 @@ fun ContactRow(
 
             // Add a divider after each chat item
             Divider(
-                modifier = Modifier.padding(top = 4.dp),
+                modifier = Modifier.padding(top = 2.dp),
                 thickness = 1.dp,
                 color = Color.Gray.copy(alpha = 0.3f)
             )

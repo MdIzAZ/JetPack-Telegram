@@ -35,6 +35,7 @@ import com.kroy.ssediotor.R
 import com.kroy.sseditor.presentation.common_components.IOSNotificationBar
 import com.kroy.sseditor.presentation.contact_list.defaultFolderList
 import com.kroy.sseditor.presentation.theme.COLOR_PINK
+import com.kroy.sseditor.presentation.theme.CustomComfortaaFontFamily
 import com.kroy.sseditor.presentation.theme.CustomGray
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.IosFolderColor
@@ -72,16 +73,16 @@ fun ContactListScreenTopBar(
         // Second Row - Telegram Title & Unread Tabs
         Row(
             modifier = Modifier
-                .padding(start = 10.dp)
+
                 .fillMaxWidth()
-                .padding(top = 8.dp, start = 8.dp, end = 8.dp),
+                .padding(top = 8.dp, start = 15.dp, end = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "Edit",
                 fontFamily = CustomRobotoMediumFontFamily,
                 color = UnreadMessages, // Assuming you have defined TelegramDark
-                fontSize = 17.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold
             )
 
@@ -96,9 +97,10 @@ fun ContactListScreenTopBar(
                 Text(
                     text = "Chats",
                     color = Color.White,
-                    fontFamily = CustomRobotoMediumFontFamily,
-                    fontSize = 19.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontFamily = CustomComfortaaFontFamily,
+                    fontSize = 18.sp,
+                    letterSpacing = 0.5f.sp,
+                    fontWeight = FontWeight.W600,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                 )
@@ -142,14 +144,14 @@ fun ContactListScreenTopBar(
                 .fillMaxWidth()
 //                .height(52.dp)
                 .wrapContentHeight()
-                .padding(top = 8.dp),
+                .padding(top = 8.dp, start = 15.dp, bottom = 2.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = Arrangement.spacedBy(14.dp)
         ) {
 
-            val spacerValue = 0.dp
+            val spacerValue = 2.dp
             items(folders) {
-              //  Spacer(modifier = Modifier.width(spacerValue))
+                Spacer(modifier = Modifier.width(spacerValue))
                 MessageTab(
                     title = it.first,
                     isSelected = it.first == "Unread",

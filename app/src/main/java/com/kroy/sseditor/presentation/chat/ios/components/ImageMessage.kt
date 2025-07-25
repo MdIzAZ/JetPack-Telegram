@@ -79,7 +79,7 @@ fun ImageMessage(
 
             Box(
                 modifier = Modifier
-                    .padding(start = 1.dp, bottom = 3.dp)
+                    .padding(start = 1.dp, bottom = 1.dp)
                     .wrapContentSize()
 //                    .then(
 //                        if (isLandscape)

@@ -37,7 +37,7 @@ val DarkBluishGray = Color(0xFF1D252F)
 val DarkPink = Color(0xFF9C27B0)
 val TelegramAndroidUnseenMessage = Color(0xFF0088cc)
 val TelegramViolate = Color(0xFF404EA3)
-val UnreadNoBox = Color(0xFF037EE5)
+val UnreadNoBox = Color(0xFF017CFC)
 
 val TelegramBlueColor = Color(0xFF27A7E7)
 

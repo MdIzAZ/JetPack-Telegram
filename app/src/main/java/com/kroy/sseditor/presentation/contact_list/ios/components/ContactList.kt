@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.kroy.sseditor.domain.models.ContactItem
 import com.kroy.sseditor.domain.models.dummyContacts
+import com.kroy.sseditor.utils.Utils.removeLeadingZeroNotMeridian
 
 
 @Preview()
@@ -31,7 +32,7 @@ fun ContactList(
         itemsIndexed(chats) { index, chat ->
             ContactRow(
                 contact = chat,
-                time = chat.uiTime,
+                time = removeLeadingZeroNotMeridian(chat.uiTime),
                 onContactClick = { onContactClick(chat.id) }
             )
         }

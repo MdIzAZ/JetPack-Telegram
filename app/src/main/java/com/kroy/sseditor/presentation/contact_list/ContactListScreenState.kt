@@ -20,6 +20,7 @@ val defaultFolderList = listOf(
     Pair("Members", 5),
     Pair("Unread", 43),
     Pair("Channel", 9),
+    Pair("Rathore",10)
 )
 
 

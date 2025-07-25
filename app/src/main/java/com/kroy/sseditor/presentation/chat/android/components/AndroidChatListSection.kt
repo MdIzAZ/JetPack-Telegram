@@ -114,7 +114,7 @@ fun AndroidChatListSection(
                     .padding(8.dp)
                     .padding(top = 6.dp)
                     .background(Color(0x65000000), RoundedCornerShape(10.dp))
-                    .padding(horizontal = 5.dp, vertical = (2.7f).dp)
+                    .padding(horizontal = 5.dp, vertical = (2.7).dp)
                     .zIndex(1f)
             )
         }
@@ -145,7 +145,7 @@ fun AndroidChatListSection(
                             .padding(8.dp)
                             .padding(top = 6.dp)
                             .background(Color(0x65000000), RoundedCornerShape(10.dp))
-                            .padding(horizontal = 5.dp, vertical = (2.7f).dp)
+                            .padding(horizontal = 5.dp, vertical = (2.7).dp)
                             .zIndex(1f)
                     )
                 }

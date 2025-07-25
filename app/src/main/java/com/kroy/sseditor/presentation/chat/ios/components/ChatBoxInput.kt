@@ -52,7 +52,7 @@ import com.kroy.sseditor.presentation.theme.BottomIconTint
 import com.kroy.sseditor.presentation.theme.CustomGray
 import com.kroy.sseditor.presentation.theme.CustomPurple
 
-@Preview(showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 fun ChatBoxInput(
     txtFieldValue: String = "",
@@ -81,9 +81,9 @@ fun ChatBoxInput(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
-                .padding(4.dp),
+                .padding(0.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             // Attachment file icon at the start
 
@@ -201,6 +201,7 @@ fun StickerCompatibleInput(
             val editText = EditText(context).apply {
                 hint = "Message"
                 setText(text)
+                setTypeface(null, android.graphics.Typeface.BOLD)
                 setBackgroundColor(Color.Black.toArgb())
                 setTextColor(Color.White.toArgb())
                 setHintTextColor(android.graphics.Color.GRAY)

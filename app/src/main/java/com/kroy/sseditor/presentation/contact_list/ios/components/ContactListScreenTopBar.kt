@@ -35,6 +35,7 @@ import com.kroy.ssediotor.R
 import com.kroy.sseditor.presentation.common_components.IOSNotificationBar
 import com.kroy.sseditor.presentation.contact_list.defaultFolderList
 import com.kroy.sseditor.presentation.theme.COLOR_PINK
+import com.kroy.sseditor.presentation.theme.CustomComfortaaFontFamily
 import com.kroy.sseditor.presentation.theme.CustomGray
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.IosFolderColor
@@ -72,7 +73,7 @@ fun ContactListScreenTopBar(
         // Second Row - Telegram Title & Unread Tabs
         Row(
             modifier = Modifier
-                .padding(start = 10.dp)
+//                .padding(start = 10.dp)
                 .fillMaxWidth()
                 .padding(top = 8.dp, start = 8.dp, end = 8.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -96,9 +97,10 @@ fun ContactListScreenTopBar(
                 Text(
                     text = "Chats",
                     color = Color.White,
-                    fontFamily = CustomRobotoMediumFontFamily,
+                    fontFamily = CustomComfortaaFontFamily,
                     fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    letterSpacing = 0.5f.sp,
+                    fontWeight = FontWeight.W600,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                 )
@@ -142,12 +144,12 @@ fun ContactListScreenTopBar(
                 .fillMaxWidth()
 //                .height(52.dp)
                 .wrapContentHeight()
-                .padding(top = 8.dp),
+                .padding(top = 8.dp, start = 15.dp, bottom = 2.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(5.dp)
+            horizontalArrangement = Arrangement.spacedBy(14.dp)
         ) {
 
-            val spacerValue = 8.dp
+            val spacerValue = 2.dp
             items(folders) {
                 Spacer(modifier = Modifier.width(spacerValue))
                 MessageTab(

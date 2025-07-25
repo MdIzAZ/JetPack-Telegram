@@ -3,6 +3,7 @@ package com.kroy.sseditor.presentation.contact_list.ios.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -33,34 +34,36 @@ fun MessageTab(
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+//        verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(bottom = 7.dp)
+//            modifier = Modifier.padding(bottom = 7.dp)
         ) {
             Text(
                 text = title,
                 color = if(isSelected) IosFolderColor else Color.Gray,
                 fontWeight = FontWeight.Bold,
-                letterSpacing = (0.5f).sp,
-                fontSize = 12.sp,
+                letterSpacing = (0.7f).sp,
+                fontSize = 14.sp,
                 fontFamily = CustomRobotoMediumFontFamily
             )
 
             BadgeBoxSmall(
                 modifier = Modifier.padding(start = 4.dp),
-                unreadCount = count,
+                unreadCount = if (title == "All") 0 else count,
                 color = if(isSelected) IosFolderColor else Color.Gray
             )
 
         }
 
+        Spacer(modifier = Modifier.height(5.dp))
+
         if (isSelected) {
             HorizontalDivider(
                 modifier = Modifier
                     .width(80.dp)
-                    .padding(top = 4.dp, end = 2.dp, start = 0.dp),
+                    .padding(top = 0.dp, end = 2.dp, start = 0.dp),
                 thickness = 2.dp,
                 color = IosFolderColor
             )

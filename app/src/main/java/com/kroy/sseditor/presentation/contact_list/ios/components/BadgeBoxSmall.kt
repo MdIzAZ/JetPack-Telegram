@@ -43,9 +43,10 @@ fun BadgeBoxSmall(
                 .align(Alignment.BottomEnd)
                 .background(
                     color,
-                    if (unreadCount >= 10) RoundedCornerShape(24.dp) else CircleShape
+                    if (unreadCount >= 10) RoundedCornerShape(24.dp) else RoundedCornerShape(20.dp)
                 )
-                .padding(horizontal = 5.dp, vertical = if (unreadCount < 10) 2.dp else 1.dp)
+//                .padding(horizontal = 5.dp, vertical = if (unreadCount < 10) 2.dp else 1.dp)
+                .padding(horizontal = 6.dp, vertical =  0.dp)
         )
 
     }

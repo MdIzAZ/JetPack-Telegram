@@ -326,6 +326,27 @@ object Utils {
         return "$hour:$minute"
     }
 
+    fun removeLeadingZeroNotMeridian(time: String): String {
+        // Split the input into time and period (AM/PM)
+        val trimmedTime = time.trim()
+        val lastSpaceIndex = trimmedTime.lastIndexOf(' ')
+        if (lastSpaceIndex == -1) {
+            throw IllegalArgumentException("Invalid time format. Expected format: HH:mm AM/PM")
+        }
+
+        val timePart = trimmedTime.substring(0, lastSpaceIndex)
+        val periodPart = trimmedTime.substring(lastSpaceIndex + 1)
+
+        val timeComponents = timePart.split(":")
+        if (timeComponents.size != 2) {
+            throw IllegalArgumentException("Invalid time component. Expected format: HH:mm")
+        }
+
+        val hour = timeComponents[0].toInt().toString() // removes leading zero
+        val minute = timeComponents[1]
+
+        return "$hour:$minute $periodPart"
+    }
 
     // Function to generate a random time between a given range (in minutes)
     @RequiresApi(Build.VERSION_CODES.O)

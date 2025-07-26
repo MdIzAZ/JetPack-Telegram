@@ -21,5 +21,5 @@ val dummyChatMessages = listOf(
     ChatMessage(7, 4, true, "Happy Birthday!", null, "12:00 PM", true),
     ChatMessage(8, 4, true, "Thank you!", null, "12:01 PM", false),
     ChatMessage(9, 5, true, "Where are you?", null, "01:30 PM", true),
-    ChatMessage(10, 5, true, "Coming in 5 minutes.", null, "01:32 PM", false)
+    ChatMessage(10, 5, true, "Coming in 5 minutes. Hello guys i am in the i am in the ", null, "01:32 PM", false)
 )

@@ -32,7 +32,7 @@ fun ContactList(
         itemsIndexed(chats) { index, chat ->
             ContactRow(
                 contact = chat,
-                time = removeLeadingZeroNotMeridian(chat.uiTime),
+                time = chat.uiTime,
                 onContactClick = { onContactClick(chat.id) }
             )
         }

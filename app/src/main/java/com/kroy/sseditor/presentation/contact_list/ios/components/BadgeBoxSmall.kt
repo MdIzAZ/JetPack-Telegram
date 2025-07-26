@@ -37,7 +37,7 @@ fun BadgeBoxSmall(
             text = "$unreadCount",
             fontFamily = CustomRobotoMediumFontFamily,
             fontWeight = FontWeight.Thin,
-            fontSize = (10f).sp,
+            fontSize = (12f).sp,
             color = Color.White,
             modifier = Modifier
                 .align(Alignment.BottomEnd)

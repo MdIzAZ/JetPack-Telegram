@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -78,7 +79,7 @@ fun ContactRow(
                     bitmap = contact.profileImage.asImageBitmap(),
                     contentDescription = "Profile picture",
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(60.dp)
+                    modifier = Modifier.size(48.dp)
                 )
             } else {
                 val initials = contact.name.split(" ").filter { it.isNotBlank() }
@@ -128,11 +129,11 @@ fun ContactRow(
                     fontFamily = CustomRobotoMediumFontFamily,
                     fontSize = (15.5).sp,
                     letterSpacing = 0.7.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.W700,
                     color = Color.White,
                     modifier = Modifier
                         .weight(1f)
-                        .padding(top = 9.dp)
+                        .padding(top = 7.dp)
                 )
                 Text(
                     text = time,
@@ -190,7 +191,7 @@ fun ContactRow(
                         text = contact.messages.last().text,
                         color = Color.Gray,
                         fontFamily = CustomRobotoMediumFontFamily,
-                        fontSize = 13.sp,
+                        fontSize = 14.5.sp,
                         fontWeight = FontWeight.Thin,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
@@ -209,7 +210,7 @@ fun ContactRow(
 
             // Add a divider after each chat item
             HorizontalDivider(
-                modifier = Modifier.padding(top = 2.dp),
+                modifier = Modifier.padding(top = 10.dp),
                 thickness = 1.dp,
                 color = Color.Gray.copy(alpha = 0.3f)
             )

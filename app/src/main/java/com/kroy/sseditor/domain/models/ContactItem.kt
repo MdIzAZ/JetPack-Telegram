@@ -108,6 +108,6 @@ val dummyContacts = listOf(
         color = Color(0xFF4FC3F7),
         uiTime = "Today",
         messages = dummyChatMessages,
-        unreadCount = 4
+        unreadCount = 14
     )
 )

@@ -19,7 +19,7 @@ val UnreadMessages = Color(0xFF2D8EFC)
 val TelegramDark = Color(0xFF4963FE)
 val TelegramTopBar = Color(0xFF022042)
 val BottomIconTint = Color(0xFF8F9092)
-val IosFolderColor = Color(0xFF4789F2)
+val IosFolderColor = Color(0xFF5A92F5)
 val CustomGray = Color(0xFF232424)
 val RandomBgColorPairs = listOf(
     Pair(Color(0xFF93D979), Color(0xFF64CE6A)),
@@ -37,7 +37,7 @@ val DarkBluishGray = Color(0xFF1D252F)
 val DarkPink = Color(0xFF9C27B0)
 val TelegramAndroidUnseenMessage = Color(0xFF0088cc)
 val TelegramViolate = Color(0xFF404EA3)
-val UnreadNoBox = Color(0xFF017CFC)
+val UnreadNoBox = Color(0xFF5A92F5)
 
 val TelegramBlueColor = Color(0xFF27A7E7)
 

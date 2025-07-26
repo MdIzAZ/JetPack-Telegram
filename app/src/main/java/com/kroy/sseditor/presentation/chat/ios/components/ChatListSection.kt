@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -97,13 +98,13 @@ fun ChatListSection(
                 text = "Today",
                 style = CustomMediumTypography.titleMedium,
                 color = Color.White,
-                fontSize = 13.sp,
+                fontSize = 12.sp,
+                textAlign = TextAlign.Center,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .padding(4.dp)
-                    .padding(top = 2.dp)
+                    .padding(.5.dp)
                     .background(Color(0x65000000), RoundedCornerShape(10.dp))
-                    .padding(horizontal = 5.dp, vertical = (2.7f).dp)
+                    .padding(horizontal = 7.dp, vertical = (4.7f).dp)
                     .zIndex(1f)
             )
         }
@@ -121,13 +122,13 @@ fun ChatListSection(
                         text = "Today",
                         style = CustomMediumTypography.titleMedium,
                         color = Color.White,
-                        fontSize = 13.sp,
+                        fontSize = 12.sp,
+                        textAlign = TextAlign.Center,
                         modifier = Modifier
                             .align(Alignment.TopCenter)
-                            .padding(4.dp)
-                            .padding(top = 2.dp)
+                            .padding(.5.dp)
                             .background(Color(0x65000000), RoundedCornerShape(10.dp))
-                            .padding(horizontal = 5.dp, vertical = (2.7f).dp)
+                            .padding(horizontal = 7.dp, vertical = (4.7f).dp)
                             .zIndex(1f)
                     )
                 }
@@ -194,7 +195,7 @@ fun ChatListSection(
 }
 
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PreviewChatListSection(modifier: Modifier = Modifier) {
     ChatListSection(chats = dummyChatMessages, lastReceiverMsgTime = "03:55 AM" ,onLongPress = {})

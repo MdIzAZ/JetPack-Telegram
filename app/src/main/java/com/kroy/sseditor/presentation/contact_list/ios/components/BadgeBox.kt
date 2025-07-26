@@ -2,7 +2,9 @@ package com.kroy.sseditor.presentation.contact_list.ios.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,20 +32,20 @@ fun BadgeBox(
 
     Text(
         modifier = modifier
+            .padding(top=4.dp, end = 4.dp, start = 1.dp, bottom = 4.dp)
             .then(if (unreadCount == 0) Modifier.alpha(0f) else Modifier)
-            .height(28.dp)
-            .widthIn(min = if (unreadCount < 10) 28.dp else 36.dp)
-            .padding(4.dp)
+            .height(if(unreadCount< 10) 20.dp else 20.dp)
+            .width(if (unreadCount < 10) 20.dp else 30.dp)
             .background(
                 color = boxColor,
                 shape = if (unreadCount < 10) CircleShape else RoundedCornerShape(16.dp)
             )
-            .padding(4.dp),
+            .padding(top=3.dp, end = 4.dp, start = 4.dp, bottom = 4.dp),
         text = unreadCount.toString(),
         fontFamily = CustomRobotoMediumFontFamily,
-        fontSize = (10).sp,
+        fontSize = (12).sp,
         textAlign = TextAlign.Center,
-        fontWeight = FontWeight.Thin,
+        fontWeight = FontWeight.W600,
         color = Color.White
     )
 

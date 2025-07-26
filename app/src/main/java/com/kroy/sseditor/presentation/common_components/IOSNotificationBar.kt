@@ -83,7 +83,7 @@ fun IOSNotificationBar(
                     tint = Color.White,
                     modifier = Modifier.size(20.dp)
                 )
-                Spacer(modifier = Modifier.width(7.dp))
+                Spacer(modifier = Modifier.width(5.dp))
                 Icon(
                     painter = painterResource(id = R.drawable.ic_wifi),
                     contentDescription = "Signal",
@@ -91,7 +91,7 @@ fun IOSNotificationBar(
                     modifier = Modifier.size(20.dp)
                 )
                 //   Icon(painterResource(id = R.drawable.ic_wifi), contentDescription = "Wi-Fi", tint = Color.White, modifier = Modifier.size(16.dp))
-                Spacer(modifier = Modifier.width(7.dp))
+                Spacer(modifier = Modifier.width(1.dp))
 
 
                 Icon(

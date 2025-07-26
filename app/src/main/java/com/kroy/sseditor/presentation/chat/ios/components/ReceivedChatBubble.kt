@@ -38,7 +38,7 @@ fun ReceivedChatBubble(
 
     Row(
         modifier = modifier
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 14.dp)
             .padding(bottom = if (shouldShowChatTail) 6.dp else 0.dp),
         horizontalArrangement = Arrangement.Start
     ) {
@@ -86,7 +86,7 @@ fun ReceivedChatBubble(
                             fontFamily = CustomRobotoMediumFontFamily,
                             fontWeight = FontWeight.Thin,
                             color = Color.White,
-                            fontSize = 15.sp,
+                            fontSize = 17.sp,
                             letterSpacing = (-0.5).sp,
                             maxLines = Int.MAX_VALUE,
                             overflow = TextOverflow.Ellipsis,
@@ -112,7 +112,7 @@ fun ReceivedChatBubble(
                             fontFamily = CustomRobotoMediumFontFamily,
                             fontWeight = FontWeight.Thin,
                             color = Color.White,
-                            fontSize = 15.sp,
+                            fontSize = 14.sp,
                             letterSpacing = (-0.5).sp,
                             maxLines = Int.MAX_VALUE,
                             overflow = TextOverflow.Ellipsis,

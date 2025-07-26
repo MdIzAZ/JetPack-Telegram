@@ -77,7 +77,7 @@ fun ChatScreenTopBar(
     LaunchedEffect(Unit) {
         val delay = (0..5).random()
         delay(delay.times(1000).toLong())
-        lastSeenStatus = "Last seen today"
+        lastSeenStatus = "last seen recently"
     }
     val context = LocalContext.current
 
@@ -106,7 +106,7 @@ fun ChatScreenTopBar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = 15.dp)
+                .padding(end = 10.dp)
                 .wrapContentHeight(),
 
             ) {
@@ -128,6 +128,7 @@ fun ChatScreenTopBar(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_back),
                         modifier = Modifier
+                            .padding(top=4.dp)
                             .size(24.dp),
                         contentDescription = "Back",
                         tint = UnreadMessages
@@ -137,7 +138,7 @@ fun ChatScreenTopBar(
                     // Pending Messages Box
                     Box(
                         modifier = Modifier
-                            .padding(top = 1.dp)
+                            .padding(top = 3.dp)
                     ) {
                         Box(
                             modifier = Modifier
@@ -181,7 +182,7 @@ fun ChatScreenTopBar(
                         fontWeight = FontWeight.Bold,
                         letterSpacing = -(0.2f).sp,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(start = 10.dp, top = 8.dp)
+                        modifier = Modifier.padding(start = 10.dp, top = 10.dp)
                     )
                     Text(
                         text = lastSeenStatus,
@@ -191,9 +192,9 @@ fun ChatScreenTopBar(
                         fontSize = 12.sp,
                         letterSpacing = 0.3.sp,
                         modifier = Modifier.padding(
-                            top = 2.dp,
+                            top = 0.dp,
                             start = 10.dp,
-                            bottom = 5.dp
+                            bottom = 0.dp
                         ), // No top padding here
                         textAlign = TextAlign.Center
                     )
@@ -208,7 +209,8 @@ fun ChatScreenTopBar(
                         .size(37.dp)
                         .clip(CircleShape)
                         .background(color = color ?: Color.Cyan) // Default background color
-                ) {
+                )
+                {
                     if (contactPic != null) {
                         Image(
                             bitmap = contactPic.asImageBitmap(),

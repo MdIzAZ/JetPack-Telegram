@@ -60,7 +60,7 @@ fun IOSNotificationBar(
             Text(
                 text = removeLeadingZero(time).dropLast(2).trim(),
                 color = Color.White,
-                fontSize = 16.sp,
+                fontSize = 14.sp,
                 letterSpacing = 1.sp,
                 style = CustomMediumTypography.titleMedium,
                 fontWeight = FontWeight.W700,
@@ -81,14 +81,14 @@ fun IOSNotificationBar(
                     painter = painterResource(id = R.drawable.ic_signal2),
                     contentDescription = "Signal",
                     tint = Color.White,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Icon(
                     painter = painterResource(id = R.drawable.ic_wifi),
                     contentDescription = "Signal",
                     tint = Color.White,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(18.dp)
                 )
                 //   Icon(painterResource(id = R.drawable.ic_wifi), contentDescription = "Wi-Fi", tint = Color.White, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(1.dp))
@@ -96,7 +96,7 @@ fun IOSNotificationBar(
 
                 Icon(
                     modifier = Modifier
-                        .size(35.dp, 13.dp),
+                        .size(34.dp, 12.dp),
                     painter = painterResource(batteryIcon),
                     contentDescription = "Battery",
                     tint = Color.White

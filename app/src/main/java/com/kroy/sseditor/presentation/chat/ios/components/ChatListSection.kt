@@ -103,8 +103,8 @@ fun ChatListSection(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .padding(.5.dp)
-                    .background(Color(0x65000000), RoundedCornerShape(10.dp))
-                    .padding(horizontal = 7.dp, vertical = (4.7f).dp)
+                    .background(Color(0x65000000), RoundedCornerShape(25.dp))
+                    .padding(horizontal = 9.dp, vertical = (2.7f).dp)
                     .zIndex(1f)
             )
         }
@@ -127,8 +127,8 @@ fun ChatListSection(
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(.5.dp)
-                            .background(Color(0x65000000), RoundedCornerShape(10.dp))
-                            .padding(horizontal = 7.dp, vertical = (4.7f).dp)
+                            .background(Color(0x65000000), RoundedCornerShape(25.dp))
+                            .padding(horizontal = 9.dp, vertical = (2.7f).dp)
                             .zIndex(1f)
                     )
                 }

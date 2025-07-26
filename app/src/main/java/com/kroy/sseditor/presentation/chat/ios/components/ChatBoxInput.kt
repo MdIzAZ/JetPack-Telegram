@@ -3,6 +3,8 @@ package com.kroy.sseditor.presentation.chat.ios.components
 import android.content.Context
 import android.content.res.ColorStateList
 import android.net.Uri
+import android.text.SpannableString
+import android.text.Spanned
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -44,8 +46,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.widget.addTextChangedListener
+import com.kroy.ssediotor.R
 import com.kroy.sseditor.domain.models.MessageType
 import com.kroy.sseditor.presentation.theme.BluishGray
 import com.kroy.sseditor.presentation.theme.BottomIconTint
@@ -197,17 +201,29 @@ fun StickerCompatibleInput(
                 gravity = Gravity.CENTER_VERTICAL
                 setPadding(12, 6, 4, 6)
             }
+            val mediumTypeface = ResourcesCompat.getFont(context, R.font.roboto_medium)
+
+            val spannableHint = SpannableString("Message").apply {
+                setSpan(
+                    CustomTypefaceSpan(mediumTypeface!!),
+                    0,
+                    length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
 
             val editText = EditText(context).apply {
-                hint = "Message"
+
+                hint = spannableHint  // Semi-bold styled hint
+                typeface = mediumTypeface // Apply to actual input text
+
                 setText(text)
-                setTypeface(null, android.graphics.Typeface.BOLD)
                 setBackgroundColor(Color.Black.toArgb())
                 setTextColor(Color.White.toArgb())
                 setHintTextColor(android.graphics.Color.GRAY)
                 textSize = 16f
                 imeOptions = android.view.inputmethod.EditorInfo.IME_ACTION_SEND
-                setPadding(12, 6, 6, 12)
+                setPadding(15, 6, 6, 12)
 
                 setOnEditorActionListener { _, actionId, _ ->
                     if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEND) {

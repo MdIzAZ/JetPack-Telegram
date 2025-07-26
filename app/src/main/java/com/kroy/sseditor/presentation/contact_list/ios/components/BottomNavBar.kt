@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.kroy.ssediotor.R
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.Dimens
@@ -137,16 +138,16 @@ fun BottomNavBar(
                         .background(Color(0xFFF35959), RoundedCornerShape(8.dp)),
                     contentAlignment = Alignment.Center
                 ) {
-//                    Text(
-//                        text = Utils.getTotalUnreadMessages(SelectedClient.dayName),
-//                      //  text = "1K",
-//                        color = Color.White,
-//                        fontSize = 11.sp,
-//                        fontFamily = CustomRobotoMediumFontFamily,
-//                        maxLines = 1,
-//                        overflow = TextOverflow.Ellipsis,
-//                        modifier = Modifier.padding(horizontal = 4.dp)
-//                    )
+                    Text(
+                        text = Utils.getTotalUnreadMessages(SelectedClient.dayName),
+                      //  text = "1K",
+                        color = Color.White,
+                        fontSize = 11.sp,
+                        fontFamily = CustomRobotoMediumFontFamily,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(horizontal = 4.dp)
+                    )
                 }
             }
 

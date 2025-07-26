@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.kroy.sseditor.domain.models.ChatMessage
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
+import com.kroy.sseditor.presentation.theme.SenderTextColor
 import com.kroy.sseditor.presentation.theme.TelegramDark
 
 @Preview(showBackground = true)
@@ -49,7 +51,7 @@ fun SendChatBubble(
 
     Row(
         modifier = modifier
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 14.dp)
             .padding(bottom = if (shouldShowChatTail) 6.dp else 0.dp),
         horizontalArrangement = Arrangement.End
     ) {
@@ -65,12 +67,24 @@ fun SendChatBubble(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .background(
-                        color = TelegramDark,
+                        brush = Brush.linearGradient(
+                            colors = listOf(
+                                Color(0xFFCD25EE),
+                                Color(0xFFCD25EE),
+                                Color(0xFFCD25EE),
+                                Color(0xFFCD25EE),
+                                Color(0xFFB013CE),
+
+                                Color(0xFFB215D7),
+                                Color(0xFFA527EF),
+                                Color(0xFF9D1EEA)
+                            ) // example gradient (green tones)
+                        ),
                         shape = RoundedCornerShape(
-                            topStart = 8.dp,
-                            topEnd = 16.dp,
-                            bottomEnd = 16.dp,
-                            bottomStart = if (shouldShowChatTail) 8.dp else 8.dp
+                            topStart = 20.dp,
+                            topEnd = 10.dp,
+                            bottomEnd = 10.dp,
+                            bottomStart = if (shouldShowChatTail) 20.dp else 20.dp
                         )
                     )
                     .padding(horizontal = 8.dp, vertical = 6.dp)
@@ -96,7 +110,7 @@ fun SendChatBubble(
                             fontFamily = CustomRobotoMediumFontFamily,
                             fontWeight = FontWeight.SemiBold,
                             color = Color.White,
-                            fontSize = 15.sp,
+                            fontSize = 17.sp,
                             letterSpacing = (-0.5).sp,
                             maxLines = Int.MAX_VALUE,
                             overflow = TextOverflow.Ellipsis,
@@ -124,7 +138,7 @@ fun SendChatBubble(
                             fontFamily = CustomRobotoMediumFontFamily,
                             fontWeight = FontWeight.Thin,
                             color = Color.White,
-                            fontSize = 15.sp,
+                            fontSize = 14.sp,
                             letterSpacing = (-0.5).sp,
                             maxLines = Int.MAX_VALUE,
                             overflow = TextOverflow.Ellipsis,
@@ -158,9 +172,11 @@ fun SendChatBubble(
                         modifier = Modifier
                             .size(14.dp, 12.dp)
                             .offset(x = .1.dp)
+
                             .zIndex(-1f),
+
                         isSender = false,
-                        color = TelegramDark
+                        color =  Color(0xFF7B1AB9)
                     )
                 }
             }

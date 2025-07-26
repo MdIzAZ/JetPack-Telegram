@@ -37,7 +37,7 @@ fun TimeWithTickBox(
                     .padding(4.dp)
                     .background(
                         Color(0x80000000),
-                        RoundedCornerShape(10.dp)
+                        RoundedCornerShape(25.dp)
                     )
                     .padding(4.dp)
                 else Modifier
@@ -48,8 +48,8 @@ fun TimeWithTickBox(
             text = convertLettersToUppercase(time),
             fontFamily = CustomRobotoMediumFontFamily,
             fontWeight = FontWeight.Thin,
-            fontSize = (10.2f).sp,
-            color = if (isTextMessage) Color.Gray else Color.White
+            fontSize = (9.2f).sp,
+            color = if (isTextMessage) Color(0xFFD5D1E8) else Color.White
         )
 
         if (isSender) {
@@ -58,8 +58,8 @@ fun TimeWithTickBox(
                 contentDescription = "Single Tick",
                 tint = Color.White,
                 modifier = Modifier
-                    .padding(start = 4.dp)
-                    .size(18.dp) // Adjust size as needed
+                    .padding(start = 2.dp)
+                    .size(16.dp) // Adjust size as needed
             )
         }
     }

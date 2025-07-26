@@ -103,14 +103,14 @@ fun ImageMessage(
                                 Modifier
 //                                    .widthIn(180.dp, 280.dp)
 //                                    .heightIn(160.dp, 230.dp)
-                                    .width(280.dp)
-                                    .height(200.dp)
+                                    .width(290.dp)
+                                    .height(210.dp)
                             else
                                 Modifier
 //                                    .widthIn(150.dp, 220.dp)
 //                                    .heightIn(200.dp, 320.dp)
-                                    .width(220.dp)
-                                    .height(320.dp)
+                                    .width(230.dp)
+                                    .height(330.dp)
                         )
                         .border(
                             width = 1.dp,
@@ -119,7 +119,7 @@ fun ImageMessage(
                         ),
                     bitmap = image.asImageBitmap(),
                     contentDescription = "Chart Screenshot",
-                    contentScale = if (isLandscape) ContentScale.FillBounds else ContentScale.Crop
+                    contentScale = if (isLandscape) ContentScale.None else ContentScale.Crop
                 )
 
 

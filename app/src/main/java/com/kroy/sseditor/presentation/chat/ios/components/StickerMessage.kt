@@ -60,8 +60,8 @@ fun StickerMessage(
                 modifier = Modifier
 //                    .heightIn(min = 140.dp, max = 180.dp)
 //                    .widthIn(120.dp, 175.dp)
-                    .height(160.dp)
-                    .width(160.dp)
+                    .height(180.dp)
+                    .width(180.dp)
                 ,
                 contentScale = ContentScale.FillBounds
             )

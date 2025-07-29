@@ -37,7 +37,11 @@ fun ReceiverChatBubbleTriangleTail(
 
         }
 
-        drawPath(path = path, color = color, style = Fill)
+        drawPath(path = path, brush = Brush.linearGradient(listOf(
+            Color(0xFF201F24),
+            Color(0xFF252024),
+            Color(0xFF1B1A1F)
+        )), style = Fill)
     }
 }
 

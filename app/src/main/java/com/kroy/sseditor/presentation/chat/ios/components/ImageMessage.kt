@@ -114,7 +114,11 @@ fun ImageMessage(
                         )
                         .border(
                             width = 1.dp,
-                            brush = Brush.linearGradient(colors =if (isSender) listOf(Color(0xFFCD25EE), Color(0xFF9D1EEA) )
+                            brush = Brush.linearGradient(colors =if (isSender) listOf(
+                                Color(0xFF201F24),
+                                Color(0xFF252024),
+                                Color(0xFF1B1A1F)
+                             )
                             else listOf(Color.Black, Color.Black)),
                             shape = RoundedCornerShape(16.dp)
                         ),

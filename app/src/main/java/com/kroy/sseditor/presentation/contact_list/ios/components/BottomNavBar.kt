@@ -19,12 +19,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
@@ -55,7 +57,16 @@ fun BottomNavBar(
         modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = 83.dp)
+            .background(brush = Brush.linearGradient(
+                listOf(
+                    Color(0xFF201F24),
+                    Color(0xFF252024),
+                    Color(0xFF1B1A1F)
+                )
+            ))
     ) {
+
+        HorizontalDivider(thickness = .1.dp, color = Color.White)
         Row(
             modifier = Modifier
                 .padding(top = 4.dp)

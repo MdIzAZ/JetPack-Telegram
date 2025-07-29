@@ -53,7 +53,7 @@ fun ImageMessage(
             .fillMaxWidth()
             .then(
                 if (shouldShowChatTail) Modifier.padding(horizontal = 0.dp)
-                else Modifier.padding(horizontal = 16.dp)
+                else Modifier.padding(start = 8.dp, end = 14.dp)
             ),
         horizontalArrangement = if (isSender) Arrangement.End else Arrangement.Start,
         verticalAlignment = Alignment.Bottom
@@ -101,25 +101,26 @@ fun ImageMessage(
                         .then(
                             if (isLandscape)
                                 Modifier
-//                                    .widthIn(180.dp, 280.dp)
-//                                    .heightIn(160.dp, 230.dp)
-                                    .width(290.dp)
-                                    .height(210.dp)
+                                    .widthIn(290.dp, 300.dp)
+                                    .heightIn(210.dp, 230.dp)
+//                                    .width(290.dp)
+//                                    .height(210.dp)
                             else
                                 Modifier
-//                                    .widthIn(150.dp, 220.dp)
-//                                    .heightIn(200.dp, 320.dp)
-                                    .width(230.dp)
-                                    .height(330.dp)
+                                    .widthIn(230.dp, 290.dp)
+                                    .heightIn(300.dp, 370.dp)
+//                                    .width(290.dp)
+//                                    .height(370.dp)
                         )
                         .border(
                             width = 1.dp,
-                            color = if (isSender) TelegramDark else Color.Black,
+                            brush = Brush.linearGradient(colors =if (isSender) listOf(Color(0xFFCD25EE), Color(0xFF9D1EEA) )
+                            else listOf(Color.Black, Color.Black)),
                             shape = RoundedCornerShape(16.dp)
                         ),
                     bitmap = image.asImageBitmap(),
                     contentDescription = "Chart Screenshot",
-                    contentScale = if (isLandscape) ContentScale.None else ContentScale.Crop
+                    contentScale = if (isLandscape) ContentScale.FillBounds else ContentScale.Crop
                 )
 
 

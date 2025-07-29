@@ -39,6 +39,7 @@ import com.kroy.sseditor.domain.models.dummyChatMessages
 import com.kroy.sseditor.presentation.theme.CustomComfortaaFontFamily
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.UnreadNoBox
+import com.kroy.sseditor.utils.Utils.removeLeadingZero
 
 @Preview(showBackground = true)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -79,7 +80,7 @@ fun ContactRow(
                     bitmap = contact.profileImage.asImageBitmap(),
                     contentDescription = "Profile picture",
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(48.dp)
+                    modifier = Modifier.size(58.dp)
                 )
             } else {
                 val initials = contact.name.split(" ").filter { it.isNotBlank() }
@@ -136,7 +137,7 @@ fun ContactRow(
                         .padding(top = 7.dp)
                 )
                 Text(
-                    text = time,
+                    text = removeLeadingZero(time),
                     fontSize = 13.sp,
                     fontFamily = CustomRobotoMediumFontFamily,
                     fontWeight = FontWeight.SemiBold,

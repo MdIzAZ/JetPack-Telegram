@@ -71,6 +71,9 @@ fun TelegramContactListScreen(
                 modifier = Modifier
                     .background(color = CustomGray)
                     .fillMaxWidth(),
+                count = state.folders.find {
+                    it.first.equals("unread", ignoreCase = true)
+                }?.second ?: 54,
                 onLongPress = onLongPress
             )
         }

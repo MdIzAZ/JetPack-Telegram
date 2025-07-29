@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.kroy.ssediotor.R
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.Dimens
+import com.kroy.sseditor.presentation.theme.IosFolderColor
 import com.kroy.sseditor.presentation.theme.UnreadMessages
 import com.kroy.sseditor.utils.SelectedClient
 import com.kroy.sseditor.utils.Utils
@@ -47,6 +48,7 @@ import com.kroy.sseditor.utils.Utils
 @Composable
 fun BottomNavBar(
     modifier: Modifier = Modifier,
+    count: Int = 4,
     onLongPress: () -> Unit = {}
 ) {
     Column(
@@ -117,7 +119,7 @@ fun BottomNavBar(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_pending_msg_white),
                         contentDescription = "Pending messages",
-                        tint = UnreadMessages.copy(0.72f),
+                        tint = IosFolderColor,
                         modifier = Modifier.size(28.dp)
                     )
                     Text(
@@ -138,9 +140,10 @@ fun BottomNavBar(
                         .background(Color(0xFFF35959), RoundedCornerShape(8.dp)),
                     contentAlignment = Alignment.Center
                 ) {
+//                    val options = listOf("")
                     Text(
-                        text = Utils.getTotalUnreadMessages(SelectedClient.dayName),
-                      //  text = "1K",
+//                        text = count.toString(),
+                        text = "1.1K",
                         color = Color.White,
                         fontSize = 11.sp,
                         fontFamily = CustomRobotoMediumFontFamily,

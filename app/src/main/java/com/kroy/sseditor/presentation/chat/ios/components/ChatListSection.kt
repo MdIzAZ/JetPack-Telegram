@@ -184,7 +184,7 @@ fun ChatListSection(
                     }
                 }
 
-                Spacer(Modifier.height(1.dp))
+                Spacer(Modifier.height(2.dp))
             }
 
 

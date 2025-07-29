@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -105,6 +106,13 @@ fun ChatScreenTopBar(
         //2nd line of status bar
         Row(
             modifier = Modifier
+                .background(brush = Brush.linearGradient(
+                    listOf(
+                        Color(0xFF201F24),
+                        Color(0xFF252024),
+                        Color(0xFF1B1A1F)
+                    )
+                ))
                 .fillMaxWidth()
                 .padding(end = 10.dp)
                 .wrapContentHeight(),
@@ -115,11 +123,18 @@ fun ChatScreenTopBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
+                    .background(brush = Brush.linearGradient(
+                        listOf(
+                            Color(0xFF201F24),
+                            Color(0xFF252024),
+                            Color(0xFF1B1A1F)
+                        )
+                    ))
             ) {
 
                 Row(
                     modifier = Modifier
-                        .padding(top = 12.dp, bottom = 12.dp)
+                        .padding(top = 12.dp, bottom = 10.dp)
                         .clickable { onBackClick() },
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -129,7 +144,7 @@ fun ChatScreenTopBar(
                         painter = painterResource(id = R.drawable.ic_back),
                         modifier = Modifier
                             .padding(top=4.dp)
-                            .size(24.dp),
+                            .size(26.dp),
                         contentDescription = "Back",
                         tint = UnreadMessages
                     )
@@ -148,7 +163,7 @@ fun ChatScreenTopBar(
                                 text = "$numberOfUnseenMessages",
                                 fontFamily = CustomRobotoMediumFontFamily,
                                 fontWeight = FontWeight.Thin,
-                                fontSize = (12f).sp,
+                                fontSize = (13f).sp,
                                 color = Color.White,
                                 modifier = Modifier
                                     .align(Alignment.BottomEnd)
@@ -258,6 +273,9 @@ fun ChatScreenTopBar(
 
             }
         }
+
+        HorizontalDivider(thickness = .25.dp, color = Color.White)
+
 
     }
 }

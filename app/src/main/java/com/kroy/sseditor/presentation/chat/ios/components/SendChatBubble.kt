@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -67,17 +68,21 @@ fun SendChatBubble(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .background(
-                        brush = Brush.linearGradient(
+                        brush = Brush.verticalGradient(
                             colors = listOf(
                                 Color(0xFFCD25EE),
-                                Color(0xFFCD25EE),
-                                Color(0xFFCD25EE),
-                                Color(0xFFCD25EE),
-                                Color(0xFFB013CE),
-
-                                Color(0xFFB215D7),
-                                Color(0xFFA527EF),
-                                Color(0xFF9D1EEA)
+//                                Color(0xFFCD25EE),
+//                                Color(0xFFCD25EE),
+//                                Color(0xFFCD25EE),
+//                                Color(0xFFB013CE),
+//                                Color(0xFFB013CE),
+//
+//                                Color(0xFFB215D7),
+//                                Color(0xFFB416E0),
+//                                Color(0xFFA527EF),
+//                                Color(0xFF9D1EEA),
+//                                Color(0xFF9D1EEA),
+                                Color(0xFF9D1EEA),
                             ) // example gradient (green tones)
                         ),
                         shape = RoundedCornerShape(
@@ -87,13 +92,13 @@ fun SendChatBubble(
                             bottomStart = if (shouldShowChatTail) 20.dp else 20.dp
                         )
                     )
-                    .padding(horizontal = 8.dp, vertical = 6.dp)
+                    .padding(horizontal = 10.dp, vertical = 6.dp)
                     .zIndex(1f)
             ) {
 
                 val requiredWidthInDp = measureTextWidthInDp(
                     text = message.text + message.timestamp + "  ",
-                    fontSizeSp = 15f
+                    fontSizeSp = 17f
                 )
                 val width = constraints.maxWidth
                 val density = LocalDensity.current
@@ -104,7 +109,7 @@ fun SendChatBubble(
 //                    Log.d("izaz", "$requiredWidthInDp S  $maxWidthInDp")
                     
 
-                    Row() {
+                    Row(modifier = Modifier.wrapContentSize()) {
                         Text(
                             text = message.text,
                             fontFamily = CustomRobotoMediumFontFamily,
@@ -131,14 +136,14 @@ fun SendChatBubble(
 
 //                    Log.d("izaz", "$requiredWidthInDp L  $maxWidthInDp")
 
-                    Column() {
+                    Column(modifier = Modifier.wrapContentSize()) {
 
                         Text(
                             text = message.text,
                             fontFamily = CustomRobotoMediumFontFamily,
                             fontWeight = FontWeight.Thin,
                             color = Color.White,
-                            fontSize = 14.sp,
+                            fontSize = 17.sp,
                             letterSpacing = (-0.5).sp,
                             maxLines = Int.MAX_VALUE,
                             overflow = TextOverflow.Ellipsis,

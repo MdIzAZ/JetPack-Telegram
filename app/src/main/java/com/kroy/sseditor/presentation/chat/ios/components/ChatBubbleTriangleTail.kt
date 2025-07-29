@@ -5,6 +5,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Fill
@@ -66,7 +67,7 @@ fun SenderChatBubbleTriangleTail(
 
         }
 
-        drawPath(path = path, color = color, style = Fill)
+        drawPath(path = path, brush = Brush.linearGradient(listOf(Color(0xFFCD25EE), Color(0xFF9D1EEA) )), style = Fill,)
     }
 }
 

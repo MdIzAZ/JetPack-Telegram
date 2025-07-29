@@ -8,6 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
@@ -17,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kroy.sseditor.domain.models.ChatMessage
+import com.kroy.sseditor.presentation.theme.ChatBubbleGray
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 
 @Preview(showSystemUi = true)
@@ -29,7 +32,7 @@ fun ReceivedChatBubble(
         id = 0,
         recipientId = -1,
         isTextMessage = true,
-        text = "Hello , How are you? Hello , How are you? Hello , How are you?Hello , How are you?vvvHello , How are you?vvvv",
+        text = "Bhai bina loss ke aaj ka session complete hua",
         timestamp = "05:07 AM",
         isSender = false
     ),
@@ -38,7 +41,8 @@ fun ReceivedChatBubble(
 
     Row(
         modifier = modifier
-            .padding(horizontal = 14.dp)
+//            .alpha(.9f)
+            .padding(start = 8.dp, end = 14.dp)
             .padding(bottom = if (shouldShowChatTail) 6.dp else 0.dp),
         horizontalArrangement = Arrangement.Start
     ) {
@@ -51,11 +55,11 @@ fun ReceivedChatBubble(
             BoxWithConstraints(
                 modifier = Modifier
                     .background(
-                        color = Color.Black.copy(alpha = 0.7f),
+                        brush = Brush.linearGradient(listOf(Color(0xFF342525),Color(0xFF2E2133) ,Color(0xFF2E2133) )),
                         shape = RoundedCornerShape(
                             topStart = 8.dp,
-                            topEnd = 16.dp,
-                            bottomEnd = 16.dp,
+                            topEnd = 18.dp,
+                            bottomEnd = 18.dp,
                             bottomStart = if (shouldShowChatTail) 8.dp else 8.dp
                         )
                     )
@@ -80,7 +84,7 @@ fun ReceivedChatBubble(
 
                 if (requiredWidthInDp < maxWidthInDp) {
 
-                    Row() {
+                    Row(modifier = Modifier.padding(end = 0.dp)) {
                         Text(
                             text = message.text,
                             fontFamily = CustomRobotoMediumFontFamily,
@@ -105,22 +109,22 @@ fun ReceivedChatBubble(
 
                 } else {
 
-                    Column {
+                    Column(modifier = Modifier.wrapContentWidth()) {
 
                         Text(
                             text = message.text,
                             fontFamily = CustomRobotoMediumFontFamily,
-                            fontWeight = FontWeight.Thin,
+                            fontWeight = FontWeight.W500,
                             color = Color.White,
-                            fontSize = 14.sp,
+                            fontSize = 17.sp,
                             letterSpacing = (-0.5).sp,
                             maxLines = Int.MAX_VALUE,
-                            overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.wrapContentWidth()
 
                         )
                         TimeWithTickBox(
                             modifier = Modifier
+                                .padding(end = 6.dp)
                                 .align(Alignment.End),
                             time = lastReceiverMsgTime,
                             isTextMessage = true,

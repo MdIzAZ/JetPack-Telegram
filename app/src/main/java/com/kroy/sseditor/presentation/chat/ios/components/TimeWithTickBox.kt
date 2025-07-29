@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kroy.ssediotor.R
@@ -22,13 +23,15 @@ import com.kroy.sseditor.presentation.theme.COLOR_PINK
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.TelegramLight
 import com.kroy.sseditor.utils.Utils.convertLettersToUppercase
+import com.kroy.sseditor.utils.Utils.removeLeadingZero
 
+@Preview(showBackground = true)
 @Composable
 fun TimeWithTickBox(
     modifier: Modifier = Modifier,
-    isTextMessage: Boolean,
-    time: String,
-    isSender: Boolean
+    isTextMessage: Boolean= true,
+    time: String ="03:45 PM",
+    isSender: Boolean = false
 ) {
     Row(
         modifier = modifier
@@ -39,16 +42,16 @@ fun TimeWithTickBox(
                         Color(0x80000000),
                         RoundedCornerShape(25.dp)
                     )
-                    .padding(4.dp)
+                    .padding(vertical = 2.dp, horizontal = 4.dp)
                 else Modifier
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = convertLettersToUppercase(time),
+            text = removeLeadingZero(time),
             fontFamily = CustomRobotoMediumFontFamily,
             fontWeight = FontWeight.Thin,
-            fontSize = (9.2f).sp,
+            fontSize = (10.5f).sp,
             color = if (isTextMessage) Color(0xFFD5D1E8) else Color.White
         )
 
@@ -58,8 +61,8 @@ fun TimeWithTickBox(
                 contentDescription = "Single Tick",
                 tint = Color.White,
                 modifier = Modifier
-                    .padding(start = 2.dp)
-                    .size(16.dp) // Adjust size as needed
+                    .padding(start = 2.dp, top = 2.dp)
+                    .size(12.dp) // Adjust size as needed
             )
         }
     }

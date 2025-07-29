@@ -22,6 +22,7 @@ val TelegramTopBar = Color(0xFF022042)
 val BottomIconTint = Color(0xFF8F9092)
 val IosFolderColor = Color(0xFF5A92F5)
 val CustomGray = Color(0xFF232424)
+val ChatBubbleGray = Color(0xFF232222)
 val RandomBgColorPairs = listOf(
     Pair(Color(0xFF93D979), Color(0xFF64CE6A)),
     Pair(Color(0xFFFDC568), Color(0xFFFFAE5D)),

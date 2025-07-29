@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -35,7 +36,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.toArgb
@@ -74,12 +77,21 @@ fun ChatBoxInput(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = CustomGray)
+            .background(brush = Brush.linearGradient(
+                listOf(
+                    Color(0xFF201F24),
+                    Color(0xFF252024),
+                    Color(0xFF1B1A1F)
+                )
+            ))
+            .padding(bottom = 12.dp)
             .graphicsLayer {
                 shape = RoundedCornerShape(0.dp)
                 clip = true
             }
     ) {
+
+        HorizontalDivider(thickness = .1.dp, color = Color.White)
 
         Row(
             modifier = Modifier
@@ -87,7 +99,7 @@ fun ChatBoxInput(
                 .height(50.dp)
                 .padding(0.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(2.dp)
+            horizontalArrangement = Arrangement.spacedBy(0.dp)
         ) {
             // Attachment file icon at the start
 
@@ -101,8 +113,8 @@ fun ChatBoxInput(
                         painter = painterResource(id = com.kroy.ssediotor.R.drawable.ic_attach_file),
                         contentDescription = "Attach",
                         modifier = Modifier
-                            .padding(start = 10.dp)
-                            .size(32.dp),
+                            .padding(start = 6.dp)
+                            .size(34.dp),
                         tint = BottomIconTint
                     )
                 }
@@ -136,13 +148,13 @@ fun ChatBoxInput(
                 )
             } else {
                 Icon(
-                    painterResource(id = com.kroy.ssediotor.R.drawable.ic_up_arrow),
+                    painterResource(id = R.drawable.ic_up_arrow),
                     contentDescription = "Send",
                     tint = Color.White,
                     modifier = Modifier
                         .background(color = CustomPurple, shape = CircleShape)
                         .padding(8.dp)
-                        .size(20.dp)
+                        .size(16.dp)
                         .clickable {
                             sendMessage(MessageType.Text(txtFieldValue))
                         }
@@ -175,7 +187,7 @@ fun ChatBoxInput(
 @Composable
 fun StickerCompatibleInput(
     modifier: Modifier,
-    text: String,
+    text: String = "Hello",
     onTextChanged: (String) -> Unit,
     onImageReceived: (Uri) -> Unit,
     onSendMessage: () -> Unit,

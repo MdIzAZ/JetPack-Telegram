@@ -25,9 +25,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,7 +60,13 @@ fun ContactListScreenTopBar(
 
     Column(
         modifier = Modifier
-            .background(color = CustomGray)
+            .background(brush = Brush.linearGradient(
+                listOf(
+                    Color(0xFF201F24),
+                    Color(0xFF252024),
+                    Color(0xFF1B1A1F)
+                )
+            ))
             .fillMaxWidth()
     ) {
 
@@ -144,18 +152,22 @@ fun ContactListScreenTopBar(
                 .fillMaxWidth()
 //                .height(52.dp)
                 .wrapContentHeight()
-                .padding(top = 8.dp, start = 15.dp, bottom = 2.dp),
+                .padding(top = 8.dp, start = 0.dp, bottom = 2.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(14.dp)
         ) {
+
+            item{
+                Spacer(Modifier.width(10.dp))
+            }
 
             val spacerValue = 2.dp
             items(folders) {
                 Spacer(modifier = Modifier.width(spacerValue))
                 MessageTab(
                     title = it.first,
-                    isSelected = it.first == "Unread",
-                    count = if (it.first == "Unread") unreadMessageCount else it.second
+                    isSelected = it.first.equals(("Unread"), ignoreCase = true),
+                    count = if (it.first.equals(("Unread"), ignoreCase = true)) unreadMessageCount else it.second
                 )
             }
 

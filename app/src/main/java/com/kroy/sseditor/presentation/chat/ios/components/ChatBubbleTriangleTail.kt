@@ -12,10 +12,11 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 
+@Preview
 @Composable
 fun ReceiverChatBubbleTriangleTail(
     modifier: Modifier = Modifier,
-    isSender: Boolean ,
+    isSender: Boolean = false,
     color: Color = Color.Black
 ) {
     Canvas(

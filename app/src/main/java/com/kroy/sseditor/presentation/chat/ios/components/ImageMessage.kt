@@ -60,7 +60,7 @@ fun ImageMessage(
     ) {
 
         if (!isSender && shouldShowChatTail) {
-            SenderChatBubbleTriangleTail(
+            ReceiverChatBubbleTriangleTail(
                 modifier = Modifier
                     .size(17.dp, 17.dp)
                     .padding(bottom = 4.dp)
@@ -114,12 +114,12 @@ fun ImageMessage(
                         )
                         .border(
                             width = 1.dp,
-                            brush = Brush.linearGradient(colors =if (isSender) listOf(
+                            brush = Brush.linearGradient(colors =if (!isSender) listOf(
                                 Color(0xFF201F24),
                                 Color(0xFF252024),
                                 Color(0xFF1B1A1F)
                              )
-                            else listOf(Color.Black, Color.Black)),
+                            else listOf(Color(0xFFCD25EE), Color(0xFF9D1EEA) )),
                             shape = RoundedCornerShape(16.dp)
                         ),
                     bitmap = image.asImageBitmap(),

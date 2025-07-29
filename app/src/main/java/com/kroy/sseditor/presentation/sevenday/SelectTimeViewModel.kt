@@ -151,6 +151,8 @@ class SelectTimeViewModel @Inject constructor(
             try {
                 _sevenDayScreenState.update { it.copy(isLoading = true) }
 
+                val ini = System.currentTimeMillis()
+
                 _contactListScreenState.update {
                     it.copy(battery = Utils.getRandomBatteryPair())
                 }
@@ -161,6 +163,9 @@ class SelectTimeViewModel @Inject constructor(
                 _sevenDayScreenState.update {
                     it.copy(contactItems = contacts)
                 }
+
+                val end = System.currentTimeMillis()
+                Log.d("izaz", "Time ${end - ini}")
 
                 _sevenDayScreenState.update { it.copy(isLoading = false) }
                 onDataFetched()

@@ -50,20 +50,22 @@ import com.kroy.sseditor.utils.Utils
 @Composable
 fun BottomNavBar(
     modifier: Modifier = Modifier,
-    count: Int = 4,
+    count: Int = 6259,
     onLongPress: () -> Unit = {}
 ) {
     Column(
         modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = 83.dp)
-            .background(brush = Brush.linearGradient(
-                listOf(
-                    Color(0xFF201F24),
-                    Color(0xFF252024),
-                    Color(0xFF1B1A1F)
+            .background(
+                brush = Brush.linearGradient(
+                    listOf(
+                        Color(0xFF201F24),
+                        Color(0xFF252024),
+                        Color(0xFF1B1A1F)
+                    )
                 )
-            ))
+            )
     ) {
 
         HorizontalDivider(thickness = .1.dp, color = Color.White)
@@ -151,10 +153,16 @@ fun BottomNavBar(
                         .background(Color(0xFFF35959), RoundedCornerShape(8.dp)),
                     contentAlignment = Alignment.Center
                 ) {
-//                    val options = listOf("")
+                    
+                    val prefix = (count/1000).toString()
+                    val suffix = if((count % 1000) / 100 != 0) ".${(count % 1000) / 100}K" else "K"
+
+                    val countText =
+                        if (count < 1000) count.toString()
+                        else prefix + suffix
+
                     Text(
-//                        text = count.toString(),
-                        text = "1.1K",
+                        text = countText,
                         color = Color.White,
                         fontSize = 11.sp,
                         fontFamily = CustomRobotoMediumFontFamily,

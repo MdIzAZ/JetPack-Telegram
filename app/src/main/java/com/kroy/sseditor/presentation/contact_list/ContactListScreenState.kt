@@ -11,6 +11,8 @@ data class ContactListScreenState(
     val notificationBarTime: String = "12:00 PM",
     val battery: Pair<Int, Int> = Pair(R.drawable.battery70, 70),
     val contactItems: List<ContactItem> = emptyList(),
+    val isNotificationEnabled: Boolean = false,
+    val currentNotification: ContactItem? = null,
     val folders: List<Pair<String, Int>> = defaultFolderList
 )
 

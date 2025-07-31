@@ -33,12 +33,15 @@ import com.kroy.sseditor.presentation.sevenday.components.DayWithTimePicker
 fun SevenDayScreen(
     state: SevenDayScreenState,
     currentOSType: OSType,
+    isNotificationEnabled: Boolean,
     updateTriggerTime: (time: String, dayIndex: Int) -> Unit,
     updateUiTime: (time: String, dayIndex: Int) -> Unit,
-    onGoClicked: (clientTimes: ClientTimes, dayName: String) -> Unit,
+    onGoClicked: (clientTimes: ClientTimes, dayName: String, isNotificationEnabled: Boolean) -> Unit,
+    onLoadContacts: () -> Unit,
     onThemeSelected: (ThemeMode) -> Unit,
     setFolders: (List<Pair<String, Int>>) -> Unit,
-    onCheckedChange: (OSType) -> Unit,
+    onOsTypeChange: (OSType) -> Unit,
+    onNotificationModeChange: (Boolean) -> Unit,
     onSaveIntervals: (List<IntervalGroup>) -> Unit,
 ) {
 
@@ -50,7 +53,9 @@ fun SevenDayScreen(
                 onThemeSelected = onThemeSelected,
                 setFolders = setFolders,
                 currentOSType = currentOSType,
-                onOsTypeChange = onCheckedChange
+                isNotificationEnabled = isNotificationEnabled,
+                onOsTypeChange = onOsTypeChange,
+                onNotificationModeChange = onNotificationModeChange
             )
         }
     ) { ip ->
@@ -62,6 +67,13 @@ fun SevenDayScreen(
                 .padding(16.dp),
         ) {
 
+            if (state.contactItems.isNotEmpty()) {
+                Text(
+                    text = "Total Contact Fetched: ${state.contactItems.size}",
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+            }
+
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -69,6 +81,7 @@ fun SevenDayScreen(
 
                 items(7) { dayIndex ->
                     DayWithTimePicker(
+                        isLoading = state.isLoading,
                         day = (dayIndex + 1).toString(),
                         clientTimes = state.times[dayIndex],
                         onTimeSelected = { newTime, timeName ->
@@ -77,7 +90,14 @@ fun SevenDayScreen(
                                 1 -> updateUiTime(newTime, dayIndex)
                             }
                         },
-                        onGoClicked = { clientTimes, dayName -> onGoClicked(clientTimes, dayName) },
+                        onLoadContacts = onLoadContacts,
+                        onGoClicked = { clientTimes, dayName ->
+                            onGoClicked(
+                                clientTimes,
+                                dayName,
+                                isNotificationEnabled
+                            )
+                        },
                         onSaveIntervals = onSaveIntervals
                     )
                 }
@@ -135,13 +155,16 @@ fun Preview4() {
     SevenDayScreen(
         state = SevenDayScreenState(),
         currentOSType = OSType.IOS,
+        isNotificationEnabled = true,
         updateTriggerTime = { _, _ -> },
         updateUiTime = { _, _ -> },
-        onGoClicked = { _, _ -> },
+        onGoClicked = { _, _, _ -> },
         onThemeSelected = {},
-        onCheckedChange = {},
+        onOsTypeChange = {},
         setFolders = {},
-        onSaveIntervals = {}
+        onSaveIntervals = {},
+        onLoadContacts = {},
+        onNotificationModeChange = {}
     )
 }
 

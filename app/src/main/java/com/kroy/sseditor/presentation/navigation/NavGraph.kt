@@ -48,6 +48,7 @@ import java.util.Locale
 fun NavGraph(
     modifier: Modifier,
     currentOSType: OSType,
+    isNotificationEnabled: Boolean,
     dataStoreHelper: DataStoreHelper,
     selectTimeViewModel: SelectTimeViewModel,
     sharedViewModel: SharedViewModel
@@ -114,6 +115,7 @@ fun NavGraph(
             ClientScreen(
                 state = state,
                 currentOSType = currentOSType,
+                isNotificationEnabled = isNotificationEnabled,
                 onAddClient = {
                     navController.navigate("addclient")
                 },
@@ -140,8 +142,9 @@ fun NavGraph(
                     sharedViewModel.setClients(it)
                 },
                 onThemeSelected = sharedViewModel::saveThemeMode,
-                onCheckedChange = sharedViewModel::changeOsType,
-                setFolders = selectTimeViewModel::setFolders
+                onOSTypeChange = sharedViewModel::changeOsType,
+                setFolders = selectTimeViewModel::setFolders,
+                onNotificationModeChange = sharedViewModel::changeNotificationMode
             )
         }
 
@@ -221,9 +224,13 @@ fun NavGraph(
             SevenDayScreen(
                 state = state,
                 currentOSType = currentOSType,
+                isNotificationEnabled = isNotificationEnabled,
                 updateTriggerTime = selectTimeViewModel::updateTriggerTime,
                 updateUiTime = selectTimeViewModel::updateUiTime,
-                onGoClicked = { clientTimes, dayName ->
+                onLoadContacts = {
+                    selectTimeViewModel.loadContactItems {  }
+                },
+                onGoClicked = { clientTimes, dayName, isNotificationEnabled ->
 
                     SelectedClient.dayName = dayName
                     SelectedClient.clientTimes = clientTimes
@@ -232,13 +239,14 @@ fun NavGraph(
                     val encodedTriggerTime = Uri.encode(triggerTime)
                     val encodedUiTime = Uri.encode(uiTime)
 
-                    selectTimeViewModel.loadDummyContactItems {
+                    selectTimeViewModel.loadContactItems {
                         navController.navigate("contact/$encodedTriggerTime/$encodedUiTime/$interval") {}
                     }
 
                 },
                 onThemeSelected = sharedViewModel::saveThemeMode,
-                onCheckedChange = sharedViewModel::changeOsType,
+                onOsTypeChange = sharedViewModel::changeOsType,
+                onNotificationModeChange = sharedViewModel::changeNotificationMode,
                 onSaveIntervals = selectTimeViewModel::setIntervals,
                 setFolders = selectTimeViewModel::setFolders
             )
@@ -277,7 +285,8 @@ fun NavGraph(
                 startShowingContacts = {
                     selectTimeViewModel.startShowingChatItemsWithDelay(
                         uiTime = uiTimeString,
-                        triggerTime = triggerTime
+                        triggerTime = triggerTime,
+                        isNotificationEnabled = isNotificationEnabled
                     )
                 },
                 onChatClick = {

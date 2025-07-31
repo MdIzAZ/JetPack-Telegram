@@ -102,6 +102,7 @@ fun TelegramChatScreen(
                 contactName = state.contactName,
                 contactPic = state.contactPic,
                 numberOfUnseenMessages = state.numberOfUnseenMessages,
+                timeRemaining = state.timeRemaining,
                 batteryPercentage = state.battery.second,
                 batteryIcon = state.battery.first,
                 onBackClick = onBackClick,

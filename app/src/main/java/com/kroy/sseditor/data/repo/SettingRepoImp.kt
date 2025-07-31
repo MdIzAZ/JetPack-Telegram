@@ -3,6 +3,7 @@ package com.kroy.sseditor.data.repo
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.kroy.sseditor.domain.models.OSType
@@ -20,6 +21,7 @@ class SettingRepoImp @Inject constructor(
     companion object {
         private val THEME_KEY = stringPreferencesKey(Constants.THEME_KEY)
         private val OS_KEY = stringPreferencesKey(Constants.OS_KEY)
+        private val NOTIFICATION_KEY = booleanPreferencesKey(Constants.NOTIFICATION_KEY)
     }
 
 
@@ -44,10 +46,23 @@ class SettingRepoImp @Inject constructor(
         }
     }
 
+    override suspend fun saveNotificationModePref(mode: Boolean) {
+        pref.edit {
+            it[NOTIFICATION_KEY] = mode
+        }
+    }
+
     override fun getCurrentOsType(): Flow<OSType> {
         return pref.data.map {
             val os = it[OS_KEY] ?: OSType.Android.name
             OSType.valueOf(os)
+        }
+    }
+
+    override fun getNotificationMode(): Flow<Boolean> {
+        return  pref.data.map {
+            val mode = it[NOTIFICATION_KEY] ?: false
+            mode
         }
     }
 }

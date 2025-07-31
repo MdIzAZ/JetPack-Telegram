@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Contrast
 import androidx.compose.material.icons.filled.DriveFolderUpload
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DropdownMenu
@@ -24,6 +25,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,6 +39,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kroy.sseditor.domain.models.OSType
@@ -48,8 +51,10 @@ fun CustomTopBar(
     modifier: Modifier = Modifier,
     title: String,
     currentOSType: OSType,
+    isNotificationEnabled: Boolean,
     setFolders: (List<Pair<String, Int>>) -> Unit,
     onOsTypeChange: (OSType) -> Unit,
+    onNotificationModeChange: (Boolean) -> Unit,
     onThemeSelected: (ThemeMode) -> Unit
 ) {
 
@@ -148,16 +153,60 @@ fun CustomTopBar(
                             isRotated = false
                         }
                     ) {
+                        var isThemeMenuExpanded by remember { mutableStateOf(false) }
 
-                        ThemeMode.entries.forEach {
-                            DropdownMenuItem(
-                                text = { Text(it.label) },
-                                onClick = {
-                                    onThemeSelected(it)
-                                    isMenuOpen = false
+                        DropdownMenuItem(
+                            text = {
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+
+                                    Text("Theme  ")
+
+                                    Icon(imageVector = Icons.Default.Contrast, contentDescription = "Theme")
+
                                 }
-                            )
+                            },
+                            onClick = { isThemeMenuExpanded = true }
+                        )
+
+                        DropdownMenu(
+                            expanded = isThemeMenuExpanded,
+                            onDismissRequest = { isThemeMenuExpanded = false },
+                            offset = DpOffset(x = 150.dp, y = 0.dp)
+                        ) {
+                            ThemeMode.entries.forEach {
+                                DropdownMenuItem(
+                                    text = { Text(it.label) },
+                                    onClick = {
+                                        onThemeSelected(it)
+                                    }
+                                )
+                            }
                         }
+
+                        DropdownMenuItem(
+                            text = {
+                                Row(
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+
+                                    Text("Notification  ")
+
+                                    Switch(
+                                        checked = isNotificationEnabled,
+                                        onCheckedChange = { onNotificationModeChange(!isNotificationEnabled) }
+                                    )
+
+                                }
+                            },
+                            onClick = {
+
+                            }
+                        )
+
                     }
                 }
             }

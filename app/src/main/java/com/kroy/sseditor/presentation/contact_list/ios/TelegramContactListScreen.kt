@@ -1,8 +1,13 @@
 package com.kroy.sseditor.presentation.contact_list.ios
 
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,7 +36,9 @@ import com.kroy.sseditor.presentation.contact_list.ContactListScreenState
 import com.kroy.sseditor.presentation.contact_list.ios.components.BottomNavBar
 import com.kroy.sseditor.presentation.contact_list.ios.components.ContactList
 import com.kroy.sseditor.presentation.contact_list.ios.components.ContactListScreenTopBar
+import com.kroy.sseditor.presentation.contact_list.ios.components.PopUpNotification
 import com.kroy.sseditor.presentation.theme.CustomGray
+import kotlinx.coroutines.delay
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -45,14 +52,30 @@ fun TelegramContactListScreen(
 ) {
 
     var isAlertDialogOpen by remember { mutableStateOf(false) }
+    var showNotification by remember { mutableStateOf(false) }
 
     BackHandler {
         isAlertDialogOpen = true
     }
 
+
+    LaunchedEffect(state.currentNotification) {
+        state.currentNotification?.let {
+            showNotification = false
+            delay(300)
+            showNotification = true
+            delay(3000)
+            showNotification = false
+        }
+    }
+
     LaunchedEffect(Unit) {
         startShowingContacts()
     }
+
+
+
+
 
     Scaffold(
         topBar = {
@@ -142,6 +165,30 @@ fun TelegramContactListScreen(
 
                 )
             }
+        }
+    }
+
+
+    AnimatedVisibility(
+        visible = state.currentNotification != null && showNotification,
+        enter = slideInVertically(
+            initialOffsetY = { -it },
+            animationSpec = tween(durationMillis = 300)
+        ),
+        exit = slideOutVertically(
+            targetOffsetY = { -it },
+            animationSpec = tween(durationMillis = 300)
+        ),
+        modifier = Modifier
+            .padding(top = 8.dp)
+    ) {
+        state.currentNotification?.let { contact ->
+            PopUpNotification(
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .padding(horizontal = 8.dp),
+                contact = contact
+            )
         }
     }
 

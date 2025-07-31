@@ -36,6 +36,13 @@ class SharedViewModel @Inject constructor(
             initialValue = OSType.Android
         )
 
+    val notificationEnabledSetting = settingsRepo.getNotificationMode()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = false
+        )
+
 
     private val _clients = MutableLiveData<List<Client>>()
     val clients: LiveData<List<Client>> get() = _clients
@@ -68,6 +75,17 @@ class SharedViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 settingsRepo.saveOsTypePref(os)
+            } catch (e: Exception) {
+                Log.d("izaz", e.message ?: "Unknown error")
+            }
+        }
+
+    }
+
+    fun changeNotificationMode(mode: Boolean) {
+        viewModelScope.launch {
+            try {
+                settingsRepo.saveNotificationModePref(mode)
             } catch (e: Exception) {
                 Log.d("izaz", e.message ?: "Unknown error")
             }

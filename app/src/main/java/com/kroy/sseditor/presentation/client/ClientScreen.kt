@@ -26,13 +26,15 @@ import com.kroy.sseditor.presentation.common_components.CustomTopBar
 fun ClientScreen(
     state: ClientScreenState,
     currentOSType: OSType,
+    isNotificationEnabled: Boolean,
     onAddClient: () -> Unit,
     onClientClick: (Client) -> Unit,
     onEditClick: (Client) -> Unit,
     setClientsOnSharedViewModel: (List<Client>) -> Unit,
     setFolders: (List<Pair<String, Int>>) -> Unit,
     onThemeSelected: (ThemeMode) -> Unit,
-    onCheckedChange: (OSType) -> Unit,
+    onOSTypeChange: (OSType) -> Unit,
+    onNotificationModeChange: (Boolean) -> Unit,
 ) {
 
 
@@ -42,9 +44,11 @@ fun ClientScreen(
             CustomTopBar(
                 title = "Clients",
                 currentOSType = currentOSType,
+                isNotificationEnabled = isNotificationEnabled,
                 setFolders = setFolders,
                 onThemeSelected = onThemeSelected,
-                onOsTypeChange = onCheckedChange
+                onOsTypeChange = onOSTypeChange,
+                onNotificationModeChange = onNotificationModeChange
             )
         },
         floatingActionButton = {

@@ -10,6 +10,7 @@ data class ContactItem(
     val profileImage: Bitmap? = null,
     val uiTime: String = "12:00 AM",
     val messages: List<ChatMessage>,
+    val timeRemainingInSec: Int = 0,
     val unreadCount: Int? = 0,
 )
 
@@ -34,7 +35,7 @@ val dummyContacts = listOf(
         id = 3,
         name = "Charlie",
         color = Color(0xFF81C784),
-        uiTime = "Yesterday",
+        uiTime = "02:44 AM",
         messages = dummyChatMessages,
         unreadCount = 1
     ),
@@ -74,7 +75,7 @@ val dummyContacts = listOf(
         id = 8,
         name = "Hannah",
         color = Color(0xFFFF8A65),
-        uiTime = "Yesterday",
+        uiTime = "06:30 AM",
         messages = dummyChatMessages,
         unreadCount = 2
     ),
@@ -90,7 +91,7 @@ val dummyContacts = listOf(
         id = 10,
         name = "Jenna",
         color = Color(0xFF90A4AE),
-        uiTime = "Yesterday",
+        uiTime = "06:30 AM",
         messages = dummyChatMessages,
         unreadCount = 1
     ),
@@ -106,7 +107,7 @@ val dummyContacts = listOf(
         id = 12,
         name = "Lily",
         color = Color(0xFF4FC3F7),
-        uiTime = "Today",
+        uiTime = "06:30 AM",
         messages = dummyChatMessages,
         unreadCount = 14
     )

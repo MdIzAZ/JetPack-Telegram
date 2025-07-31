@@ -48,6 +48,7 @@ class MainActivity : FragmentActivity() {
 
             val currentTheme by sharedViewModel.currentTheme.collectAsStateWithLifecycle()
             val currentOs by sharedViewModel.currentOSType.collectAsStateWithLifecycle()
+            val notificationMode by sharedViewModel.notificationEnabledSetting.collectAsStateWithLifecycle()
 
             val isDarkTheme = when (currentTheme) {
                 ThemeMode.SYSTEM -> isSystemInDarkTheme()
@@ -60,6 +61,7 @@ class MainActivity : FragmentActivity() {
                 NavGraph(
                     modifier = Modifier,
                     currentOSType = currentOs,
+                    isNotificationEnabled = notificationMode,
                     dataStoreHelper = dataStoreHelper,
                     sharedViewModel = sharedViewModel,
                     selectTimeViewModel = selectTimeViewModel

@@ -61,13 +61,15 @@ fun ContactListScreenTopBar(
 
     Column(
         modifier = Modifier
-            .background(brush = Brush.linearGradient(
-                listOf(
-                    Color(0xFF201F24),
-                    Color(0xFF252024),
-                    Color(0xFF1B1A1F)
+            .background(
+                brush = Brush.linearGradient(
+                    listOf(
+                        Color(0xFF201F24),
+                        Color(0xFF252024),
+                        Color(0xFF1B1A1F)
+                    )
                 )
-            ))
+            )
             .fillMaxWidth()
     ) {
 
@@ -144,7 +146,9 @@ fun ContactListScreenTopBar(
             }
         }
 
-        Spacer(modifier = Modifier.fillMaxWidth().height(8.dp))
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(8.dp))
 
 
         // Third Row - Tabs with "Unread" centered vertically
@@ -168,7 +172,7 @@ fun ContactListScreenTopBar(
                 MessageTab(
                     title = it.first,
                     isSelected = it.first.equals(("Unread"), ignoreCase = true),
-                    count = if (it.first.equals(("Unread"), ignoreCase = true)) unreadMessageCount else it.second
+                    count = if (it.first.equals(("Unread"), ignoreCase = true)) (unreadMessageCount + it.second) else it.second
                 )
             }
 

@@ -1,6 +1,7 @@
 package com.kroy.sseditor.presentation.chat.ios.components
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,17 +14,14 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -52,11 +50,8 @@ import com.kroy.ssediotor.R
 import com.kroy.sseditor.presentation.common_components.IOSNotificationBar
 import com.kroy.sseditor.presentation.theme.CustomComfortaaFontFamily
 import com.kroy.sseditor.presentation.theme.CustomGray
-import com.kroy.sseditor.presentation.theme.CustomPurple
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
-import com.kroy.sseditor.presentation.theme.RandomBgColorPairs
 import com.kroy.sseditor.presentation.theme.UnreadMessages
-import com.kroy.sseditor.utils.Utils
 import kotlinx.coroutines.delay
 
 
@@ -66,8 +61,9 @@ fun ChatScreenTopBar(
     time: String = "12:00 PM",
     contactName: String = "Ronaldo",
     numberOfUnseenMessages: Int = 12,
-    batteryIcon:Int = R.drawable.battery70,
-    batteryPercentage:Int = 70,
+    timeRemaining: Int = 4,
+    batteryIcon: Int = R.drawable.battery70,
+    batteryPercentage: Int = 70,
     contactPic: Bitmap? = null,
     color: Color? = null,
     onBackClick: () -> Unit = {}
@@ -76,8 +72,9 @@ fun ChatScreenTopBar(
     var lastSeenStatus by remember { mutableStateOf("Online") }
 
     LaunchedEffect(Unit) {
-        val delay = (0..5).random()
-        delay(delay.times(1000).toLong())
+        Log.d("izaz", "Start: $timeRemaining")
+        delay(timeRemaining.times(1000).toLong())
+        Log.d("izaz", "End: $timeRemaining")
         lastSeenStatus = "last seen recently"
     }
     val context = LocalContext.current
@@ -106,13 +103,15 @@ fun ChatScreenTopBar(
         //2nd line of status bar
         Row(
             modifier = Modifier
-                .background(brush = Brush.linearGradient(
-                    listOf(
-                        Color(0xFF201F24),
-                        Color(0xFF252024),
-                        Color(0xFF1B1A1F)
+                .background(
+                    brush = Brush.linearGradient(
+                        listOf(
+                            Color(0xFF201F24),
+                            Color(0xFF252024),
+                            Color(0xFF1B1A1F)
+                        )
                     )
-                ))
+                )
                 .fillMaxWidth()
                 .padding(end = 10.dp)
                 .wrapContentHeight(),
@@ -123,13 +122,15 @@ fun ChatScreenTopBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .background(brush = Brush.linearGradient(
-                        listOf(
-                            Color(0xFF201F24),
-                            Color(0xFF252024),
-                            Color(0xFF1B1A1F)
+                    .background(
+                        brush = Brush.linearGradient(
+                            listOf(
+                                Color(0xFF201F24),
+                                Color(0xFF252024),
+                                Color(0xFF1B1A1F)
+                            )
                         )
-                    ))
+                    )
             ) {
 
                 Row(
@@ -143,7 +144,7 @@ fun ChatScreenTopBar(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_back),
                         modifier = Modifier
-                            .padding(top=4.dp)
+                            .padding(top = 4.dp)
                             .size(26.dp),
                         contentDescription = "Back",
                         tint = UnreadMessages

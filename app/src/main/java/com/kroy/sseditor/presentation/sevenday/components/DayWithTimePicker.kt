@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,11 +13,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -51,8 +58,10 @@ import java.util.Locale
 @Composable
 fun DayWithTimePicker(
     day: String,
+    isLoading: Boolean,
     clientTimes: ClientTimes,
     onTimeSelected: (String, Int) -> Unit,
+    onLoadContacts: () -> Unit,
     onSaveIntervals: (List<IntervalGroup>) -> Unit,
     onGoClicked: (clientTimes: ClientTimes, dayName: String) -> Unit
 ) {
@@ -116,9 +125,14 @@ fun DayWithTimePicker(
         )
 
 
-        LazyRow(
-            modifier = Modifier.weight(1.5f),
-            verticalAlignment = Alignment.CenterVertically
+        LazyVerticalGrid(
+            modifier = Modifier
+                .weight(1.5f)
+                .height(180.dp),
+            columns = GridCells.Adaptive(110.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            flingBehavior = ScrollableDefaults.flingBehavior()
         ) {
 
             item {
@@ -146,26 +160,61 @@ fun DayWithTimePicker(
             }
 
             item {
-//                IntervalSelection(
-//                    interval = clientTimes.interval,
-//                    onIncrease = onIncrease,
-//                    onDecrease = onDecrease,
-//                )
 
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+                OutlinedButton(
+                    modifier = Modifier.padding(top = 12.dp, start = 4.dp),
+                    onClick = {
+                        shouldShowIntervalDialog = true
+                    },
+                    content = { Text("Interval") }
+                )
 
-                    Spacer(Modifier.height(20.dp))
 
-                    OutlinedButton(
-                        onClick = {
-                            shouldShowIntervalDialog = true
-                        },
-                        content = { Text("Interval") }
-                    )
-                }
+            }
+
+            item {
+
+                ElevatedButton(
+                    modifier = Modifier.padding(top = 12.dp),
+                    enabled = !isLoading,
+                    onClick = onLoadContacts,
+                    content = { Text("Load") }
+                )
+
+
+            }
+
+            item {
+
+                OutlinedButton(
+                    modifier = Modifier.padding(top = 12.dp, start = 4.dp),
+                    onClick = {
+                        if (
+                            !isFutureTime(
+                                parseTimeTo24Hour(clientTimes.triggerTime).first,
+                                parseTimeTo24Hour(clientTimes.triggerTime).second,
+                                now
+                            )
+                        ) {
+                            Toast.makeText(
+                                context,
+                                "Select a future trigger time",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                            return@OutlinedButton
+                        }
+
+                        onGoClicked(clientTimes, "Day $day")
+                    },
+                    content = {
+                        Row {
+                            Text("Go")
+                            Icon(imageVector = Icons.Default.ArrowForward, contentDescription = "Go")
+                        }
+                    }
+                )
+
 
             }
 
@@ -174,30 +223,16 @@ fun DayWithTimePicker(
 
 
         // Go button
-        IconButton(
-            modifier = Modifier.weight(.15f),
-            onClick = {
-                if (
-                    !isFutureTime(
-                        parseTimeTo24Hour(clientTimes.triggerTime).first,
-                        parseTimeTo24Hour(clientTimes.triggerTime).second,
-                        now
-                    )
-                ) {
-                    Toast.makeText(context, "Select a future trigger time", Toast.LENGTH_SHORT)
-                        .show()
-                    return@IconButton
-                }
-
-                onGoClicked(clientTimes, "Day $day")
-            }
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                tint = Color.Black,
-                contentDescription = "Go"
-            )
-        }
+//        IconButton(
+//            modifier = Modifier.weight(.15f),
+//
+//        ) {
+//            Icon(
+//                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+//                tint = Color.Black,
+//                contentDescription = "Go"
+//            )
+//        }
     }
 }
 

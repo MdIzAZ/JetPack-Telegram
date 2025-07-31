@@ -53,7 +53,7 @@ fun ContactRow(
         unreadCount = 0,
         color = Color.Cyan
     ),
-    time: String = "09:00 PM",
+    time: String = "09:00 AM",
     onContactClick: () -> Unit = {}
 ) {
 
@@ -68,47 +68,64 @@ fun ContactRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        Box(
-            modifier = Modifier
-                .size(56.dp)
-                .clip(CircleShape)
-                .background(color = contact.color ?: Color.Cyan)
-        ) {
+        Box() {
 
-            if (contact.profileImage != null) {
-                Image(
-                    bitmap = contact.profileImage.asImageBitmap(),
-                    contentDescription = "Profile picture",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(58.dp)
-                )
-            } else {
-                val initials = contact.name.split(" ").filter { it.isNotBlank() }
-                    .let { words ->
-                        when {
-                            words.size == 1 -> words.first().firstOrNull()?.uppercase() ?: "N"
-                            words.size > 1 -> {
-                                val firstInitial =
-                                    words.first().firstOrNull()?.uppercase() ?: ""
-                                val lastInitial = words.last().firstOrNull()?.uppercase() ?: ""
-                                "$firstInitial$lastInitial"
+            Box(
+                modifier = Modifier
+                    .size(56.dp)
+                    .clip(CircleShape)
+                    .background(color = contact.color ?: Color.Cyan)
+            ) {
+
+                if (contact.profileImage != null) {
+                    Image(
+                        bitmap = contact.profileImage.asImageBitmap(),
+                        contentDescription = "Profile picture",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.size(58.dp)
+                    )
+                } else {
+
+                    val initials = contact.name.split(" ").filter { it.isNotBlank() }
+                        .let { words ->
+                            when {
+                                words.size == 1 -> words.first().firstOrNull()?.uppercase() ?: "N"
+                                words.size > 1 -> {
+                                    val firstInitial =
+                                        words.first().firstOrNull()?.uppercase() ?: ""
+                                    val lastInitial = words.last().firstOrNull()?.uppercase() ?: ""
+                                    "$firstInitial$lastInitial"
+                                }
+
+                                else -> "N"
                             }
-
-                            else -> "N"
                         }
-                    }
 
 
-                Text(
-                    text = initials,
-                    fontSize = 29.sp,
-                    fontFamily = CustomComfortaaFontFamily,
-                    fontWeight = FontWeight.W900,
-                    textAlign = TextAlign.Center,
-                    color = Color.White,
+                    Text(
+                        text = initials,
+                        fontSize = 29.sp,
+                        fontFamily = CustomComfortaaFontFamily,
+                        fontWeight = FontWeight.W900,
+                        textAlign = TextAlign.Center,
+                        color = Color.White,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+
+                    )
+                }
+
+            }
+
+            if (contact.timeRemainingInSec>0) {
+                Box(
                     modifier = Modifier
-                        .align(Alignment.Center)
-
+                        .align(Alignment.BottomEnd)
+                        .size(16.dp)
+                        .clip(CircleShape)
+                        .background(color = Color.Black, shape = CircleShape)
+                        .padding(2.dp)
+                        .background(color = Color.Green, shape = CircleShape)
                 )
             }
         }
@@ -159,6 +176,7 @@ fun ContactRow(
                             when (it) {
                                 is NonTextMessage.Image -> it.bitmap
                                 is NonTextMessage.Sticker -> null
+                                is NonTextMessage.Gif -> null
                             }
                         }
                         bitmap?.asImageBitmap()?.let {
@@ -172,10 +190,13 @@ fun ContactRow(
                         if (bitmap != null) {
                             Spacer(modifier = Modifier.width(8.dp))
                         }
+
+                        val randomEmoji = listOf("😂", "🤬", "👍", "💖").random()
                         Text(
                             text = when (contact.messages.last().nonTextMessage) {
                                 is NonTextMessage.Image -> "Photo"
                                 is NonTextMessage.Sticker -> "Sticker"
+                                is NonTextMessage.Gif -> randomEmoji + "Sticker"
                                 null -> ""
                             },
                             color = Color.Gray,

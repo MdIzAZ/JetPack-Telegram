@@ -17,6 +17,7 @@ import com.kroy.sseditor.domain.models.ChatMessage
 import com.kroy.sseditor.domain.models.IntervalGroup
 import com.kroy.sseditor.domain.models.MessageType
 import com.kroy.sseditor.domain.models.NonTextMessage
+import com.kroy.sseditor.domain.models.dummyContacts
 import com.kroy.sseditor.domain.repo.ContactRepo
 import com.kroy.sseditor.presentation.chat.ChatScreenState
 import com.kroy.sseditor.presentation.contact_list.ContactListScreenState
@@ -34,7 +35,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import okio.IOException
 import java.io.File
-import java.nio.file.Files.find
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -49,6 +49,10 @@ class SelectTimeViewModel @Inject constructor(
     private val contactRepo: ContactRepo,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    init {
+        startOnlineCountdown()
+    }
 
     private var clockJob: Job? = null
     private var chatUpdateJob: Job? = null
@@ -144,14 +148,12 @@ class SelectTimeViewModel @Inject constructor(
         }
     }
 
-    fun loadDummyContactItems(onDataFetched: () -> Unit) {
+    fun loadContactItems(onDataFetched: () -> Unit) {
 
         viewModelScope.launch {
 
             try {
                 _sevenDayScreenState.update { it.copy(isLoading = true) }
-
-                val ini = System.currentTimeMillis()
 
                 _contactListScreenState.update {
                     it.copy(battery = Utils.getRandomBatteryPair())
@@ -160,12 +162,11 @@ class SelectTimeViewModel @Inject constructor(
                 val contacts =
                     contactRepo.getRandomContacts().data?.toContactItemList() ?: emptyList()
 
-                _sevenDayScreenState.update {
-                    it.copy(contactItems = contacts)
-                }
+//                val contacts = dummyContacts
 
-                val end = System.currentTimeMillis()
-                Log.d("izaz", "Time ${end - ini}")
+                _sevenDayScreenState.update {
+                    it.copy(contactItems = sevenDayScreenState.value.contactItems + contacts)
+                }
 
                 _sevenDayScreenState.update { it.copy(isLoading = false) }
                 onDataFetched()
@@ -185,11 +186,15 @@ class SelectTimeViewModel @Inject constructor(
 
                 val newContacts =
                     contactRepo.getRandomContacts().data?.toContactItemList() ?: emptyList()
+
+//                val newContacts = dummyContacts
                 val allContacts = sevenDayScreenState.value.contactItems + newContacts
 
                 _sevenDayScreenState.update {
                     it.copy(contactItems = allContacts)
                 }
+
+                val currentQueue = contactListScreenState.value
 
             } catch (e: Exception) {
                 Log.d("izaz", e.message ?: "Unknown error")
@@ -203,11 +208,15 @@ class SelectTimeViewModel @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     fun startShowingChatItemsWithDelay(
         uiTime: String,
-        triggerTime: LocalTime
+        triggerTime: LocalTime,
+        isNotificationEnabled: Boolean
     ) {
 
         if (contactListScreenState.value.isListUpdatingStarted) return
 
+        _contactListScreenState.update {   // Should show notification
+            it.copy(isNotificationEnabled = isNotificationEnabled)
+        }
         startClock(initialTime = uiTime)
 
         val today = LocalDate.now()
@@ -235,19 +244,22 @@ class SelectTimeViewModel @Inject constructor(
 
                         val contactItem = item.copy(
                             uiTime = _contactListScreenState.value.notificationBarTime,
-                            unreadCount = item.unreadCount
+                            unreadCount = item.unreadCount,
+                            timeRemainingInSec = (0..15).random()
                         )
 
 //                        val totalUnreadMessages =
 //                            contactListScreenState.value.totalUnreadMessages + (item.unreadCount
 //                                ?: 0)
 
-                        val totalUnreadMessages = contactListScreenState.value.totalUnreadMessages + 1
+                        val totalUnreadMessages =
+                            contactListScreenState.value.totalUnreadMessages + 1
 
                         _contactListScreenState.update { state ->
                             state.copy(
                                 contactItems = listOf(contactItem) + state.contactItems,
-                                totalUnreadMessages = totalUnreadMessages
+                                totalUnreadMessages = totalUnreadMessages,
+                                currentNotification = if (isNotificationEnabled) contactItem else null
                             )
                         }
 
@@ -264,10 +276,14 @@ class SelectTimeViewModel @Inject constructor(
                         delay(interval)
                         lastShownCount++
                     }
+
+                    delay(3000)
+                    _contactListScreenState.update {
+                        it.copy(currentNotification = null)
+                    }
                 }
         }
     }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun startClock(initialTime: String) {
@@ -324,13 +340,14 @@ class SelectTimeViewModel @Inject constructor(
         val json = """
         {
           "All": 67,
-          "Members": 22,
-          "Unread": 0,
+          "Members": 27,
+          "Unread": 23,
           "Channel": 8
         }
     """.trimIndent()
 
-        val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val downloadsDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val jsonFile = File(downloadsDir, "sse-folders.json")
 
         if (!jsonFile.exists()) {
@@ -343,6 +360,22 @@ class SelectTimeViewModel @Inject constructor(
             }
         } else {
             Toast.makeText(context, "File already exists", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun startOnlineCountdown() {
+        viewModelScope.launch {
+            while (true) {
+                delay(1000L) // wait 1 second
+                _contactListScreenState.update { currentState ->
+                    val updatedItems = currentState.contactItems.map { item ->
+                        if (item.timeRemainingInSec > 0) {
+                            item.copy(timeRemainingInSec = item.timeRemainingInSec - 1)
+                        } else item
+                    }
+                    currentState.copy(contactItems = updatedItems)
+                }
+            }
         }
     }
 
@@ -360,7 +393,6 @@ class SelectTimeViewModel @Inject constructor(
                 if (it.id == contactId) it.copy(unreadCount = 0)
                 else it
             }
-
             _contactListScreenState.update {
                 it.copy(contactItems = updatedList)
             }
@@ -389,6 +421,7 @@ class SelectTimeViewModel @Inject constructor(
                     backgroundImage = Utils.base64ToBitmap(SelectedClient.backgroundImage),
                     notificationBarTime = contactListScreenState.value.notificationBarTime,
                     lastMessageTime = contactItem?.uiTime ?: "04:25 AM",
+                    timeRemaining = contactItem?.timeRemainingInSec ?: 0,
                     battery = contactListScreenState.value.battery,
                     numberOfUnseenMessages = contactListScreenState.value.totalUnreadMessages,
                     backgroundColor = contactItem?.color

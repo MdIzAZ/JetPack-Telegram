@@ -215,6 +215,7 @@ fun AndroidChatListSection(
                                 lastReceiverMsgTime = receiverTimeMap[idx] ?: "12:00 PM"
                             )
 
+                            is NonTextMessage.Gif -> TODO()
                             null -> {}
                         }
                     }

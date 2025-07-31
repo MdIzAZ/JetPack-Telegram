@@ -9,6 +9,7 @@ data class ChatScreenState(
     val contactId: Int = 0,
     val notificationBarTime: String = "08:45 AM",
     val lastMessageTime: String = "08:45 AM",
+    val timeRemaining:Int=0,
     val numberOfUnseenMessages: Int = 0,
     val contactName: String = "",
     val contactPic: Bitmap? = null,

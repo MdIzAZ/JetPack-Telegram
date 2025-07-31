@@ -179,6 +179,7 @@ fun ChatListSection(
                                 lastReceiverMsgTime = receiverTimeMap[idx] ?: "12:00 PM"
                             )
 
+                            is NonTextMessage.Gif -> GifMessage(gif = item.nonTextMessage.base64)
                             null -> {}
                         }
                     }

@@ -12,6 +12,10 @@ interface SettingsRepo {
 
     suspend fun saveOsTypePref(osType: OSType)
 
+    suspend fun saveNotificationModePref(mode: Boolean)
+
     fun getCurrentOsType(): Flow<OSType>
+
+    fun getNotificationMode(): Flow<Boolean>
 
 }

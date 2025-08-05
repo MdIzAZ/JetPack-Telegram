@@ -51,7 +51,8 @@ fun ContactRow(
         profileImage = null,
         messages = dummyChatMessages,
         unreadCount = 0,
-        color = Color.Cyan
+        color = Color.Cyan,
+        timeRemainingInSec = 4
     ),
     time: String = "09:00 AM",
     onContactClick: () -> Unit = {}
@@ -125,7 +126,7 @@ fun ContactRow(
                         .clip(CircleShape)
                         .background(color = Color.Black, shape = CircleShape)
                         .padding(2.dp)
-                        .background(color = Color.Green, shape = CircleShape)
+                        .background(color = Color(0xFF6DCB5D), shape = CircleShape)
                 )
             }
         }

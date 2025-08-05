@@ -42,6 +42,8 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import javax.inject.Inject
+import kotlin.math.ceil
+import kotlin.math.max
 
 @HiltViewModel
 class SelectTimeViewModel @Inject constructor(
@@ -56,6 +58,7 @@ class SelectTimeViewModel @Inject constructor(
 
     private var clockJob: Job? = null
     private var chatUpdateJob: Job? = null
+    private var notificationUpdateJob: Job? = null
 
     private val _sevenDayScreenState = MutableStateFlow(SevenDayScreenState())
     val sevenDayScreenState = _sevenDayScreenState.asStateFlow()
@@ -159,10 +162,10 @@ class SelectTimeViewModel @Inject constructor(
                     it.copy(battery = Utils.getRandomBatteryPair())
                 }
 
-                val contacts =
-                    contactRepo.getRandomContacts().data?.toContactItemList() ?: emptyList()
+//                val contacts =
+//                    contactRepo.getRandomContacts().data?.toContactItemList() ?: emptyList()
 
-//                val contacts = dummyContacts
+                val contacts = dummyContacts
 
                 _sevenDayScreenState.update {
                     it.copy(contactItems = sevenDayScreenState.value.contactItems + contacts)
@@ -184,10 +187,11 @@ class SelectTimeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
 
-                val newContacts =
-                    contactRepo.getRandomContacts().data?.toContactItemList() ?: emptyList()
+//                val newContacts =
+//                    contactRepo.getRandomContacts().data?.toContactItemList() ?: emptyList()
 
-//                val newContacts = dummyContacts
+                val newContacts = dummyContacts
+
                 val allContacts = sevenDayScreenState.value.contactItems + newContacts
 
                 _sevenDayScreenState.update {
@@ -217,6 +221,14 @@ class SelectTimeViewModel @Inject constructor(
         _contactListScreenState.update {   // Should show notification
             it.copy(isNotificationEnabled = isNotificationEnabled)
         }
+
+        if (contactListScreenState.value.isNotificationEnabled) {
+            startShowingNotificationWithDelay(
+                delayBetweenTwo = 1000,
+                triggerTime = triggerTime
+            )
+        }
+
         startClock(initialTime = uiTime)
 
         val today = LocalDate.now()
@@ -259,7 +271,7 @@ class SelectTimeViewModel @Inject constructor(
                             state.copy(
                                 contactItems = listOf(contactItem) + state.contactItems,
                                 totalUnreadMessages = totalUnreadMessages,
-                                currentNotification = if (isNotificationEnabled) contactItem else null
+//                                currentNotification = if (isNotificationEnabled) contactItem else null
                             )
                         }
 
@@ -277,13 +289,78 @@ class SelectTimeViewModel @Inject constructor(
                         lastShownCount++
                     }
 
+                }
+        }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun startShowingNotificationWithDelay(
+        delayBetweenTwo: Long = 1000,
+        triggerTime: LocalTime
+    ) {
+        val today = LocalDate.now()
+        val dateTime = LocalDateTime.of(today, triggerTime)
+        val triggerMillis = dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+        notificationUpdateJob?.cancel()
+        notificationUpdateJob = viewModelScope.launch {
+
+            val delayMillis = triggerMillis - System.currentTimeMillis()
+            if (delayMillis > 0) delay(delayMillis)
+
+            var lastShownCount = 0
+
+            sevenDayScreenState
+                .map { it.contactItems }
+                .distinctUntilChanged()
+                .collect { currentList ->
+
+                    val newItems = currentList.drop(lastShownCount).reversed()
+
+                    var idx = 0
+                    while (idx < newItems.size) {
+                        val item = newItems[idx]
+                        Log.d("izaz", "${item.name}")
+
+
+                        _contactListScreenState.update { state ->
+                            Log.d("izaz", "${state.notificationItems.size}")
+
+                            state.copy(
+                                notificationItems = listOf(item) + state.notificationItems
+                            )
+                        }
+
+                        val itemIndex = lastShownCount + idx
+                        val interval = sevenDayScreenState.value.intervalGroups.find { group ->
+                            itemIndex in group.start!!..group.end!!
+                        }?.interval ?: 1000L
+
+
+                        val jump =
+                            if (interval.toInt() == 0) 1 else ceil((delayBetweenTwo / interval).toDouble()).toInt()
+                                .coerceAtLeast(1)
+
+                        Log.d("izaz", "Jump: $jump")
+                        Log.d("izaz", "Interval: $interval")
+
+
+                        val haveToDelay = max(delayBetweenTwo, interval)
+                        delay(haveToDelay)
+
+                        idx += jump
+                        lastShownCount += jump
+                    }
+
                     delay(3000)
                     _contactListScreenState.update {
-                        it.copy(currentNotification = null)
+                        it.copy(notificationItems = listOf(null) + it.notificationItems)
                     }
                 }
         }
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun startClock(initialTime: String) {

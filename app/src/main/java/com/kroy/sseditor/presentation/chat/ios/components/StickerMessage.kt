@@ -45,8 +45,7 @@ fun StickerMessage(
     isSender: Boolean = false
 ) {
 
-    val context = LocalContext.current
-//    val imageBitmap = Utils.getBitmapFromResource(context, sticker)
+
 
     Row(
         modifier = modifier

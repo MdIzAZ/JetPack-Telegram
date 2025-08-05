@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.kroy.sseditor.domain.models.ContactItem
 import com.kroy.sseditor.domain.models.dummyContacts
 import com.kroy.sseditor.presentation.contact_list.ContactListScreenState
 import com.kroy.sseditor.presentation.contact_list.ios.components.BottomNavBar
@@ -53,19 +54,23 @@ fun TelegramContactListScreen(
 
     var isAlertDialogOpen by remember { mutableStateOf(false) }
     var showNotification by remember { mutableStateOf(false) }
+    var currentNotification by remember { mutableStateOf<ContactItem?>(null) }
 
     BackHandler {
         isAlertDialogOpen = true
     }
 
 
-    LaunchedEffect(state.currentNotification) {
-        state.currentNotification?.let {
+    LaunchedEffect(state.notificationItems.firstOrNull()) {
+        state.notificationItems.firstOrNull().let {
             showNotification = false
             delay(300)
             showNotification = true
+            currentNotification = it
             delay(3000)
             showNotification = false
+            delay(300)
+            currentNotification = null
         }
     }
 
@@ -170,7 +175,7 @@ fun TelegramContactListScreen(
 
 
     AnimatedVisibility(
-        visible = state.currentNotification != null && showNotification,
+        visible = showNotification,
         enter = slideInVertically(
             initialOffsetY = { -it },
             animationSpec = tween(durationMillis = 300)
@@ -182,7 +187,7 @@ fun TelegramContactListScreen(
         modifier = Modifier
             .padding(top = 8.dp)
     ) {
-        state.currentNotification?.let { contact ->
+        currentNotification?.let { contact ->
             PopUpNotification(
                 modifier = Modifier
                     .fillMaxWidth(0.95f)

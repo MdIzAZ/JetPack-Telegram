@@ -76,10 +76,13 @@ fun GifMessage(
                 LottieAnimation(
                     composition = composition,
                     progress = { progress },
-                    modifier = modifier.size(100.dp)
+                    modifier = modifier
+                        .height(200.dp)
+                        .width(200.dp),
+                    contentScale = ContentScale.FillBounds
                 )
             } else {
-                Box(modifier = modifier.size(100.dp)) {
+                Box(modifier = modifier.size(200.dp)) {
                     Text("Gif Sticker")
                 }
             }
@@ -95,7 +98,6 @@ fun GifMessage(
         }
     }
 }
-
 
 
 fun decompressTgsBase64(base64: String): String? {

@@ -12,7 +12,7 @@ data class ContactListScreenState(
     val battery: Pair<Int, Int> = Pair(R.drawable.battery70, 70),
     val contactItems: List<ContactItem> = emptyList(),
     val isNotificationEnabled: Boolean = false,
-    val currentNotification: ContactItem? = null,
+    val notificationItems: List<ContactItem?> = emptyList(),
     val folders: List<Pair<String, Int>> = defaultFolderList
 )
 

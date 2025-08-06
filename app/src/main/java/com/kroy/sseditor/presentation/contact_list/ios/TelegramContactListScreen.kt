@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
@@ -25,6 +26,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +42,7 @@ import com.kroy.sseditor.presentation.contact_list.ios.components.ContactListScr
 import com.kroy.sseditor.presentation.contact_list.ios.components.PopUpNotification
 import com.kroy.sseditor.presentation.theme.CustomGray
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -55,22 +58,29 @@ fun TelegramContactListScreen(
     var isAlertDialogOpen by remember { mutableStateOf(false) }
     var showNotification by remember { mutableStateOf(false) }
     var currentNotification by remember { mutableStateOf<ContactItem?>(null) }
+    var isAtTop by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+
 
     BackHandler {
         isAlertDialogOpen = true
     }
 
+    val delays = listOf<Long>(150, 250, 600, 450)
+
 
     LaunchedEffect(state.notificationItems.firstOrNull()) {
         state.notificationItems.firstOrNull().let {
-            showNotification = false
-            delay(300)
-            showNotification = true
-            currentNotification = it
-            delay(3000)
-            showNotification = false
-            delay(300)
-            currentNotification = null
+            if (!isAtTop) {
+                showNotification = false
+                delay(delays.random())
+                showNotification = true
+                currentNotification = it
+                delay(3000)
+                showNotification = false
+                delay(300)
+                currentNotification = null
+            }
         }
     }
 
@@ -87,7 +97,7 @@ fun TelegramContactListScreen(
             ContactListScreenTopBar(
                 time = state.notificationBarTime,
                 unreadMessageCount = state.totalUnreadMessages,
-                folders = state.folders,
+                folders = state.folders.filter { !it.first.equals("chats", ignoreCase = true) },
                 batteryIcon = state.battery.first,
                 batteryPercentage = state.battery.second,
                 onLongPress = {}
@@ -100,7 +110,7 @@ fun TelegramContactListScreen(
                     .background(color = CustomGray)
                     .fillMaxWidth(),
                 count = state.folders.find {
-                    it.first.equals("unread", ignoreCase = true)
+                    it.first.equals("chats", ignoreCase = true)
                 }?.second ?: 54,
                 onLongPress = onLongPress
             )
@@ -120,7 +130,20 @@ fun TelegramContactListScreen(
                 ContactList(
                     modifier = Modifier.weight(1f),// Fills the remaining space right after the status bar,
                     chats = state.contactItems,
-                    onContactClick = onChatClick
+                    onContactClick = onChatClick,
+                    onTopPositionChange = {
+                        scope.launch {
+                            if (it) {
+                                delay(300)
+                                isAtTop = true
+                                showNotification = false
+
+                            } else {
+                                delay(500)
+                                isAtTop = false
+                            }
+                        }
+                    }
                 )
 
             }
@@ -192,7 +215,8 @@ fun TelegramContactListScreen(
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
                     .padding(horizontal = 8.dp),
-                contact = contact
+                contact = contact,
+                isAtTop = isAtTop
             )
         }
     }

@@ -222,17 +222,6 @@ fun DayWithTimePicker(
         }
 
 
-        // Go button
-//        IconButton(
-//            modifier = Modifier.weight(.15f),
-//
-//        ) {
-//            Icon(
-//                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-//                tint = Color.Black,
-//                contentDescription = "Go"
-//            )
-//        }
     }
 }
 

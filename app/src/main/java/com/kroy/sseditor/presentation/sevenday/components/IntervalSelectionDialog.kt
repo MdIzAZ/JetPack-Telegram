@@ -56,7 +56,7 @@ fun IntervalSelectionDialog(
     onDismiss: () -> Unit = {}
 ) {
     val context = LocalContext.current
-    val groups = remember { mutableStateListOf(IntervalGroup(0, Int.MAX_VALUE, 0)) }
+    val groups = remember { mutableStateListOf(IntervalGroup(0, Int.MAX_VALUE, 350)) }
 
 
     AlertDialog(

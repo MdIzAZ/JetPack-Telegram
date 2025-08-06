@@ -27,6 +27,13 @@ fun BadgeBoxSmall(
     color: Color = IosFolderColor
 ) {
 
+    val prefix = (unreadCount/1000).toString()
+    val suffix = if((unreadCount % 1000) / 100 != 0) ".${(unreadCount % 1000) / 100}K" else "K"
+
+    val countText =
+        if (unreadCount < 1000) unreadCount.toString()
+        else prefix + suffix
+
     Box(
         modifier = modifier
             .wrapContentSize()
@@ -34,7 +41,7 @@ fun BadgeBoxSmall(
         if (unreadCount == 0) return
 
         Text(
-            text = "$unreadCount",
+            text = countText,
             fontFamily = CustomRobotoMediumFontFamily,
             fontWeight = FontWeight.Thin,
             fontSize = (12f).sp,

@@ -122,11 +122,11 @@ fun ContactRow(
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
-                        .size(16.dp)
+                        .size(14.dp)
                         .clip(CircleShape)
                         .background(color = Color.Black, shape = CircleShape)
                         .padding(2.dp)
-                        .background(color = Color(0xFF6DCB5D), shape = CircleShape)
+                        .background(color = Color(0xFF4CC91F), shape = CircleShape)
                 )
             }
         }

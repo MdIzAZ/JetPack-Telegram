@@ -134,10 +134,11 @@ fun TelegramContactListScreen(
                     onTopPositionChange = {
                         scope.launch {
                             if (it) {
-                                delay(300)
                                 isAtTop = true
+                                delay(1500)
                                 showNotification = false
-
+                                delay(300)
+                                currentNotification = null
                             } else {
                                 delay(500)
                                 isAtTop = false
@@ -215,8 +216,7 @@ fun TelegramContactListScreen(
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
                     .padding(horizontal = 8.dp),
-                contact = contact,
-                isAtTop = isAtTop
+                contact = contact
             )
         }
     }

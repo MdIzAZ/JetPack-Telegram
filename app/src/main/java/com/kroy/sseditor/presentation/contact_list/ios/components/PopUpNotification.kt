@@ -47,14 +47,13 @@ import com.kroy.sseditor.utils.Utils.removeLeadingZero
 @Composable
 fun PopUpNotification(
     modifier: Modifier = Modifier,
-    isAtTop: Boolean = false,
     contact: ContactItem = dummyContacts[0]
 ) {
 
     val context = LocalContext.current
 
 
-    if (!isAtTop){
+
     Row(
         modifier = Modifier
             .padding(horizontal = 4.dp, vertical = 28.dp)
@@ -168,7 +167,7 @@ fun PopUpNotification(
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .weight(1f)
-                            .padding(bottom =4.dp)
+                            .padding(bottom = 4.dp)
                     )
                 }
 
@@ -201,6 +200,5 @@ fun PopUpNotification(
 
         }
     }
-    }
-
 }
+

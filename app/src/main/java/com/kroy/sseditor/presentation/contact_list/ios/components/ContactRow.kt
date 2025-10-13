@@ -192,12 +192,12 @@ fun ContactRow(
                             Spacer(modifier = Modifier.width(8.dp))
                         }
 
-                        val randomEmoji = listOf("😂", "🤬", "👍", "💖").random()
+
                         Text(
                             text = when (contact.messages.last().nonTextMessage) {
                                 is NonTextMessage.Image -> "Photo"
                                 is NonTextMessage.Sticker -> "Sticker"
-                                is NonTextMessage.Gif -> randomEmoji + "Sticker"
+                                is NonTextMessage.Gif -> contact.emoji + "Sticker"
                                 null -> ""
                             },
                             color = Color.Gray,

@@ -47,6 +47,7 @@ fun ChatListSection(
 ) {
 
     val listState = rememberLazyListState()
+
     var shouldShowToday by remember { mutableStateOf(false) }
     val isAtTop by remember {
         derivedStateOf {
@@ -59,7 +60,8 @@ fun ChatListSection(
         val total = chats.count { !it.isSender }
         val map = mutableMapOf<Int, String>()
         var receiverSeen = 0
-        val lastTime = SimpleDateFormat("hh:mm a", Locale.getDefault()).parse(lastReceiverMsgTime) ?: Date()
+        val lastTime =
+            SimpleDateFormat("hh:mm a", Locale.getDefault()).parse(lastReceiverMsgTime) ?: Date()
 
         chats.forEachIndexed { index, chat ->
             if (!chat.isSender) {
@@ -75,18 +77,18 @@ fun ChatListSection(
     }
 
     LaunchedEffect(chats.size) {
-        val lastIndex = if(chats.lastIndex < 0) 0 else chats.lastIndex
+        val lastIndex = if (chats.lastIndex < 0) 0 else chats.lastIndex
         listState.animateScrollToItem(lastIndex)
     }
 
     LaunchedEffect(listState.isScrollInProgress) {
         if (listState.isScrollInProgress) {
             shouldShowToday = true
-            
+
         } else {
             delay(1500)
             shouldShowToday = false
-            
+
         }
     }
 
@@ -157,7 +159,7 @@ fun ChatListSection(
                                 shouldShowChatTail = shouldShowChatTail,
                                 message = item,
                                 lastReceiverMsgTime = receiverTimeMap[idx] ?: "12:00 PM",
-                                onLongPress = {onLongPress(item.id)}
+                                onLongPress = { onLongPress(item.id) }
                             )
                         }
                     }
@@ -199,5 +201,5 @@ fun ChatListSection(
 @Preview(showBackground = true)
 @Composable
 fun PreviewChatListSection(modifier: Modifier = Modifier) {
-    ChatListSection(chats = dummyChatMessages, lastReceiverMsgTime = "03:55 AM" ,onLongPress = {})
+    ChatListSection(chats = dummyChatMessages, lastReceiverMsgTime = "03:55 AM", onLongPress = {})
 }

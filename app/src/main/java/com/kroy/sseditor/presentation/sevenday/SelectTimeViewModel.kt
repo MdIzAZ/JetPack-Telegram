@@ -162,10 +162,10 @@ class SelectTimeViewModel @Inject constructor(
                     it.copy(battery = Utils.getRandomBatteryPair())
                 }
 
-//                val contacts =
-//                    contactRepo.getRandomContacts().data?.toContactItemList() ?: emptyList()
+                val contacts =
+                    contactRepo.getRandomContacts().data?.toContactItemList() ?: emptyList()
 
-                val contacts = dummyContacts
+//                val contacts = dummyContacts
 
                 _sevenDayScreenState.update {
                     it.copy(contactItems = sevenDayScreenState.value.contactItems + contacts)
@@ -187,10 +187,10 @@ class SelectTimeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
 
-//                val newContacts =
-//                    contactRepo.getRandomContacts().data?.toContactItemList() ?: emptyList()
+                val newContacts =
+                    contactRepo.getRandomContacts().data?.toContactItemList() ?: emptyList()
 
-                val newContacts = dummyContacts
+//                val newContacts = dummyContacts
 
                 val allContacts = sevenDayScreenState.value.contactItems + newContacts
 
@@ -281,11 +281,16 @@ class SelectTimeViewModel @Inject constructor(
 
 
                         val itemIndex = lastShownCount + idx
-                        val interval = sevenDayScreenState.value.intervalGroups.find { group ->
+                        val maxInterval = sevenDayScreenState.value.intervalGroups.find { group ->
                             itemIndex in group.start!!..group.end!!
                         }?.interval ?: 1000L // Default fallback delay
 
-                        delay(interval)
+                        val randomInterval = (250L..maxInterval).random()
+                        
+                        Log.d("izaz", "Random Interval : $randomInterval")
+                        
+
+                        delay(randomInterval)
                         lastShownCount++
                     }
 

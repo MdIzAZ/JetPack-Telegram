@@ -26,7 +26,7 @@ import com.kroy.sseditor.utils.Utils.removeLeadingZeroNotMeridian
 fun ContactList(
     modifier: Modifier = Modifier,
     chats: List<ContactItem> = dummyContacts,
-    onTopPositionChange:(Boolean) ->Unit,
+    onTopPositionChange: (Boolean) -> Unit,
     onContactClick: (Int) -> Unit = {}
 ) {
 
@@ -48,7 +48,7 @@ fun ContactList(
         state = listState,
         modifier = modifier.fillMaxSize()
     ) {
-        itemsIndexed(chats) { index, chat ->
+        itemsIndexed(chats, key = { _, chat -> chat.id }) { index, chat ->
             ContactRow(
                 contact = chat,
                 time = chat.uiTime,

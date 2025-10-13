@@ -5,10 +5,14 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.KeyboardOptions
@@ -267,21 +271,14 @@ fun IntervalGroupRow(
     val mili by remember(interval) { mutableStateOf((interval?.mod(1000))) }
 
 
-    LazyRow(
-        modifier = modifier.fillMaxWidth(),
+    LazyVerticalGrid (
+        modifier = modifier.fillMaxWidth().height(200.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.CenterVertically
+        columns = GridCells.Adaptive(minSize = 120.dp)
     ) {
 
         item {
-//            if (isFirstIndex) {
-//                Text(
-//                    modifier = Modifier.padding(start = 12.dp, bottom = 20.dp),
-//                    text = "0",
-//                    textAlign = TextAlign.Center,
-//                    style = typography.labelLarge
-//                )
-//            } else {
+
             OutlinedTextField(
                 modifier = Modifier.width(70.dp),
                 readOnly = isFirstIndex,
@@ -291,27 +288,20 @@ fun IntervalGroupRow(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 onValueChange = { onStartValueChange(it) }
             )
-//            }
+
         }
 
-        item {
-            Text(
-                modifier = Modifier.padding(start = 2.dp, bottom = 20.dp),
-                textAlign = TextAlign.Center,
-                text = "To",
-                style = typography.labelLarge
-            )
-        }
+//        item {
+//            Text(
+//                modifier = Modifier.padding(start = 2.dp, bottom = 20.dp),
+//                textAlign = TextAlign.Center,
+//                text = "To",
+//                style = typography.labelLarge
+//            )
+//        }
 
         item {
-//            if (isLastIndex) {
-//                Text(
-//                    modifier = Modifier.padding(start = 2.dp, bottom = 20.dp),
-//                    textAlign = TextAlign.Center,
-//                    text = "Last",
-//                    style = typography.labelLarge
-//                )
-//            } else {
+
             OutlinedTextField(
                 modifier = Modifier
                     .width(70.dp),
@@ -326,7 +316,7 @@ fun IntervalGroupRow(
                 supportingText = { Text("End") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
-//            }
+
         }
 
         item {

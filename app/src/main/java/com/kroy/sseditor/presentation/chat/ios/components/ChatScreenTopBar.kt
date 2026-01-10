@@ -52,6 +52,7 @@ import com.kroy.sseditor.presentation.theme.CustomComfortaaFontFamily
 import com.kroy.sseditor.presentation.theme.CustomGray
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.UnreadMessages
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 import kotlinx.coroutines.delay
 
 
@@ -70,6 +71,7 @@ fun ChatScreenTopBar(
 ) {
 
     var lastSeenStatus by remember { mutableStateOf("Online") }
+    val tColorScheme = TelegramCustomTheme.colorScheme
 
     LaunchedEffect(Unit) {
         Log.d("izaz", "Start: $timeRemaining")
@@ -83,7 +85,7 @@ fun ChatScreenTopBar(
         modifier = Modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = 88.dp)
-            .background(color = CustomGray.copy(alpha = 0.85f))
+            .background(color = tColorScheme.topbarBackgroundColor1)
             .graphicsLayer {
                 shape = RoundedCornerShape(0.dp)
                 clip = true
@@ -103,15 +105,15 @@ fun ChatScreenTopBar(
         //2nd line of status bar
         Row(
             modifier = Modifier
-                .background(
-                    brush = Brush.linearGradient(
-                        listOf(
-                            Color(0xFF201F24),
-                            Color(0xFF252024),
-                            Color(0xFF1B1A1F)
-                        )
-                    )
-                )
+//                .background(
+//                    brush = Brush.linearGradient(
+//                        listOf(
+//                            Color(0xFF201F24),
+//                            Color(0xFF252024),
+//                            Color(0xFF1B1A1F)
+//                        )
+//                    )
+//                )
                 .fillMaxWidth()
                 .padding(end = 10.dp)
                 .wrapContentHeight(),
@@ -125,9 +127,9 @@ fun ChatScreenTopBar(
                     .background(
                         brush = Brush.linearGradient(
                             listOf(
-                                Color(0xFF201F24),
-                                Color(0xFF252024),
-                                Color(0xFF1B1A1F)
+                                tColorScheme.topbarBackgroundColor1,
+                                tColorScheme.topbarBackgroundColor2,
+                                tColorScheme.topbarBackgroundColor3,
                             )
                         )
                     )
@@ -147,7 +149,7 @@ fun ChatScreenTopBar(
                             .padding(top = 4.dp)
                             .size(26.dp),
                         contentDescription = "Back",
-                        tint = UnreadMessages
+                        tint = tColorScheme.backBtnAndCountColor
                     )
 
 
@@ -192,7 +194,7 @@ fun ChatScreenTopBar(
                 ) {
                     Text(
                         text = contactName,
-                        color = Color.White,
+//                        color = Color.White,
                         fontSize = 16.sp,
                         fontFamily = CustomRobotoMediumFontFamily,
                         fontWeight = FontWeight.Bold,
@@ -202,7 +204,7 @@ fun ChatScreenTopBar(
                     )
                     Text(
                         text = lastSeenStatus,
-                        color = Color(0xFFAAACAF),
+                        color = tColorScheme.lastSeenTextColor,
                         fontFamily = CustomRobotoMediumFontFamily,
                         fontWeight = FontWeight.Thin,
                         fontSize = 12.sp,

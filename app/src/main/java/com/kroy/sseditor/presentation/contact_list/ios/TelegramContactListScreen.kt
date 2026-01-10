@@ -1,7 +1,6 @@
 package com.kroy.sseditor.presentation.contact_list.ios
 
 import android.os.Build
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
@@ -34,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kroy.sseditor.domain.models.ContactItem
+import com.kroy.sseditor.domain.models.OSType
 import com.kroy.sseditor.domain.models.dummyContacts
 import com.kroy.sseditor.presentation.contact_list.ContactListScreenState
 import com.kroy.sseditor.presentation.contact_list.ios.components.BottomNavBar
@@ -41,6 +41,7 @@ import com.kroy.sseditor.presentation.contact_list.ios.components.ContactList
 import com.kroy.sseditor.presentation.contact_list.ios.components.ContactListScreenTopBar
 import com.kroy.sseditor.presentation.contact_list.ios.components.PopUpNotification
 import com.kroy.sseditor.presentation.theme.CustomGray
+import com.kroy.sseditor.presentation.theme.SSEditorTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -121,7 +122,6 @@ fun TelegramContactListScreen(
             modifier = Modifier
                 .padding(ip)
                 .fillMaxSize()
-                .background(Color.Black)
         ) {
             Column(
                 modifier = Modifier.fillMaxSize()
@@ -129,7 +129,7 @@ fun TelegramContactListScreen(
 
                 ContactList(
                     modifier = Modifier.weight(1f),// Fills the remaining space right after the status bar,
-                    chats = state.contactItems,
+                    contactItems = state.contactItems,
                     onContactClick = onChatClick,
                     onTopPositionChange = {
                         scope.launch {
@@ -232,10 +232,12 @@ fun TelegramContactListScreen(
 @Composable
 fun TelegramScreenPreview() {
 
-    TelegramContactListScreen(
-        ContactListScreenState(contactItems = dummyContacts),
-        {},
-        {},
-        {},
-        {})
+    SSEditorTheme(darkTheme = true, OSType.IOS) {
+        TelegramContactListScreen(
+            ContactListScreenState(contactItems = dummyContacts),
+            {},
+            {},
+            {},
+            {})
+    }
 }

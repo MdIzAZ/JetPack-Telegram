@@ -1,5 +1,6 @@
 package com.kroy.sseditor.presentation.contact_list.ios.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,7 @@ import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.Dimens
 import com.kroy.sseditor.presentation.theme.IosFolderColor
 import com.kroy.sseditor.presentation.theme.Telegram
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 
 @Preview
 @Composable
@@ -31,8 +33,10 @@ fun MessageTab(
     count: Int = 4
 ) {
 
+    val tColorScheme = TelegramCustomTheme.colorScheme
+
     Column(
-        modifier = modifier,
+        modifier = modifier.background(tColorScheme.topbarBackgroundColor1),
         horizontalAlignment = Alignment.CenterHorizontally,
 //        verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
@@ -42,7 +46,7 @@ fun MessageTab(
         ) {
             Text(
                 text = title,
-                color = if(isSelected) IosFolderColor else Color.Gray,
+                color = if(isSelected) tColorScheme.selectedFolderColor else tColorScheme.unSelectedFolderColor,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = (0.7f).sp,
                 fontSize = 14.sp,
@@ -52,7 +56,7 @@ fun MessageTab(
             BadgeBoxSmall(
                 modifier = Modifier.padding(start = 4.dp),
                 unreadCount = if (title == "All") 0 else count,
-                color = if(isSelected) IosFolderColor else Color.Gray
+                color = if(isSelected) tColorScheme.selectedFolderColor else tColorScheme.unSelectedFolderColor
             )
 
         }
@@ -65,7 +69,7 @@ fun MessageTab(
                     .width(80.dp)
                     .padding(top = 0.dp, end = 2.dp, start = 0.dp),
                 thickness = 2.dp,
-                color = IosFolderColor
+                color = tColorScheme.selectedFolderColor
             )
         }
     }

@@ -1,5 +1,6 @@
 package com.kroy.sseditor.presentation.contact_list.ios.components
 
+import android.content.res.Configuration
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
@@ -39,9 +40,10 @@ import com.kroy.sseditor.domain.models.dummyChatMessages
 import com.kroy.sseditor.presentation.theme.CustomComfortaaFontFamily
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.UnreadNoBox
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 import com.kroy.sseditor.utils.Utils.removeLeadingZero
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ContactRow(
@@ -59,11 +61,13 @@ fun ContactRow(
 ) {
 
     val context = LocalContext.current
+    val tColorScheme = TelegramCustomTheme.colorScheme
 
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .background(color = tColorScheme.contactItemBackgroundColor)
             .padding(start = 4.dp, end = 4.dp)
             .clickable { onContactClick() },
         verticalAlignment = Alignment.CenterVertically
@@ -124,9 +128,9 @@ fun ContactRow(
                         .align(Alignment.BottomEnd)
                         .size(14.dp)
                         .clip(CircleShape)
-                        .background(color = Color.Black, shape = CircleShape)
+                        .background(color = tColorScheme.contactItemBackgroundColor, shape = CircleShape)
                         .padding(2.dp)
-                        .background(color = Color(0xFF4CC91F), shape = CircleShape)
+                        .background(color = tColorScheme.onlineIndicatorColor, shape = CircleShape)
                 )
             }
         }
@@ -149,7 +153,6 @@ fun ContactRow(
                     fontSize = (15.5).sp,
                     letterSpacing = 0.7.sp,
                     fontWeight = FontWeight.W700,
-                    color = Color.White,
                     modifier = Modifier
                         .weight(1f)
                         .padding(top = 7.dp)

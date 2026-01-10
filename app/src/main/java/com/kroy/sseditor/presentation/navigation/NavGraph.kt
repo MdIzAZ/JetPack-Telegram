@@ -22,6 +22,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.kroy.ssediotor.BuildConfig
 import com.kroy.sseditor.domain.models.Client
 import com.kroy.sseditor.domain.models.OSType
 import com.kroy.sseditor.presentation.SharedViewModel
@@ -66,8 +67,13 @@ fun NavGraph(
         if (!hasNavigated) {
             delay(1000)
             if (isLoggedIn) {
-                navController.navigate("client/${userId}") {
-                    popUpTo(0)
+
+                if (BuildConfig.DEBUG) {
+                    navController.navigate("timer/${"Hello"}/${7}")
+                } else {
+                    navController.navigate("client/${userId}") {
+                        popUpTo(0)
+                    }
                 }
             } else {
                 navController.navigate("login") {
@@ -228,7 +234,7 @@ fun NavGraph(
                 updateTriggerTime = selectTimeViewModel::updateTriggerTime,
                 updateUiTime = selectTimeViewModel::updateUiTime,
                 onLoadContacts = {
-                    selectTimeViewModel.loadContactItems {  }
+                    selectTimeViewModel.loadContactItems { }
                 },
                 onGoClicked = { clientTimes, dayName, isNotificationEnabled ->
 

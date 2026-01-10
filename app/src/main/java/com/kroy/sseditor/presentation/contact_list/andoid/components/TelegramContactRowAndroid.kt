@@ -20,24 +20,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.kroy.ssediotor.R
 import com.kroy.sseditor.domain.models.ContactItem
 import com.kroy.sseditor.domain.models.NonTextMessage
 import com.kroy.sseditor.presentation.contact_list.ios.components.BadgeBox
 import com.kroy.sseditor.presentation.theme.CustomComfortaaFontFamily
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
-import com.kroy.sseditor.presentation.theme.DarkBluishGray
-import com.kroy.sseditor.presentation.theme.TelegramBlack
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 
 @Preview
 @Composable
@@ -53,12 +49,13 @@ fun TelegramContactRowAndroid(
     onContactClick: () -> Unit = {}
 ) {
     val context = LocalContext.current
+    val tColorScheme = TelegramCustomTheme.colorScheme
 
 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(TelegramBlack)
+            .background(tColorScheme.contactItemBackgroundColor)
             .padding(start = 8.dp, end = 8.dp)
             .clickable { onContactClick() },
         verticalAlignment = Alignment.CenterVertically
@@ -129,7 +126,7 @@ fun TelegramContactRowAndroid(
                     fontSize = 14.5.sp,
                     letterSpacing = 0.7.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+//                    color = Color.White,
                     modifier = Modifier
                         .weight(1f)
                         .padding(top = 10.dp)

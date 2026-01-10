@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kroy.ssediotor.BuildConfig
 import com.kroy.sseditor.data.mapper.toContactItemList
 import com.kroy.sseditor.domain.models.ChatMessage
 import com.kroy.sseditor.domain.models.IntervalGroup
@@ -162,10 +163,11 @@ class SelectTimeViewModel @Inject constructor(
                     it.copy(battery = Utils.getRandomBatteryPair())
                 }
 
-                val contacts =
+                val contacts = if (BuildConfig.DEBUG) {
+                    dummyContacts
+                } else {
                     contactRepo.getRandomContacts().data?.toContactItemList() ?: emptyList()
-
-//                val contacts = dummyContacts
+                }
 
                 _sevenDayScreenState.update {
                     it.copy(contactItems = sevenDayScreenState.value.contactItems + contacts)
@@ -187,10 +189,11 @@ class SelectTimeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
 
-                val newContacts =
+                val newContacts = if (BuildConfig.DEBUG) {
+                    dummyContacts
+                } else {
                     contactRepo.getRandomContacts().data?.toContactItemList() ?: emptyList()
-
-//                val newContacts = dummyContacts
+                }
 
                 val allContacts = sevenDayScreenState.value.contactItems + newContacts
 
@@ -360,7 +363,8 @@ class SelectTimeViewModel @Inject constructor(
 
                     delay(3000)
                     _contactListScreenState.update {
-                        it.copy(notificationItems = listOf(null) + it.notificationItems)
+//                        it.copy(notificationItems = listOf(null) + it.notificationItems)
+                        it.copy(notificationItems = listOf(null))
                     }
                 }
         }

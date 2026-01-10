@@ -1,5 +1,6 @@
 package com.kroy.sseditor.presentation.chat.ios.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
@@ -21,7 +22,9 @@ import androidx.compose.ui.unit.sp
 import com.kroy.sseditor.domain.models.ChatMessage
 import com.kroy.sseditor.presentation.theme.ChatBubbleGray
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @Preview(showSystemUi = true)
 @Composable
 fun ReceivedChatBubble(
@@ -39,6 +42,8 @@ fun ReceivedChatBubble(
     onLongPress: () -> Unit = {}
 ) {
 
+    val colorScheme = TelegramCustomTheme.colorScheme
+
     Row(
         modifier = modifier
 //            .alpha(.9f)
@@ -55,7 +60,13 @@ fun ReceivedChatBubble(
             BoxWithConstraints(
                 modifier = Modifier
                     .background(
-                        brush = Brush.linearGradient(listOf(Color(0xFF342525),Color(0xFF2E2133) ,Color(0xFF2E2133) )),
+                        brush = Brush.linearGradient(
+                            listOf(
+                                colorScheme.receiverChatBubbleColor1,
+                                colorScheme.receiverChatBubbleColor2,
+                                colorScheme.receiverChatBubbleColor2
+                            )
+                        ),
                         shape = RoundedCornerShape(
                             topStart = 8.dp,
                             topEnd = 18.dp,
@@ -89,7 +100,7 @@ fun ReceivedChatBubble(
                             text = message.text,
                             fontFamily = CustomRobotoMediumFontFamily,
                             fontWeight = FontWeight.Thin,
-                            color = Color.White,
+//                            color = Color.White,
                             fontSize = 17.sp,
                             letterSpacing = (-0.5).sp,
                             maxLines = Int.MAX_VALUE,
@@ -115,7 +126,7 @@ fun ReceivedChatBubble(
                             text = message.text,
                             fontFamily = CustomRobotoMediumFontFamily,
                             fontWeight = FontWeight.W500,
-                            color = Color.White,
+//                            color = Color.White,
                             fontSize = 17.sp,
                             letterSpacing = (-0.5).sp,
                             maxLines = Int.MAX_VALUE,

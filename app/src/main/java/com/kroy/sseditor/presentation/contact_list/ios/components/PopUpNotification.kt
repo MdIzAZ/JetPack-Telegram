@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,10 +41,11 @@ import com.kroy.sseditor.domain.models.dummyContacts
 import com.kroy.sseditor.presentation.theme.CustomComfortaaFontFamily
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.UnreadNoBox
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 import com.kroy.sseditor.utils.Utils.removeLeadingZero
 
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, )
 @Composable
 fun PopUpNotification(
     modifier: Modifier = Modifier,
@@ -51,6 +53,7 @@ fun PopUpNotification(
 ) {
 
     val context = LocalContext.current
+    val colorScheme = TelegramCustomTheme.colorScheme
 
 
 
@@ -59,7 +62,7 @@ fun PopUpNotification(
             .padding(horizontal = 4.dp, vertical = 28.dp)
             .height(80.dp)
             .fillMaxWidth()
-            .background(shape = RoundedCornerShape(16.dp), color = Color.Black)
+            .background(shape = RoundedCornerShape(16.dp), color = MaterialTheme.colorScheme.background)
             .padding(start = 12.dp, end = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -123,7 +126,7 @@ fun PopUpNotification(
                 fontSize = (15.5).sp,
                 letterSpacing = 0.7.sp,
                 fontWeight = FontWeight.W700,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .padding(top = 12.dp, bottom = 2.dp)
             )

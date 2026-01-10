@@ -46,6 +46,7 @@ import com.kroy.sseditor.presentation.theme.TelegramAndroidUnseenMessage
 import com.kroy.sseditor.presentation.theme.TelegramBlack
 import com.kroy.sseditor.presentation.theme.TelegramBlueColor
 import com.kroy.sseditor.presentation.theme.TelegramLight
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 
 @Composable
 fun AndroidContactListScreen(
@@ -59,6 +60,7 @@ fun AndroidContactListScreen(
 
     var isAlertDialogOpen by remember { mutableStateOf(false) }
     val context = LocalContext.current
+    val tColorScheme = TelegramCustomTheme.colorScheme
 
     BackHandler {
         isAlertDialogOpen = true
@@ -107,7 +109,7 @@ fun AndroidContactListScreen(
 
         Box(
             Modifier
-                .background(TelegramBlack)
+                .background(tColorScheme.contactItemBackgroundColor)
                 .fillMaxSize()
                 .padding(ip)
         ) {

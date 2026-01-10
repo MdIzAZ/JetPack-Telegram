@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kroy.ssediotor.R
 import com.kroy.sseditor.presentation.contact_list.defaultFolderList
 import com.kroy.sseditor.presentation.theme.BluishGray
 import com.kroy.sseditor.presentation.theme.DARK_GRAY
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 
 @Preview
 @Composable
@@ -20,12 +22,12 @@ fun AndroidContactScreenCompleteTop(
     modifier: Modifier = Modifier,
     time: String = "04:25 PM",
     folder: List<Pair<String, Int>> = defaultFolderList,
-    battery:Pair<Int,Int> = Pair(R.drawable.ic_battery, 58),
-    unreadMessageCount:Int = 4
+    battery: Pair<Int, Int> = Pair(R.drawable.ic_battery, 58),
+    unreadMessageCount: Int = 4
 ) {
     Column(
         modifier = modifier
-            .background(DARK_GRAY)
+            .background(TelegramCustomTheme.colorScheme.topbarBackgroundColor1)
             .fillMaxWidth()
     ) {
         AndroidNotificationBar(
@@ -34,7 +36,10 @@ fun AndroidContactScreenCompleteTop(
             battery = battery.second
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(
+            Modifier
+                .height(8.dp)
+        )
         TelegramTopBarAndroid(unreadMessageCount = unreadMessageCount, folders = folder)
     }
 }

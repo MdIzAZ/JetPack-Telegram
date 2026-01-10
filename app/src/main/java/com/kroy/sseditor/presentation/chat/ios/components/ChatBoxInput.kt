@@ -2,6 +2,7 @@ package com.kroy.sseditor.presentation.chat.ios.components
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color.toArgb
 import android.net.Uri
 import android.text.SpannableString
 import android.text.Spanned
@@ -29,6 +30,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -58,6 +60,7 @@ import com.kroy.sseditor.presentation.theme.BluishGray
 import com.kroy.sseditor.presentation.theme.BottomIconTint
 import com.kroy.sseditor.presentation.theme.CustomGray
 import com.kroy.sseditor.presentation.theme.CustomPurple
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 
 @Preview(showBackground = true)
 @Composable
@@ -69,6 +72,7 @@ fun ChatBoxInput(
     onStickerClick:()->Unit = {}
 ) {
 
+    val tColorScheme = TelegramCustomTheme.colorScheme
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
     val density = LocalDensity.current
@@ -79,9 +83,9 @@ fun ChatBoxInput(
             .fillMaxWidth()
             .background(brush = Brush.linearGradient(
                 listOf(
-                    Color(0xFF201F24),
-                    Color(0xFF252024),
-                    Color(0xFF1B1A1F)
+                    tColorScheme.topbarBackgroundColor1,
+                    tColorScheme.topbarBackgroundColor2,
+                    tColorScheme.topbarBackgroundColor3,
                 )
             ))
             .padding(bottom = 12.dp)
@@ -196,6 +200,8 @@ fun StickerCompatibleInput(
 
     val context = LocalContext.current
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val txtFieldBG = TelegramCustomTheme.colorScheme.txtFieldColor
+    val txtFieldTxtColor = MaterialTheme.colorScheme.onBackground
 
 
     var editTextRef by remember { mutableStateOf<EditText?>(null) }
@@ -204,12 +210,11 @@ fun StickerCompatibleInput(
 
     AndroidView(
         modifier = modifier
-            .clip(RoundedCornerShape(28.dp))
-            .background(Color.Black),
+            .clip(RoundedCornerShape(28.dp)),
         factory = {
             val container = LinearLayout(context).apply {
                 orientation = LinearLayout.HORIZONTAL
-                setBackgroundColor(Color.Black.toArgb())
+                setBackgroundColor(txtFieldBG.toArgb())
                 gravity = Gravity.CENTER_VERTICAL
                 setPadding(12, 6, 4, 6)
             }
@@ -230,8 +235,8 @@ fun StickerCompatibleInput(
                 typeface = mediumTypeface // Apply to actual input text
 
                 setText(text)
-                setBackgroundColor(Color.Black.toArgb())
-                setTextColor(Color.White.toArgb())
+                setBackgroundColor(txtFieldBG.toArgb())
+                setTextColor(txtFieldTxtColor.toArgb())
                 setHintTextColor(android.graphics.Color.GRAY)
                 textSize = 16f
                 imeOptions = android.view.inputmethod.EditorInfo.IME_ACTION_SEND

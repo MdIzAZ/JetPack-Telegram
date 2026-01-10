@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.IosFolderColor
 import com.kroy.sseditor.presentation.theme.UnreadMessages
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 
 @Preview
 @Composable
@@ -45,7 +46,7 @@ fun BadgeBoxSmall(
             fontFamily = CustomRobotoMediumFontFamily,
             fontWeight = FontWeight.Thin,
             fontSize = (12f).sp,
-            color = Color.White,
+            color = TelegramCustomTheme.colorScheme.topbarBackgroundColor1,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .background(

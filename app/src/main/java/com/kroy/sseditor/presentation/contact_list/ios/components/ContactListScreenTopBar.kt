@@ -1,6 +1,7 @@
 package com.kroy.sseditor.presentation.contact_list.ios.components
 
 import android.content.Context
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.util.Log
@@ -44,9 +45,10 @@ import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.IosFolderColor
 import com.kroy.sseditor.presentation.theme.TelegramDark
 import com.kroy.sseditor.presentation.theme.UnreadMessages
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 import org.json.JSONObject
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ContactListScreenTopBar(
@@ -58,15 +60,17 @@ fun ContactListScreenTopBar(
     onLongPress: () -> Unit = {},
 ) {
 
+    val tColorScheme  = TelegramCustomTheme.colorScheme
+
 
     Column(
         modifier = Modifier
             .background(
                 brush = Brush.linearGradient(
                     listOf(
-                        Color(0xFF201F24),
-                        Color(0xFF252024),
-                        Color(0xFF1B1A1F)
+                        tColorScheme.topbarBackgroundColor1,
+                        tColorScheme.topbarBackgroundColor2,
+                        tColorScheme.topbarBackgroundColor3,
                     )
                 )
             )
@@ -92,7 +96,7 @@ fun ContactListScreenTopBar(
             Text(
                 text = "Edit",
                 fontFamily = CustomRobotoMediumFontFamily,
-                color = UnreadMessages, // Assuming you have defined TelegramDark
+                color = tColorScheme.editTextColor, // Assuming you have defined TelegramDark
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold
             )
@@ -107,7 +111,6 @@ fun ContactListScreenTopBar(
                 Spacer(Modifier.width(24.dp))
                 Text(
                     text = "Chats",
-                    color = Color.White,
                     fontFamily = CustomComfortaaFontFamily,
                     fontSize = 18.sp,
                     letterSpacing = 0.5f.sp,
@@ -129,7 +132,7 @@ fun ContactListScreenTopBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_add_dotted),
                     contentDescription = "Search",
-                    tint = IosFolderColor,
+                    tint = tColorScheme.topTwoIconColor,
                     modifier = Modifier
                         .rotate(180f)
                         .size(24.dp)
@@ -138,7 +141,7 @@ fun ContactListScreenTopBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_edit),
                     contentDescription = "More options",
-                    tint = IosFolderColor,
+                    tint = tColorScheme.topTwoIconColor,
                     modifier = Modifier
                         .padding(end = 5.dp)
                         .size(24.dp)
@@ -178,7 +181,7 @@ fun ContactListScreenTopBar(
 
         }
 
-        HorizontalDivider(thickness = .1.dp, color = Color.White)
+        HorizontalDivider(thickness = .1.dp)
     }
 }
 

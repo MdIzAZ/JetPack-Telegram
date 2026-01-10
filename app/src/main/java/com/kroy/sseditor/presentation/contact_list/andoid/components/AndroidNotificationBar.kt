@@ -28,6 +28,7 @@ import com.kroy.sseditor.presentation.theme.BluishGray
 import com.kroy.sseditor.presentation.theme.CustomGray
 import com.kroy.sseditor.presentation.theme.CustomMediumTypography
 import com.kroy.sseditor.presentation.theme.DARK_GRAY
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 import com.kroy.sseditor.utils.Utils.removeLeadingZero
 
 @Preview(showBackground = true)
@@ -37,11 +38,13 @@ fun AndroidNotificationBar(
     time: String = "04:25 PM",
     battery: Int = 56
 ) {
+    
+    val tColorScheme = TelegramCustomTheme.colorScheme
 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(color = DARK_GRAY)
+            .background(color = tColorScheme.topbarBackgroundColor1)
             .padding(top = 12.dp, end = 8.dp, bottom = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically

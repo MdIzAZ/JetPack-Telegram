@@ -10,7 +10,10 @@ import android.view.WindowInsetsController
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
@@ -21,6 +24,7 @@ import com.kroy.sseditor.domain.models.ThemeMode
 import com.kroy.sseditor.presentation.navigation.NavGraph
 import com.kroy.sseditor.presentation.sevenday.SelectTimeViewModel
 import com.kroy.sseditor.presentation.theme.SSEditorTheme
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 import com.kroy.sseditor.utils.DataStoreHelper
 import com.kroy.sseditor.utils.Permissions
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,7 +60,7 @@ class MainActivity : FragmentActivity() {
                 ThemeMode.DARK -> true
             }
 
-            SSEditorTheme(darkTheme = isDarkTheme) {
+            SSEditorTheme(darkTheme = isDarkTheme, currentOSType = currentOs) {
 
                 NavGraph(
                     modifier = Modifier,

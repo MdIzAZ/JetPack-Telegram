@@ -12,7 +12,12 @@ data class ContactItem(
     val messages: List<ChatMessage>,
     val timeRemainingInSec: Int = 0,
     val unreadCount: Int? = 0,
-    val emoji: String = listOf("😂", "🤬", "👍", "💖").random(),
+    val emoji: String =  listOf(
+        "🫡", "🤑", "💰", "💲", "💸", "💞", "🙏", "💀", "👀", "🗿",
+        "📈", "💥", "🥳", "✨", "♥", "👌", "🤝", "💯", "✅", "🥰",
+        "🤩", "😌", "😎", "😇", "⚡", "❤", "❤‍🔥", "❣", "💪", "👍",
+        "🍾", "🍻", "🎉", "🎯", "📊"
+    ).random(),
 )
 
 val dummyContacts = listOf(

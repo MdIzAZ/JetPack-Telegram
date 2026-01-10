@@ -12,6 +12,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.Font
@@ -20,19 +21,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import com.kroy.ssediotor.R
+import com.kroy.sseditor.domain.models.OSType
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,
-    tertiary = Pink80
+    tertiary = Pink80,
+    background = Color(0xFF000000),
+    onBackground = Color(0xFFF7F7F8),
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Purple40,
     secondary = PurpleGrey40,
-    tertiary = Pink40
+    tertiary = Pink40,
 
-    /* Other default colors to override
+//    /* Other default colors to override
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
@@ -40,7 +45,7 @@ private val LightColorScheme = lightColorScheme(
     onTertiary = Color.White,
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
-    */
+
 )
 
 // Load your custom font
@@ -71,7 +76,7 @@ val CustomTypography = Typography(
         fontFamily = CustomFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
-    ) ,  // Add a bold body text style
+    ),  // Add a bold body text style
 
 
 )
@@ -109,7 +114,7 @@ val CustomBoldTypography = Typography(
         fontFamily = CustomBoldFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
-    ) ,  // Add a bold body text style
+    ),  // Add a bold body text style
 
 
 )
@@ -141,7 +146,7 @@ val CustomMediumTypography = Typography(
         fontFamily = CustomMediumFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
-    ) ,  // Add a bold body text style
+    ),  // Add a bold body text style
 
 
 )
@@ -173,7 +178,7 @@ val CustomRegularTypography = Typography(
         fontFamily = CustomRegularFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
-    ) ,  // Add a bold body text style
+    ),  // Add a bold body text style
 
 
 )
@@ -219,7 +224,7 @@ val CustomRobotoMediumFontFamily = FontFamily(
 @Composable
 fun SSEditorTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-
+    currentOSType: OSType,
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
@@ -244,7 +249,8 @@ fun SSEditorTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = CustomTypography,
-        content = content
-    )
+        typography = CustomTypography
+    ) {
+        TelegramCustomTheme(darkTheme = darkTheme, content = content, currentOSType = currentOSType)
+    }
 }

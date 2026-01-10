@@ -52,7 +52,7 @@ fun TimeWithTickBox(
             fontFamily = CustomRobotoMediumFontFamily,
             fontWeight = FontWeight.Thin,
             fontSize = (10.5f).sp,
-            color = if (isTextMessage) Color(0xFFD5D1E8) else Color.White
+            color = if (isTextMessage) Color(0xFF979797) else Color.Unspecified
         )
 
         if (isSender) {

@@ -1,6 +1,8 @@
 package com.kroy.sseditor.presentation.chat.android.components
 
+import android.R.attr.top
 import android.graphics.Bitmap
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kroy.sseditor.presentation.theme.BluishGray
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 import com.kroy.sseditor.utils.Utils
 import kotlinx.coroutines.delay
 
@@ -46,6 +49,7 @@ fun AndroidChatScreenTopBar(
 ) {
     val context = LocalContext.current
     var lastSeenStatus by remember { mutableStateOf("Online") }
+    val tColorScheme = TelegramCustomTheme.colorScheme
 
     LaunchedEffect(Unit) {
         delay(10_000)
@@ -53,7 +57,7 @@ fun AndroidChatScreenTopBar(
     }
 
     Row(
-        modifier = modifier.padding(top = 16.dp),
+        modifier = modifier.background(tColorScheme.topbarBackgroundColor1).padding(top = 16.dp),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -61,7 +65,7 @@ fun AndroidChatScreenTopBar(
         IconButton(onClick = { onBackClick() }) {
             Icon(
                 modifier = Modifier,
-                tint = Color.White,
+                tint = tColorScheme.backBtnAndCountColor,
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back"
             )
@@ -84,16 +88,16 @@ fun AndroidChatScreenTopBar(
 
             Text(
                 text = name,
-                fontSize = 15.sp,
                 color = Color.White,
-                fontWeight = FontWeight.SemiBold,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold,
                 lineHeight = 17.sp
             )
 
             Text(
                 text = lastSeenStatus,
                 fontSize = 12.sp,
-                color = Color.Gray,
+                color = tColorScheme.lastSeenTextColor,
                 lineHeight = 11.sp
             )
 

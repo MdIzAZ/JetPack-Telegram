@@ -1,5 +1,6 @@
 package com.kroy.sseditor.presentation.chat.ios.components
 
+import android.annotation.SuppressLint
 import android.text.TextPaint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +35,9 @@ import com.kroy.sseditor.domain.models.ChatMessage
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.SenderTextColor
 import com.kroy.sseditor.presentation.theme.TelegramDark
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @Preview(showBackground = true)
 @Composable
 fun SendChatBubble(
@@ -49,6 +52,8 @@ fun SendChatBubble(
         isSender = true
     )
 ) {
+
+    val colorScheme = TelegramCustomTheme.colorScheme
 
     Row(
         modifier = modifier
@@ -70,19 +75,8 @@ fun SendChatBubble(
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
-                                Color(0xFFCD25EE),
-//                                Color(0xFFCD25EE),
-//                                Color(0xFFCD25EE),
-//                                Color(0xFFCD25EE),
-//                                Color(0xFFB013CE),
-//                                Color(0xFFB013CE),
-//
-//                                Color(0xFFB215D7),
-//                                Color(0xFFB416E0),
-//                                Color(0xFFA527EF),
-//                                Color(0xFF9D1EEA),
-//                                Color(0xFF9D1EEA),
-                                Color(0xFF9D1EEA),
+                                colorScheme.senderChatBubbleColor1,
+                                colorScheme.senderChatBubbleColor2
                             ) // example gradient (green tones)
                         ),
                         shape = RoundedCornerShape(
@@ -95,6 +89,7 @@ fun SendChatBubble(
                     .padding(horizontal = 10.dp, vertical = 6.dp)
                     .zIndex(1f)
             ) {
+
 
                 val requiredWidthInDp = measureTextWidthInDp(
                     text = message.text + message.timestamp + "  ",
@@ -114,7 +109,7 @@ fun SendChatBubble(
                             text = message.text,
                             fontFamily = CustomRobotoMediumFontFamily,
                             fontWeight = FontWeight.SemiBold,
-                            color = Color.White,
+//                            color = Color.White,
                             fontSize = 17.sp,
                             letterSpacing = (-0.5).sp,
                             maxLines = Int.MAX_VALUE,
@@ -142,7 +137,7 @@ fun SendChatBubble(
                             text = message.text,
                             fontFamily = CustomRobotoMediumFontFamily,
                             fontWeight = FontWeight.Thin,
-                            color = Color.White,
+//                            color = Color.White,
                             fontSize = 17.sp,
                             letterSpacing = (-0.5).sp,
                             maxLines = Int.MAX_VALUE,

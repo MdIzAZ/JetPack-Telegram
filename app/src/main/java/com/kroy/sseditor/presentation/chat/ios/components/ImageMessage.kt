@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.kroy.ssediotor.R
 import com.kroy.sseditor.presentation.theme.TelegramDark
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 
 //@Preview(showSystemUi = true)
 @Composable
@@ -47,6 +49,7 @@ fun ImageMessage(
     lastReceiverMsgTime: String,
 ) {
 
+    val colorScheme = TelegramCustomTheme.colorScheme
 
     Row(
         modifier = Modifier
@@ -66,7 +69,7 @@ fun ImageMessage(
                     .padding(bottom = 4.dp)
                     .offset(x = 8.dp),
                 isSender = isSender,
-                color = Color.Black
+                color = MaterialTheme.colorScheme.background
             )
         }
 
@@ -114,12 +117,16 @@ fun ImageMessage(
                         )
                         .border(
                             width = 1.dp,
-                            brush = Brush.linearGradient(colors =if (!isSender) listOf(
-                                Color(0xFF201F24),
-                                Color(0xFF252024),
-                                Color(0xFF1B1A1F)
-                             )
-                            else listOf(Color(0xFFCD25EE), Color(0xFF9D1EEA) )),
+                            brush = Brush.linearGradient(
+                                colors = if (!isSender) listOf(
+//                                    Color(0xFF201F24),
+//                                    Color(0xFF252024),
+//                                    Color(0xFF1B1A1F),
+                                    colorScheme.receiverChatBubbleColor1,
+                                    colorScheme.receiverChatBubbleColor2
+                                )
+                                else listOf(colorScheme.senderChatBubbleColor1, colorScheme.senderChatBubbleColor2)
+                            ),
                             shape = RoundedCornerShape(16.dp)
                         ),
                     bitmap = image.asImageBitmap(),
@@ -146,9 +153,9 @@ fun ImageMessage(
                     .padding(bottom = 4.dp)
                     .offset(x = (-7).dp)
                     .zIndex(-1f),
-                isSender = isSender,
-                color = if (isSender) TelegramDark else Color.Black
-            )
+                isSender = true,
+
+                )
         }
 
         // Forward icon placed outside the chart box

@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 
 @Preview
 @Composable
@@ -19,6 +20,9 @@ fun ReceiverChatBubbleTriangleTail(
     isSender: Boolean = false,
     color: Color = Color.Black
 ) {
+
+    val colorScheme = TelegramCustomTheme.colorScheme
+
     Canvas(
         modifier = modifier.graphicsLayer {
             if (isSender) scaleX = -1f
@@ -33,27 +37,32 @@ fun ReceiverChatBubbleTriangleTail(
             quadraticTo((4 * w) / 8, h / 2, (5.5f * w) / 8, 0f)
 //            lineTo(w, 0f)
 //            lineTo(w, (5 * h) / 9)
-            quadraticTo(6*w/9, (6 * h) / 10, (8f*w)/10, (5 * h) / 9)
+            quadraticTo(6 * w / 9, (6 * h) / 10, (8f * w) / 10, (5 * h) / 9)
             quadraticTo((5 * w) / 8, (7 * h) / 8, 0f, h)
 
         }
 
-        drawPath(path = path, brush = Brush.linearGradient(listOf(
-            Color(0xFF201F24),
-            Color(0xFF252024),
-            Color(0xFF1B1A1F)
-        )), style = Fill)
+        drawPath(
+            path = path, brush = Brush.linearGradient(
+                listOf(
+                    colorScheme.receiverChatBubbleColor1,
+                    colorScheme.receiverChatBubbleColor2
+                )
+            ), style = Fill
+        )
     }
 }
-
 
 
 @Composable
 fun SenderChatBubbleTriangleTail(
     modifier: Modifier = Modifier,
-    isSender: Boolean ,
+    isSender: Boolean,
     color: Color = Color.Black
 ) {
+
+    val colorScheme = TelegramCustomTheme.colorScheme
+
     Canvas(
         modifier = modifier.graphicsLayer {
             if (isSender) scaleX = -1f
@@ -72,7 +81,16 @@ fun SenderChatBubbleTriangleTail(
 
         }
 
-        drawPath(path = path, brush = Brush.linearGradient(listOf(Color(0xFFCD25EE), Color(0xFF9D1EEA) )), style = Fill,)
+        drawPath(
+            path = path,
+            brush = Brush.linearGradient(
+                listOf(
+                    colorScheme.senderChatBubbleColor1,
+                    colorScheme.senderChatBubbleColor2
+                )
+            ),
+            style = Fill,
+        )
     }
 }
 

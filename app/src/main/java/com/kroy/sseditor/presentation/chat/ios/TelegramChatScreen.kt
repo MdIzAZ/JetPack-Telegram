@@ -33,11 +33,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kroy.ssediotor.R
 import com.kroy.sseditor.domain.models.MessageType
+import com.kroy.sseditor.domain.models.OSType
 import com.kroy.sseditor.domain.models.dummyChatMessages
 import com.kroy.sseditor.presentation.chat.ChatScreenState
 import com.kroy.sseditor.presentation.chat.ios.components.ChatBoxInput
 import com.kroy.sseditor.presentation.chat.ios.components.ChatListSection
 import com.kroy.sseditor.presentation.chat.ios.components.ChatScreenTopBar
+import com.kroy.sseditor.presentation.theme.SSEditorTheme
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 import com.kroy.sseditor.utils.Utils
 
 
@@ -205,17 +208,23 @@ fun hasExternalStoragePermission(context: Context): Boolean {
 @Composable
 fun PreviewTelegram() {
     val context = LocalContext.current
-    TelegramChatScreen(
-        contactId = 404,
-        state = ChatScreenState(
-            contactName = "Rakesh",
-            messages = dummyChatMessages,
-            backgroundImage = Utils.getBitmapFromResource(context, R.drawable.d)
-        ),
-        onBackClick = {},
-        onMessageSend = { _, _ -> },
-        editMessage = { _, _, _ -> }
-    )
+
+    SSEditorTheme(
+        darkTheme = true,
+        currentOSType = OSType.IOS
+    ) {
+        TelegramChatScreen(
+            contactId = 404,
+            state = ChatScreenState(
+                contactName = "Rakesh",
+                messages = dummyChatMessages,
+                backgroundImage = Utils.getBitmapFromResource(context, R.drawable.d)
+            ),
+            onBackClick = {},
+            onMessageSend = { _, _ -> },
+            editMessage = { _, _, _ -> }
+        )
+    }
 }
 
 

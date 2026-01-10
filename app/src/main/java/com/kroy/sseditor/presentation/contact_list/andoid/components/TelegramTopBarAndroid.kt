@@ -30,6 +30,7 @@ import com.kroy.sseditor.presentation.contact_list.ios.components.MessageTab
 import com.kroy.sseditor.presentation.theme.CustomMediumTypography
 import com.kroy.sseditor.presentation.theme.DARK_GRAY
 import com.kroy.sseditor.presentation.theme.IosFolderColor
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 
 @Preview(showBackground = true, backgroundColor = 0x00000000)
 @Composable
@@ -39,13 +40,19 @@ fun TelegramTopBarAndroid(
     folders: List<Pair<String, Int>> = defaultFolderList
 ) {
 
+    val tColorScheme = TelegramCustomTheme.colorScheme
 
-    Column {
+
+    Column(
+        modifier = modifier
+            .background(tColorScheme.topbarBackgroundColor1)
+            .fillMaxWidth()
+    ) {
         Row(
             modifier = modifier
                 .padding(horizontal = 16.dp, vertical = 16.dp)
                 .fillMaxWidth()
-                .background(DARK_GRAY),
+                .background(tColorScheme.topbarBackgroundColor1),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {

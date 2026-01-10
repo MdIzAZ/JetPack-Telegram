@@ -1,5 +1,6 @@
 package com.kroy.sseditor.presentation.contact_list.ios.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,17 +43,22 @@ import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.Dimens
 import com.kroy.sseditor.presentation.theme.IosFolderColor
 import com.kroy.sseditor.presentation.theme.UnreadMessages
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 import com.kroy.sseditor.utils.SelectedClient
 import com.kroy.sseditor.utils.Utils
 
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun BottomNavBar(
     modifier: Modifier = Modifier,
     count: Int = 6259,
     onLongPress: () -> Unit = {}
 ) {
+
+
+    val tColorScheme = TelegramCustomTheme.colorScheme
+
     Column(
         modifier
             .fillMaxWidth()
@@ -60,9 +66,9 @@ fun BottomNavBar(
             .background(
                 brush = Brush.linearGradient(
                     listOf(
-                        Color(0xFF201F24),
-                        Color(0xFF252024),
-                        Color(0xFF1B1A1F)
+                        tColorScheme.topbarBackgroundColor1,
+                        tColorScheme.topbarBackgroundColor2,
+                        tColorScheme.topbarBackgroundColor3,
                     )
                 )
             )
@@ -132,12 +138,12 @@ fun BottomNavBar(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_pending_msg_white),
                         contentDescription = "Pending messages",
-                        tint = IosFolderColor,
+                        tint = tColorScheme.selectedFolderColor,
                         modifier = Modifier.size(28.dp)
                     )
                     Text(
                         text = "Chats",
-                        color = UnreadMessages,
+                        color = tColorScheme.selectedFolderColor,
                         fontSize = Dimens.ChatScreenBottomBarTextSize,
                         fontWeight = FontWeight.Thin,
                         fontFamily = CustomRobotoMediumFontFamily,

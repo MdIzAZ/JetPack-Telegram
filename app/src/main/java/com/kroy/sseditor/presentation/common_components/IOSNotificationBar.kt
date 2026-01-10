@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.kroy.ssediotor.R
 import com.kroy.sseditor.presentation.theme.CustomMediumTypography
 import com.kroy.sseditor.presentation.theme.CustomRegularFontFamily
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 import com.kroy.sseditor.utils.SelectedClient
 import com.kroy.sseditor.utils.Utils
 import com.kroy.sseditor.utils.Utils.removeLeadingZero
@@ -42,6 +43,8 @@ fun IOSNotificationBar(
     onLongPress: () -> Unit
 ) {
 
+    val colorScheme = TelegramCustomTheme.colorScheme
+
 
     Box(
         modifier = Modifier
@@ -49,9 +52,9 @@ fun IOSNotificationBar(
             .wrapContentHeight()
             .background(brush = Brush.linearGradient(
                 listOf(
-                    Color(0xFF201F24),
-                    Color(0xFF252024),
-                    Color(0xFF1B1A1F)
+                    TelegramCustomTheme.colorScheme.topbarBackgroundColor1,
+                    TelegramCustomTheme.colorScheme.topbarBackgroundColor2,
+                    TelegramCustomTheme.colorScheme.topbarBackgroundColor3,
                 )
             ))
             .then(modifier)
@@ -67,7 +70,7 @@ fun IOSNotificationBar(
 
             Text(
                 text = removeLeadingZero(time).dropLast(2).trim(),
-                color = Color.White,
+                color = colorScheme.topbarContentColor,
                 fontSize = 15.sp,
                 letterSpacing = 1.sp,
                 style = CustomMediumTypography.titleMedium,
@@ -88,17 +91,17 @@ fun IOSNotificationBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_signal2),
                     contentDescription = "Signal",
-                    tint = Color.White,
+                    tint = colorScheme.topbarContentColor,
                     modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Icon(
                     painter = painterResource(id = R.drawable.ic_wifi),
                     contentDescription = "Signal",
-                    tint = Color.White,
+                    tint = colorScheme.topbarContentColor,
                     modifier = Modifier.size(18.dp)
                 )
-                //   Icon(painterResource(id = R.drawable.ic_wifi), contentDescription = "Wi-Fi", tint = Color.White, modifier = Modifier.size(16.dp))
+                //   Icon(painterResource(id = R.drawable.ic_wifi), contentDescription = "Wi-Fi", tint = colorScheme.topbarContentColor, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(1.dp))
 
 
@@ -107,7 +110,7 @@ fun IOSNotificationBar(
                         .size(34.dp, 12.dp),
                     painter = painterResource(batteryIcon),
                     contentDescription = "Battery",
-                    tint = Color.White
+                    tint = colorScheme.topbarContentColor
                 )
 
                 Spacer(modifier = Modifier.width(16.dp))

@@ -52,6 +52,8 @@ data class SSEditorColorScheme(
     /* Chat Screen Bottom Bar */
     val txtFieldColor: Color,
 
+    val txtColor: Color
+
 
 
 

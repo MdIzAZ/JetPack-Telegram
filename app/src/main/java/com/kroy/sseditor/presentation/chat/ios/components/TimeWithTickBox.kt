@@ -22,6 +22,7 @@ import com.kroy.ssediotor.R
 import com.kroy.sseditor.presentation.theme.COLOR_PINK
 import com.kroy.sseditor.presentation.theme.CustomRobotoMediumFontFamily
 import com.kroy.sseditor.presentation.theme.TelegramLight
+import com.kroy.sseditor.presentation.theme.sse_editor_theme.TelegramCustomTheme
 import com.kroy.sseditor.utils.Utils.convertLettersToUppercase
 import com.kroy.sseditor.utils.Utils.removeLeadingZero
 
@@ -33,6 +34,10 @@ fun TimeWithTickBox(
     time: String ="03:45 PM",
     isSender: Boolean = false
 ) {
+
+    val scheme = TelegramCustomTheme.colorScheme
+
+
     Row(
         modifier = modifier
             .then(

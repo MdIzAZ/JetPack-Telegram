@@ -33,7 +33,8 @@ fun lightSSEditorColorScheme(currentOSType: OSType) :SSEditorColorScheme {
             receiverChatBubbleColor1 = Color.White,
             receiverChatBubbleColor2 = Color.White,
             todayTextBackgroundColor = Color(0xFF52a4a7),
-            txtFieldColor = Color.White
+            txtFieldColor = Color.White,
+            txtColor = Color.Black
         )
 
         OSType.Android -> SSEditorColorScheme(
@@ -60,7 +61,8 @@ fun lightSSEditorColorScheme(currentOSType: OSType) :SSEditorColorScheme {
             receiverChatBubbleColor2 = Color.White,
             todayTextBackgroundColor = Color.White,
             txtFieldColor = Color.White,
-            topbarContentColor = Color.Black
+            topbarContentColor = Color.Black,
+            txtColor = Color.Black
         )
     }
 
@@ -91,7 +93,8 @@ fun darkSSEditorColorScheme(currentOSType: OSType): SSEditorColorScheme {
             receiverChatBubbleColor2 = Color(0xFF2E2133),
             todayTextBackgroundColor = Color(0xFF2E2133),
             txtFieldColor = Color.Black,
-            topbarContentColor = Color.White
+            topbarContentColor = Color.White,
+            txtColor = Color.White
         )
         OSType.Android -> SSEditorColorScheme(
             editTextColor = Color(0xFF6abfff),
@@ -114,7 +117,8 @@ fun darkSSEditorColorScheme(currentOSType: OSType): SSEditorColorScheme {
             receiverChatBubbleColor2 = Color(0xff232e3b),
             todayTextBackgroundColor = Color(0xff242f3c),
             txtFieldColor = Color(0xff212d3b),
-            topbarContentColor = Color.White
+            topbarContentColor = Color.White,
+            txtColor = Color.White
         )
     }
 }
